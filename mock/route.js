@@ -79,6 +79,48 @@ const database = [
     icon: 'camera-o',
   },
   {
+    id: '41',
+    breadcrumbParentId: '4',
+    menuParentId: '4',
+    name: 'Button',
+    zh: {
+      name: 'Button'
+    },
+    'pt-br': {
+      name: 'Button'
+    },
+    icon: 'edit',
+    route: '/UIElement/button',
+  },
+  {
+    id: '42',
+    breadcrumbParentId: '4',
+    menuParentId: '4',
+    name: 'Form',
+    zh: {
+      name: 'Form'
+    },
+    'pt-br': {
+      name: 'Form'
+    },
+    icon: 'edit',
+    route: '/UIElement/form',
+  },
+  {
+    id: '43',
+    breadcrumbParentId: '4',
+    menuParentId: '4',
+    name: 'Table',
+    zh: {
+      name: 'Table'
+    },
+    'pt-br': {
+      name: 'Table'
+    },
+    icon: 'edit',
+    route: '/UIElement/table',
+  },
+  {
     id: '45',
     breadcrumbParentId: '4',
     menuParentId: '4',
