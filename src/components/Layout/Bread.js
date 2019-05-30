@@ -24,7 +24,7 @@ class Bread extends PureComponent {
       return (
         <Breadcrumb.Item key={key}>
           {paths.length - 1 !== key ? (
-            <Link to={addLangPrefix(item.route) || '#'}>{content}</Link>
+            <Link to={item.route || '#'}>{content}</Link>
           ) : (
             content
           )}

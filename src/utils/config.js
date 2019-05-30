@@ -19,11 +19,6 @@ module.exports = {
     /* Countrys flags: https://www.flaticon.com/packs/countrys-flags */
     languages: [
       {
-        key: 'pt-br',
-        title: 'Português',
-        flag: '/brazil.svg',
-      },
-      {
         key: 'en',
         title: 'English',
         flag: '/america.svg',
@@ -34,6 +29,6 @@ module.exports = {
         flag: '/china.svg',
       },
     ],
-    defaultLanguage: 'en',
+    defaultLanguage: 'zh',
   },
 }

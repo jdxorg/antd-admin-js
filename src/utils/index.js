@@ -122,15 +122,15 @@ const routerAddLangPrefix = params => {
  */
 const myRouter = { ...umiRouter }
 
-myRouter.push = flow(
-  routerAddLangPrefix,
-  umiRouter.push
-)
+// myRouter.push = flow(
+//   routerAddLangPrefix,
+//   umiRouter.push
+// )
 
-myRouter.replace = flow(
-  routerAddLangPrefix,
-  myRouter.replace
-)
+// myRouter.replace = flow(
+//   routerAddLangPrefix,
+//   myRouter.replace
+// )
 
 export const router = myRouter
 
@@ -250,4 +250,11 @@ export function setLocale(language) {
       search: window.location.search,
     })
   }
+}
+
+// /userinfo/2144/id => ['/userinfo','/useinfo/2144,'/userindo/2144/id']
+// eslint-disable-next-line import/prefer-default-export
+export function urlToList(url) {
+  const urllist = url.split('/').filter(i => i);
+  return urllist.map((urlItem, index) => `/${urllist.slice(0, index + 1).join('/')}`);
 }

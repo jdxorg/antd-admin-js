@@ -21,7 +21,7 @@ class SiderMenu extends PureComponent {
 
   onOpenChange = openKeys => {
     const { menus } = this.props
-    const rootSubmenuKeys = menus.filter(_ => !_.menuParentId).map(_ => _.id)
+    const rootSubmenuKeys = menus.map(_ => _.id)
 
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1
@@ -57,7 +57,7 @@ class SiderMenu extends PureComponent {
       }
       return (
         <Menu.Item key={item.id}>
-          <Navlink to={addLangPrefix(item.route) || '#'}>
+          <Navlink to={item.route || '#'}>
             {item.icon && <Icon type={item.icon} />}
             <span>{item.name}</span>
           </Navlink>
@@ -77,7 +77,7 @@ class SiderMenu extends PureComponent {
     } = this.props
 
     // Generating tree-structured data for menu content.
-    const menuTree = arrayToTree(menus, 'id', 'menuParentId')
+    // const menuTree = arrayToTree(menus, 'id', 'menuParentId')
 
     // Find a menu that matches the pathname.
     const currentMenu = menus.find(
@@ -111,7 +111,7 @@ class SiderMenu extends PureComponent {
         }
         {...menuProps}
       >
-        {this.generateMenus(menuTree)}
+        {this.generateMenus(menus)}
       </Menu>
     )
   }
