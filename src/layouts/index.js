@@ -19,10 +19,11 @@ class Layout extends Component {
     catalogs: {},
   }
 
-  language = defaultLanguage
+  // language = defaultLanguage
 
   componentDidMount() {
     const language = langFromPath(this.props.location.pathname)
+    console.log('componentDidMount', language)
     this.language = language
     this.loadCatalog(language)
   }
@@ -31,7 +32,7 @@ class Layout extends Component {
     const language = langFromPath(nextProps.location.pathname)
     const preLanguage = this.language
     const { catalogs } = nextState
-
+    console.log('componentDidMount->nextState', nextState)
     if (preLanguage !== language && !catalogs[language]) {
       this.loadCatalog(language)
       this.language = language
@@ -43,8 +44,10 @@ class Layout extends Component {
   }
 
   loadCatalog = async language => {
-    const catalog = await import(/* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
-    `@lingui/loader!../locales/${language}/messages.json`)
+    const catalog = await import(
+      /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
+      `@lingui/loader!../locales/${language}/messages.json`
+    )
 
     this.setState(state => ({
       catalogs: {
@@ -61,7 +64,7 @@ class Layout extends Component {
     let language = langFromPath(location.pathname)
     // If the language pack is not loaded or is loading, use the default language
     if (!catalogs[language]) language = defaultLanguage
-
+    console.log('render', catalogs)
     return (
       <LocaleProvider locale={languages[language]}>
         <I18nProvider language={language} catalogs={catalogs}>
