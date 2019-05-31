@@ -58,79 +58,11 @@ export function arrayToTree(
   })
   return result
 }
-
-export const langFromPath = curry(
-  /**
-   * Query language from pathname.
-   * @param   {array}     languages         Specify which languages are currently available.
-   * @param   {string}    defaultLanguage   Specify the default language.
-   * @param   {string}    pathname          Pathname to be queried.
-   * @return  {string}    Return the queryed language.
-   */
-  (languages, defaultLanguage, pathname) => {
-    for (const item of languages) {
-      if (pathname.startsWith(`/${item}/`)) {
-        return item
-      }
-    }
-    return defaultLanguage
-  }
-)(languages)(defaultLanguage)
-
-export const deLangPrefix = curry(
-  /**
-   * Remove the language prefix in pathname.
-   * @param   {array}     languages  Specify which languages are currently available.
-   * @param   {string}    pathname   Remove the language prefix in the pathname.
-   * @return  {string}    Return the pathname after removing the language prefix.
-   */
-  (languages, pathname) => {
-    if (!pathname) {
-      return
-    }
-    for (const item of languages) {
-      if (pathname.startsWith(`/${item}/`)) {
-        return pathname.replace(`/${item}/`, '/')
-      }
-    }
-
-    return pathname
-  }
-)(languages)
-
-/**
- * Add the language prefix in pathname.
- * @param   {string}    pathname   Add the language prefix in the pathname.
- * @return  {string}    Return the pathname after adding the language prefix.
- */
-export function addLangPrefix(pathname) {
-  const prefix = langFromPath(window.location.pathname)
-  return `/${prefix}${deLangPrefix(pathname)}`
-}
-
-const routerAddLangPrefix = params => {
-  if (isString(params)) {
-    params = addLangPrefix(params)
-  } else {
-    params.pathname = addLangPrefix(params.pathname)
-  }
-  return params
-}
-
 /**
  * Adjust the router to automatically add the current language prefix before the pathname in push and replace.
  */
 const myRouter = { ...umiRouter }
 
-// myRouter.push = flow(
-//   routerAddLangPrefix,
-//   umiRouter.push
-// )
-
-// myRouter.replace = flow(
-//   routerAddLangPrefix,
-//   myRouter.replace
-// )
 
 export const router = myRouter
 
@@ -141,7 +73,7 @@ export const router = myRouter
  * @return  {array|null}              Return the result of the match or null.
  */
 export function pathMatchRegexp(regexp, pathname) {
-  return pathToRegexp(regexp).exec(deLangPrefix(pathname))
+  return pathToRegexp(regexp).exec(pathname)
 }
 
 /**
@@ -237,19 +169,6 @@ export function queryLayout(layouts, pathname) {
   }
 
   return result
-}
-
-export function getLocale() {
-  return langFromPath(window.location.pathname)
-}
-
-export function setLocale(language) {
-  if (getLocale() !== language) {
-    umiRouter.push({
-      pathname: `/${language}${deLangPrefix(window.location.pathname)}`,
-      search: window.location.search,
-    })
-  }
 }
 
 // /userinfo/2144/id => ['/userinfo','/useinfo/2144,'/userindo/2144/id']

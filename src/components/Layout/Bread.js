@@ -4,7 +4,7 @@ import { Breadcrumb, Icon } from 'antd'
 import Link from 'umi/navlink'
 import withRouter from 'umi/withRouter'
 import { withI18n } from '@lingui/react'
-import { pathMatchRegexp, queryAncestors, addLangPrefix } from 'utils'
+import { pathMatchRegexp, queryAncestors } from 'utils'
 import styles from './Bread.less'
 
 @withI18n()
@@ -34,7 +34,7 @@ class Bread extends PureComponent {
   }
   render() {
     const { routeList, location, i18n } = this.props
-
+console.log(pathMatchRegexp(location.pathname))
     // Find a route that matches the pathname.
     const currentRoute = routeList.find(
       _ => _.route && pathMatchRegexp(_.route, location.pathname)

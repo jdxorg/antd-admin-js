@@ -7,7 +7,6 @@ import {
   arrayToTree,
   queryAncestors,
   pathMatchRegexp,
-  addLangPrefix,
 } from 'utils'
 import store from 'store'
 

@@ -8,7 +8,8 @@ import { MyLayout } from 'components'
 import { BackTop, Layout, Drawer } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
-import { config, pathMatchRegexp, langFromPath } from 'utils'
+import { config, pathMatchRegexp } from 'utils'
+import { lang } from 'utils/local'
 import Error from '../pages/404'
 import styles from './PrimaryLayout.less'
 
@@ -59,14 +60,14 @@ class PrimaryLayout extends PureComponent {
 
     // Localized route name.
 
-    const lang = langFromPath(location.pathname)
+    const language = lang()
     const newRouteList =
-      lang !== 'en'
+    language !== 'en'
         ? routeList.map(item => {
             const { name, ...other } = item
             return {
               ...other,
-              name: (item[lang] || {}).name || name,
+              name: (item[language] || {}).name || name,
             }
           })
         : routeList

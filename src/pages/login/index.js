@@ -4,7 +4,7 @@ import { connect } from 'dva'
 import { Button, Row, Form, Icon, Input } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { Trans, withI18n } from '@lingui/react'
-import { setLocale } from 'utils'
+import { setLocale } from 'utils/local'
 import config from 'utils/config'
 
 import styles from './index.less'
