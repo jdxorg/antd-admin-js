@@ -109,7 +109,7 @@ export function queryPathKeys(array, current, parentId, id = 'id') {
  * @param   {string}    id        The alias of the unique ID of the object in the array.
  * @return  {array}    Return a key array.
  */
-export function queryAncestors(array, current, parentId, id = 'id') {
+export function queryAncestors(array, current, parentId='parentid', id = 'id') {
   const result = [current]
   const hashMap = new Map()
   array.forEach(item => hashMap.set(item[id], item))

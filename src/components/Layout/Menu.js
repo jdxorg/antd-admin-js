@@ -37,7 +37,27 @@ class SiderMenu extends PureComponent {
     store.set('openKeys', newOpenKeys)
   }
 
-  generateMenus = data => {
+  findMenu = (menus,pathname)=>{
+    let array = pathname.substring(1,pathname.length).split('/')
+    let path = `/${array[0]}`
+    let root = menus.find(_=>_.route && pathMatchRegexp(_.route,path) )
+    let selectedItems=[root]
+    const getMenu = (_menus,path) =>{
+      root = _menus.find(_=>_.route && pathMatchRegexp(_.route,path ) )
+      if( root )
+        selectedItems.push(root)
+    }
+    for(let i=0;i<array.length;i++){
+      if( i==0 )continue;
+      path += `/${array[i]}`
+      if( root && root.children ){
+        getMenu(root.children,path)
+      }
+    }
+    return selectedItems
+  }
+
+  generateMenus = (data) => {
     return data.map(item => {
       if (item.children) {
         return (
@@ -54,9 +74,10 @@ class SiderMenu extends PureComponent {
           </SubMenu>
         )
       }
+      
       return (
         <Menu.Item key={item.id}>
-          <Navlink to={item.route || '#'}>
+          <Navlink to={item.route||'#'}>
             {item.icon && <Icon type={item.icon} />}
             <span>{item.name}</span>
           </Navlink>
@@ -75,24 +96,12 @@ class SiderMenu extends PureComponent {
       onCollapseChange,
     } = this.props
 
-    // Generating tree-structured data for menu content.
-    // const menuTree = arrayToTree(menus, 'id', 'menuParentId')
-
     // Find a menu that matches the pathname.
-    const currentMenu = menus.find(
-      _ => _.route && pathMatchRegexp(_.route, location.pathname)
-    )
-
+    const selectedItems = this.findMenu(menus,location.pathname)
     // Find the key that should be selected according to the current menu.
-    const selectedKeys = currentMenu
-      ? queryAncestors(menus, currentMenu, 'menuParentId').map(_ => _.id)
-      : []
-
-    const menuProps = collapsed
-      ? {}
-      : {
-          openKeys: this.state.openKeys,
-        }
+    const selectedKeys = selectedItems.map(_ => _.id).reverse() 
+    console.log('selectedKeys',selectedKeys)
+    const menuProps = collapsed ? {}: { openKeys: this.state.openKeys,}
 
     return (
       <Menu

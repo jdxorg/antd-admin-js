@@ -17,9 +17,10 @@ const database = [
       name: '用户管理'
     },
     icon: 'user',
+    route:'/user',
     children:[
-      {id:'21',parentid:'2',name:'user',zh: {name: '用户管理'},icon:'user',route:'/user'},
-      {id:'22',parentid:'2',name:'role',zh: {name: '角色管理'},icon:'user',route:'/role'},
+      {id:'21',parentid:'2',name:'user',zh: {name: '用户管理'},icon:'user',route:'/user/user'},
+      {id:'22',parentid:'2',name:'role',zh: {name: '角色管理'},icon:'user',route:'/user/role'},
     ]
   },
   {
@@ -47,6 +48,7 @@ const database = [
       name: 'UI组件'
     },
     icon: 'camera-o',
+    route:'/UIElement',
     children:[
       { id: '41',parentid: '4',name: 'Button',zh: {name: 'Button'},icon: 'edit',route: '/UIElement/button',},
       { id: '42',parentid: '4',name: 'Form',zh: {name: 'Form'},icon: 'edit',route: '/UIElement/form',},
@@ -61,6 +63,7 @@ const database = [
       name: 'Charts'
     },
     icon: 'code-o',
+    route:'chart',
     children:[
       {id: '51', parentid: '5',name: 'ECharts',zh: { name: 'ECharts'}, icon: 'line-chart',route: '/chart/ECharts',},
       {id: '52', parentid: '5',name: 'HighCharts',zh: { name: 'HighCharts'}, icon: 'bar-chart',route: '/chart/highCharts',},
