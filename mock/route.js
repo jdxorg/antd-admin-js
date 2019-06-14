@@ -12,15 +12,15 @@ const database = [
   },
   {
     id: '2',
-    name: 'Users',
+    name: 'Account',
     zh: {
-      name: '用户管理'
+      name: '账户管理'
     },
     icon: 'user',
-    route:'/user',
+    route:'/account',
     children:[
-      {id:'21',parentid:'2',name:'user',zh: {name: '用户管理'},icon:'user',route:'/user/user'},
-      {id:'22',parentid:'2',name:'role',zh: {name: '角色管理'},icon:'user',route:'/user/role'},
+      {id:'21',parentid:'2',name:'user',zh: {name: '用户管理'},icon:'user',route:'/account/user'},
+      {id:'22',parentid:'2',name:'role',zh: {name: '角色管理'},icon:'user',route:'/account/role'},
     ]
   },
   {
@@ -63,12 +63,23 @@ const database = [
       name: 'Charts'
     },
     icon: 'code-o',
-    route:'chart',
+    route:'/chart',
     children:[
       {id: '51', parentid: '5',name: 'ECharts',zh: { name: 'ECharts'}, icon: 'line-chart',route: '/chart/ECharts',},
       {id: '52', parentid: '5',name: 'HighCharts',zh: { name: 'HighCharts'}, icon: 'bar-chart',route: '/chart/highCharts',},
       {id: '53', parentid: '5',name: 'Rechartst',zh: { name: 'Rechartst'}, icon: 'area-chart',route: '/chart/Recharts',},
     ]
+  },
+  {
+    id: '6',
+    name: 'Test',
+    zh: {
+      name: '测试'
+    },
+    icon: 'code-o',
+    route:'/test',
+    hideInMenu: true,
+    authority: ['admin'],
   },
 ]
 

@@ -76,54 +76,24 @@ export function pathMatchRegexp(regexp, pathname) {
   return pathToRegexp(regexp).exec(pathname)
 }
 
-/**
- * In an array object, traverse all parent IDs based on the value of an object.
- * @param   {array}     array     The Array need to Converted.
- * @param   {string}    current   Specify the value of the object that needs to be queried.
- * @param   {string}    parentId  The alias of the parent ID of the object in the array.
- * @param   {string}    id        The alias of the unique ID of the object in the array.
- * @return  {array}    Return a key array.
- */
-export function queryPathKeys(array, current, parentId, id = 'id') {
-  const result = [current]
-  const hashMap = new Map()
-  array.forEach(item => hashMap.set(item[id], item))
-
-  const getPath = current => {
-    const currentParentId = hashMap.get(current)[parentId]
-    if (currentParentId) {
-      result.push(currentParentId)
-      getPath(currentParentId)
+export function queryAncestors(menus,pathname){
+  let array = pathname.substring(1,pathname.length).split('/')
+  let path = `/${array[0]}`
+  let root = menus.find(_=>_.route && pathMatchRegexp(_.route,path) )
+  let selectedItems=[root]
+  const getMenu = (_menus,path) =>{
+    root = _menus.find(_=>_.route && pathMatchRegexp(_.route,path ) )
+    if( root )
+      selectedItems.push(root)
+  }
+  for(let i=0;i<array.length;i++){
+    if( i==0 )continue;
+    path += `/${array[i]}`
+    if( root && root.children ){
+      getMenu(root.children,path)
     }
   }
-
-  getPath(current)
-  return result
-}
-
-/**
- * In an array of objects, specify an object that traverses the objects whose parent ID matches.
- * @param   {array}     array     The Array need to Converted.
- * @param   {string}    current   Specify the object that needs to be queried.
- * @param   {string}    parentId  The alias of the parent ID of the object in the array.
- * @param   {string}    id        The alias of the unique ID of the object in the array.
- * @return  {array}    Return a key array.
- */
-export function queryAncestors(array, current, parentId='parentid', id = 'id') {
-  const result = [current]
-  const hashMap = new Map()
-  array.forEach(item => hashMap.set(item[id], item))
-
-  const getPath = current => {
-    const currentParentId = hashMap.get(current[id])[parentId]
-    if (currentParentId) {
-      result.push(hashMap.get(currentParentId))
-      getPath(hashMap.get(currentParentId))
-    }
-  }
-
-  getPath(current)
-  return result
+  return selectedItems
 }
 
 /**

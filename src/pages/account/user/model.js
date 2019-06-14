@@ -25,7 +25,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/user', location.pathname)) {
+        if (pathMatchRegexp('/account/user', location.pathname)) {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',

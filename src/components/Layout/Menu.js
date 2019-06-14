@@ -37,52 +37,36 @@ class SiderMenu extends PureComponent {
     store.set('openKeys', newOpenKeys)
   }
 
-  findMenu = (menus,pathname)=>{
-    let array = pathname.substring(1,pathname.length).split('/')
-    let path = `/${array[0]}`
-    let root = menus.find(_=>_.route && pathMatchRegexp(_.route,path) )
-    let selectedItems=[root]
-    const getMenu = (_menus,path) =>{
-      root = _menus.find(_=>_.route && pathMatchRegexp(_.route,path ) )
-      if( root )
-        selectedItems.push(root)
-    }
-    for(let i=0;i<array.length;i++){
-      if( i==0 )continue;
-      path += `/${array[i]}`
-      if( root && root.children ){
-        getMenu(root.children,path)
-      }
-    }
-    return selectedItems
-  }
-
-  generateMenus = (data) => {
+  generateMenus = (data,lang) => {
     return data.map(item => {
-      if (item.children) {
+      if( !item.hideInMenu ){
+
+        if (item.children) {
+          return (
+            <SubMenu
+              key={item.id}
+              title={
+                <Fragment>
+                  {item.icon && <Icon type={item.icon} />}
+                  {lang==='zh'&&<span>{item.zh.name}</span> }
+                  {lang==='en'&&<span>{item.name}</span> }
+                </Fragment>
+              }
+            >
+              {this.generateMenus(item.children,lang)}
+            </SubMenu>
+          )
+        }
         return (
-          <SubMenu
-            key={item.id}
-            title={
-              <Fragment>
-                {item.icon && <Icon type={item.icon} />}
-                <span>{item.name}</span>
-              </Fragment>
-            }
-          >
-            {this.generateMenus(item.children)}
-          </SubMenu>
+          <Menu.Item key={item.id}>
+            <Navlink to={item.route||'#'}>
+              {item.icon && <Icon type={item.icon} />}
+              {lang==='zh'&&<span>{item.zh.name}</span> }
+              {lang==='en'&&<span>{item.name}</span> }
+            </Navlink>
+          </Menu.Item>
         )
       }
-      
-      return (
-        <Menu.Item key={item.id}>
-          <Navlink to={item.route||'#'}>
-            {item.icon && <Icon type={item.icon} />}
-            <span>{item.name}</span>
-          </Navlink>
-        </Menu.Item>
-      )
     })
   }
 
@@ -97,12 +81,12 @@ class SiderMenu extends PureComponent {
     } = this.props
 
     // Find a menu that matches the pathname.
-    const selectedItems = this.findMenu(menus,location.pathname)
+    let selectedItems = queryAncestors(menus,location.pathname)
     // Find the key that should be selected according to the current menu.
+    selectedItems = selectedItems?selectedItems:menus[0]
     const selectedKeys = selectedItems.map(_ => _.id).reverse() 
-    console.log('selectedKeys',selectedKeys)
     const menuProps = collapsed ? {}: { openKeys: this.state.openKeys,}
-
+    const lang = store.get('language')
     return (
       <Menu
         mode="inline"
@@ -119,7 +103,7 @@ class SiderMenu extends PureComponent {
         }
         {...menuProps}
       >
-        {this.generateMenus(menus)}
+        {this.generateMenus(menus,lang)}
       </Menu>
     )
   }

@@ -8,10 +8,12 @@ import { MyLayout } from 'components'
 import { BackTop, Layout, Drawer } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
-import { config, pathMatchRegexp } from 'utils'
+import { config, pathMatchRegexp,queryAncestors } from 'utils'
 import { lang } from 'utils/local'
 import Error from '../pages/404'
 import styles from './PrimaryLayout.less'
+import { ROLE_TYPE } from 'utils/constant'
+import _ from 'lodash'
 
 const { Content } = Layout
 const { Header, Bread, Sider } = MyLayout
@@ -61,32 +63,21 @@ class PrimaryLayout extends PureComponent {
     // Localized route name.
 
     const language = lang()
-    const newRouteList =
-    language !== 'en'
-        ? routeList.map(item => {
-            const { name, ...other } = item
-            return {
-              ...other,
-              name: (item[language] || {}).name || name,
-            }
-          })
-        : routeList
 
+    const selectedItems = queryAncestors(routeList,location.pathname)
     // Find a route that matches the pathname.
-    const currentRoute = newRouteList.find(
-      _ => _.route && pathMatchRegexp(_.route, location.pathname)
-    )
-
+    const currentRoute = selectedItems?selectedItems[selectedItems.length-1]:null
     // Query whether you have permission to enter this page
-    const hasPermission = currentRoute
-      ? permissions.visit.includes(currentRoute.id)
-      : false
-
-    // MenuParentId is equal to -1 is not a available menu.
-    const menus = newRouteList.filter(_ => _.menuParentId !== '-1')
-
+    let hasPermission = false
+    if( permissions.role === ROLE_TYPE.ADMIN||permissions.role === ROLE_TYPE.DEFAULT||permissions.role === ROLE_TYPE.DEVELOPER ){
+      hasPermission = true
+    }else{
+      if( permissions.visit && _.isArray(permissions.visit) ){
+        hasPermission = currentRoute ? permissions.visit.includes(currentRoute.id): false
+      }
+    }
     const headerProps = {
-      menus,
+      menus:routeList,
       collapsed,
       notifications,
       onCollapseChange,
@@ -103,7 +94,7 @@ class PrimaryLayout extends PureComponent {
 
     const siderProps = {
       theme,
-      menus,
+      menus:routeList,
       isMobile,
       collapsed,
       onCollapseChange,
@@ -143,7 +134,7 @@ class PrimaryLayout extends PureComponent {
           >
             <Header {...headerProps} />
             <Content className={styles.content}>
-              <Bread routeList={newRouteList} />
+              <Bread routeList={routeList} />
               {hasPermission ? children : <Error />}
             </Content>
             <BackTop

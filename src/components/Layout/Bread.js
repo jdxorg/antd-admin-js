@@ -6,25 +6,27 @@ import withRouter from 'umi/withRouter'
 import { withI18n } from '@lingui/react'
 import { pathMatchRegexp, queryAncestors } from 'utils'
 import styles from './Bread.less'
+import store from 'store'
 
 @withI18n()
 @withRouter
 class Bread extends PureComponent {
-  generateBreadcrumbs = paths => {
+  generateBreadcrumbs = (paths,lang) => {
     return paths.map((item, key) => {
       const content = (
         <Fragment>
           {item.icon ? (
             <Icon type={item.icon} style={{ marginRight: 4 }} />
           ) : null}
-          {item.name}
+          {lang==='zh'&&<span>{item.zh.name}</span> }
+          {lang==='en'&&<span>{item.name}</span> }
         </Fragment>
       )
 
       return (
         <Breadcrumb.Item key={key}>
           {paths.length - 1 !== key ? (
-            <Link to={item.route || '#'}>{content}</Link>
+            <Link to={item.parentid?(item.route || '#'):'#'}>{content}</Link>
           ) : (
             content
           )}
@@ -34,15 +36,11 @@ class Bread extends PureComponent {
   }
   render() {
     const { routeList, location, i18n } = this.props
-console.log(pathMatchRegexp(location.pathname))
     // Find a route that matches the pathname.
-    const currentRoute = routeList.find(
-      _ => _.route && pathMatchRegexp(_.route, location.pathname)
-    )
-
+    const selectedItems = queryAncestors(routeList,location.pathname)
     // Find the breadcrumb navigation of the current route match and all its ancestors.
-    const paths = currentRoute
-      ? queryAncestors(routeList, currentRoute, 'breadcrumbParentId').reverse()
+    const paths = selectedItems
+      ? selectedItems
       : [
           routeList[0],
           {
@@ -50,10 +48,10 @@ console.log(pathMatchRegexp(location.pathname))
             name: i18n.t`Not Found`,
           },
         ]
-
+    const lang = store.get('language')
     return (
       <Breadcrumb className={styles.bread}>
-        {this.generateBreadcrumbs(paths)}
+        {this.generateBreadcrumbs(paths,lang)}
       </Breadcrumb>
     )
   }
