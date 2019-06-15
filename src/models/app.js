@@ -17,15 +17,7 @@ export default {
     permissions: {
       visit: [],
     },
-    routeList: [
-      {
-        id: '1',
-        icon: 'laptop',
-        name: 'Dashboard',
-        zhName: '仪表盘',
-        router: '/dashboard',
-      },
-    ],
+    routeList: [],
     locationPathname: '',
     locationQuery: {},
     theme: store.get('theme') || 'light',
@@ -68,14 +60,15 @@ export default {
     },
 
     setup({ dispatch }) {
+      console.log('setup')
       dispatch({ type: 'query' })
     },
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      const { success, user } = yield call(queryUserInfo, payload)
+      const { success, user } = yield call(queryUserInfo)
       const { locationPathname } = yield select(_ => _.app)
-      console.log('user', user)
+      const callback = payload?payload.callback:null
       if (success && user) {
         const { list } = yield call(queryRouteList)
         const { permissions } = user
@@ -92,6 +85,7 @@ export default {
             pathname: '/dashboard',
           })
         }
+        callback&&callback()
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
         router.push({
           pathname: '/login',
@@ -110,15 +104,6 @@ export default {
           payload: {
             user: {},
             permissions: { visit: [] },
-            menu: [
-              {
-                id: '1',
-                icon: 'laptop',
-                name: 'Dashboard',
-                zhName: '仪表盘',
-                router: '/dashboard',
-              },
-            ],
           },
         })
         yield put({ type: 'query' })

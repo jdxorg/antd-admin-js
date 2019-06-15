@@ -14,13 +14,14 @@ export default {
       const { locationQuery } = yield select(_ => _.app)
       if (data.success) {
         const { from } = locationQuery
-        yield put({ type: 'app/query' })
-        if (!pathMatchRegexp('/login', from)) {
-          if (from === '/') router.push('/dashboard')
-          else router.push(from)
-        } else {
-          router.push('/dashboard')
-        }
+        yield put({ type: 'app/query' ,payload:{callback:e=>{
+          if (!pathMatchRegexp('/login', from)) {
+            if (from === '/') router.push('/dashboard')
+            else router.push(from)
+          } else {
+            router.push('/dashboard')
+          }
+        }}})
       } else {
         throw data
       }
