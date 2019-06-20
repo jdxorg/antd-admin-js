@@ -1,6 +1,5 @@
 import React from 'react'
-import { request } from 'utils'
-import { apiPrefix } from 'utils/config'
+import { request,config } from 'utils'
 import {
   Row,
   Col,
@@ -19,7 +18,7 @@ import api from '@/services/api'
 import { Page } from 'components'
 
 import styles from './index.less'
-
+const { apiPrefix }  = config
 const { Option } = Select
 const InputGroup = Input.Group
 const methods = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
@@ -238,7 +237,7 @@ class RequestPage extends React.Component {
 
               <Row style={{ marginTop: 8 }}>
                 <Button onClick={this.handleAddField}>
-                  <Trans>Add Param</Trans>
+                  <Trans>Add.Param</Trans>
                 </Button>
               </Row>
             </div>

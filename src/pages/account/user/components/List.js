@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal, Avatar } from 'antd'
-import { DropOption } from 'components'
+import { DropOption,DataTable } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
-import styles from './List.less'
 
 const { confirm } = Modal
 
@@ -12,12 +11,11 @@ const { confirm } = Modal
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
-
     if (e.key === '1') {
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: i18n.t`Are you sure delete this record?`,
+        title: i18n.t`Delete.Title`,
         onOk() {
           onDeleteItem(record.id)
         },
@@ -98,18 +96,10 @@ class List extends PureComponent {
     ]
 
     return (
-      <Table
+      <DataTable
         {...tableProps}
-        pagination={{
-          ...tableProps.pagination,
-          showTotal: total => i18n.t`Total ${total} Items`,
-        }}
-        className={styles.table}
-        bordered
-        scroll={{ x: 1200 }}
+        pagination={tableProps.pagination}
         columns={columns}
-        simple
-        rowKey={record => record.id}
       />
     )
   }

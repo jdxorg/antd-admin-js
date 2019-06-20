@@ -45,7 +45,7 @@ class Bread extends PureComponent {
           routeList[0],
           {
             id: 404,
-            name: i18n.t`Not Found`,
+            name: i18n.t`Not.Found`,
           },
         ]
     const lang = store.get('language')

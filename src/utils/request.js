@@ -2,7 +2,7 @@ import axios from 'axios'
 import { cloneDeep, isEmpty } from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
-import { CANCEL_REQUEST_MESSAGE } from 'utils/constant'
+import { CANCEL_REQUEST_MESSAGE } from '@/sys/enum/constant'
 import qs from 'qs'
 
 const { CancelToken } = axios

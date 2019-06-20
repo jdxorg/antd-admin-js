@@ -83,7 +83,7 @@ class SiderMenu extends PureComponent {
     // Find a menu that matches the pathname.
     let selectedItems = queryAncestors(menus,location.pathname)
     // Find the key that should be selected according to the current menu.
-    selectedItems = selectedItems?selectedItems:menus[0]
+    selectedItems = selectedItems?selectedItems.filter(p=>p):(menus?menus[0]:null)
     const selectedKeys = selectedItems?selectedItems.map(_ => _.id).reverse():[]
     const menuProps = collapsed ? {}: { openKeys: this.state.openKeys,}
     const lang = store.get('language')

@@ -5,7 +5,7 @@ import moment from 'moment'
 import { FilterItem } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
-import city from 'utils/city'
+import city from '@/sys/city'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -96,7 +96,7 @@ class Filter extends Component {
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('name', { initialValue: name })(
             <Search
-              placeholder={i18n.t`Search Name`}
+              placeholder={i18n.t`Search.Name`}
               onSearch={this.handleSubmit}
             />
           )}
@@ -111,7 +111,7 @@ class Filter extends Component {
             <Cascader
               style={{ width: '100%' }}
               options={city}
-              placeholder={i18n.t`Please pick an address`}
+              placeholder={i18n.t`Please.pick.an.address`}
               onChange={this.handleChange.bind(this, 'address')}
               getPopupContainer={() =>
                 document.getElementById('addressCascader')

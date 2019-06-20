@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
 import { Trans, withI18n } from '@lingui/react'
-import city from 'utils/city'
-
+import city from '@/sys/city'
+import { BaseModal } from 'components'
 const FormItem = Form.Item
 
 const formItemLayout = {
@@ -35,11 +35,11 @@ class UserModal extends PureComponent {
   }
 
   render() {
-    const { item = {}, onOk, form, i18n, ...modalProps } = this.props
+    const { item = {}, onOk, form, i18n,modal, ...modalProps } = this.props
     const { getFieldDecorator } = form
-
+    
     return (
-      <Modal {...modalProps} onOk={this.handleOk}>
+      <BaseModal {...modalProps} onOk={this.handleOk} children={
         <Form layout="horizontal">
           <FormItem label={i18n.t`Name`} hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
@@ -99,7 +99,7 @@ class UserModal extends PureComponent {
                 {
                   required: true,
                   pattern: /^1[34578]\d{9}$/,
-                  message: i18n.t`The input is not valid phone!`,
+                  message: i18n.t`The.input.is.not.valid.phone`,
                 },
               ],
             })(<Input />)}
@@ -111,7 +111,7 @@ class UserModal extends PureComponent {
                 {
                   required: true,
                   pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
-                  message: i18n.t`The input is not valid E-mail!`,
+                  message: i18n.t`The.input.is.not.valid.E-mail`,
                 },
               ],
             })(<Input />)}
@@ -128,12 +128,12 @@ class UserModal extends PureComponent {
               <Cascader
                 style={{ width: '100%' }}
                 options={city}
-                placeholder={i18n.t`Pick an address`}
+                placeholder={i18n.t`Pick.an.address`}
               />
             )}
           </FormItem>
         </Form>
-      </Modal>
+      } />
     )
   }
 }

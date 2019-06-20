@@ -58,7 +58,7 @@ class Sider extends PureComponent {
           <div className={styles.switchTheme}>
             <span>
               <Icon type="bulb" />
-              <Trans>Switch Theme</Trans>
+              <Trans>Switch.Theme</Trans>
             </span>
             <Switch
               onChange={onThemeChange.bind(

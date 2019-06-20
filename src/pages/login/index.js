@@ -5,7 +5,7 @@ import { Button, Row, Form, Icon, Input } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { Trans, withI18n } from '@lingui/react'
 import { setLocale } from 'utils/local'
-import config from 'utils/config'
+import { config } from 'utils'
 
 import styles from './index.less'
 const FormItem = Form.Item
@@ -28,7 +28,6 @@ class Login extends PureComponent {
   render() {
     const { loading, form, i18n } = this.props
     const { getFieldDecorator } = form
-
     let footerLinks = [
       {
         key: 'github',
@@ -92,7 +91,7 @@ class Login extends PureComponent {
                 onClick={this.handleOk}
                 loading={loading.effects.login}
               >
-                <Trans>Sign in</Trans>
+                <Trans>Sign.in</Trans>
               </Button>
               <p>
                 <span>

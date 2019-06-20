@@ -2,7 +2,7 @@ import { parse } from 'qs'
 import modelExtend from 'dva-model-extend'
 import api from 'api'
 import { pathMatchRegexp } from 'utils'
-import { model } from 'utils/model'
+import { model } from '@/models/pageModel'
 
 const { queryDashboard, queryWeather } = api
 

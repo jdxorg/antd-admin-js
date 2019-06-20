@@ -42,7 +42,7 @@ class Header extends PureComponent {
           }
         >
           <Menu.Item key="SignOut">
-            <Trans>Sign out</Trans>
+            <Trans>Sign.out</Trans>
           </Menu.Item>
         </SubMenu>
       </Menu>,
@@ -92,7 +92,7 @@ class Header extends PureComponent {
               itemLayout="horizontal"
               dataSource={notifications}
               locale={{
-                emptyText: <Trans>You have viewed all notifications.</Trans>,
+                emptyText: <Trans>You.have.viewed.all.notifications</Trans>,
               }}
               renderItem={item => (
                 <List.Item className={styles.notificationItem}>
@@ -117,7 +117,7 @@ class Header extends PureComponent {
                 onClick={onAllNotificationsRead}
                 className={styles.clearButton}
               >
-                <Trans>Clear notifications</Trans>
+                <Trans>Clear.notifications</Trans>
               </div>
             ) : null}
           </div>

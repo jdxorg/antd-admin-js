@@ -12,7 +12,7 @@ const fs = require('fs')
 const path = require('path')
 const axios = require('axios')
 const jsonFormat = require('json-format')
-const { i18n } = require('../src/utils/config')
+const { i18n } = require('../src/utils')
 const { languages, defaultLanguage } = i18n
 
 const locales = {}

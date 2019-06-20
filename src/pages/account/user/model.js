@@ -2,7 +2,7 @@
 import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
-import { pageModel } from 'utils/model'
+import { pageModel } from '@/models/pageModel'
 
 const {
   queryUserList,
@@ -16,8 +16,6 @@ export default modelExtend(pageModel, {
   namespace: 'user',
 
   state: {
-    currentItem: {},
-    modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
   },
@@ -81,7 +79,7 @@ export default modelExtend(pageModel, {
     *create({ payload }, { call, put }) {
       const data = yield call(createUser, payload)
       if (data.success) {
-        yield put({ type: 'hideModal' })
+        yield put({ type: 'modal/hideModal' })
       } else {
         throw data
       }
@@ -92,20 +90,17 @@ export default modelExtend(pageModel, {
       const newUser = { ...payload, id }
       const data = yield call(updateUser, newUser)
       if (data.success) {
-        yield put({ type: 'hideModal' })
+        yield put({ type: 'modal/hideModal' })
       } else {
         throw data
       }
     },
-  },
-
-  reducers: {
-    showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
-    },
-
-    hideModal(state) {
-      return { ...state, modalVisible: false }
+    *showModal({payload}, { put }) {
+      const { currentItem } = payload
+      yield put({ type:'modal/showModal'})
+      if( currentItem ){
+        yield put({ type:'modal/setItem',payload:{ item:currentItem }})
+      }
     },
   },
 })

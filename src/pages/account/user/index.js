@@ -4,6 +4,7 @@ import { router } from 'utils'
 import { connect } from 'dva'
 import { Row, Col, Button, Popconfirm } from 'antd'
 import { withI18n } from '@lingui/react'
+
 import { Page } from 'components'
 import { stringify } from 'qs'
 import List from './components/List'
@@ -11,20 +12,17 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
-@connect(({ user, loading }) => ({ user, loading }))
+@connect(({ user,modal, loading }) => ({ user,modal, loading }))
 class User extends PureComponent {
   render() {
-    const { location, dispatch, user, loading, i18n } = this.props
+    const { location, dispatch, user,modal, loading, i18n } = this.props
     const { query, pathname } = location
     const {
       list,
       pagination,
-      currentItem,
-      modalVisible,
       modalType,
       selectedRowKeys,
     } = user
-
     const handleRefresh = newQuery => {
       router.push({
         pathname,
@@ -39,14 +37,10 @@ class User extends PureComponent {
     }
 
     const modalProps = {
-      item: modalType === 'create' ? {} : currentItem,
-      visible: modalVisible,
-      maskClosable: false,
+      ...modal,
+      loading:loading.effects['user/showModal'],
       confirmLoading: loading.effects[`user/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create User` : i18n.t`Update User`
-      }`,
-      centered: true,
+      title: modalType === 'create' ? i18n.t`Create.User` : i18n.t`Update.User`,
       onOk(data) {
         dispatch({
           type: `user/${modalType}`,
@@ -57,7 +51,7 @@ class User extends PureComponent {
       },
       onCancel() {
         dispatch({
-          type: 'user/hideModal',
+          type: 'modal/hideModal',
         })
       },
     }
@@ -163,7 +157,7 @@ class User extends PureComponent {
           </Row>
         )}
         <List {...listProps} />
-        {modalVisible && <Modal {...modalProps} />}
+        {modal.visible && <Modal {...modalProps} />}
       </Page>
     )
   }

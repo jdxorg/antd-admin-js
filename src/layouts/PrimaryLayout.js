@@ -12,7 +12,7 @@ import { config, pathMatchRegexp,queryAncestors } from 'utils'
 import { lang } from 'utils/local'
 import Error from '../pages/404'
 import styles from './PrimaryLayout.less'
-import { ROLE_TYPE } from 'utils/constant'
+import { ROLE_TYPE } from '@/sys/enum/constant'
 import _ from 'lodash'
 
 const { Content } = Layout

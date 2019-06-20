@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import api from 'api'
 import { pathMatchRegexp } from 'utils'
-import { pageModel } from 'utils/model'
+import { pageModel } from '@/models/pageModel'
 
 const { queryPostList } = api
 

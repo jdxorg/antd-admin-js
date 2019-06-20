@@ -1,4 +1,4 @@
-import { pathMatchRegexp } from './index'
+import { pathMatchRegexp } from 'utils'
 import pathToRegexp from 'path-to-regexp'
 
 describe('test pathMatchRegexp', () => {

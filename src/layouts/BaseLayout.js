@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { Loader } from 'components'
 import { queryLayout } from 'utils'
 import NProgress from 'nprogress'
-import config from 'utils/config'
+import {config} from 'utils'
 import withRouter from 'umi/withRouter'
 
 import PublicLayout from './PublicLayout'

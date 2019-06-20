@@ -2,7 +2,7 @@ import React from 'react';
 import { Table,Modal,Icon } from 'antd';
 import API from '../../../../services/api';
 import {DataTable} from 'components'
-import { OPERATION } from '../../../../utils/constant';
+import { OPERATION } from '@/sys/enum/constant';
 const confirm = Modal.confirm;
 const { DETAIL, UPDATE,DELETE } = OPERATION
 export default class ListView extends React.Component{

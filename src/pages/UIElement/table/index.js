@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import SearchBar from './components/search';
 import ListView from './components/list';
 import ModalForm from './components/modal';
-import { OPERATION } from '../../../utils/constant';
+import { OPERATION } from '@/sys/enum/constant';
 import { Page } from 'components'
 const {DETAIL, UPDATE,DELETE,ADD } = OPERATION
 export default class TablePage extends React.Component {

@@ -1,6 +1,5 @@
-import { i18n } from './config'
+import { router,i18n } from 'utils'
 import store from 'store'
-import umiRouter from 'umi/router'
 const { defaultLanguage } = i18n
 const languages = i18n.languages.map(item => item.key)
 
@@ -11,7 +10,7 @@ const getLocale=()=>{
 const setLocale=language=> {
   if (getLocale() !== language) {
     store.set('language', language)
-    umiRouter.push({
+    router.push({
       pathname: `${window.location.pathname}`,
       search: window.location.search,
     })

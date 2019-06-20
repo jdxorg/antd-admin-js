@@ -48,7 +48,7 @@ class List extends PureComponent {
         dataIndex: 'views',
       },
       {
-        title: i18n.t`Publish Date`,
+        title: i18n.t`Publish.Date`,
         dataIndex: 'date',
       },
     ]
