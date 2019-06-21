@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 
 const GraphComponent = () => {
   const getOtion = () => {
@@ -1314,7 +1314,7 @@ const GraphComponent = () => {
         { source: 491, target: 7 },
         { source: 491, target: 94 },
       ],
-    }
+    };
     const option = {
       legend: {
         data: ['HTMLElement', 'WebGL', 'SVG', 'CSS', 'Other'],
@@ -1332,8 +1332,8 @@ const GraphComponent = () => {
           },
           draggable: true,
           data: webkitDep.nodes.map((node, idx) => {
-            node.id = idx
-            return node
+            node.id = idx;
+            return node;
           }),
           categories: webkitDep.categories,
           force: {
@@ -1344,9 +1344,9 @@ const GraphComponent = () => {
           edges: webkitDep.links,
         },
       ],
-    }
-    return option
-  }
+    };
+    return option;
+  };
 
   return (
     <div className="examples">
@@ -1359,7 +1359,7 @@ const GraphComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GraphComponent
+export default GraphComponent;

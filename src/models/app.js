@@ -4,7 +4,7 @@ import { router } from 'utils'
 import { stringify } from 'qs'
 import store from 'store'
 import { queryLayout, pathMatchRegexp } from 'utils'
-import { CANCEL_REQUEST_MESSAGE } from '@/sys/enum/constant'
+import { CANCEL_REQUEST_MESSAGE } from '@/utils/sys/enum/constant'
 import api from 'api'
 import config from 'config'
 
@@ -60,7 +60,6 @@ export default {
     },
 
     setup({ dispatch }) {
-      console.log('setup')
       dispatch({ type: 'query' })
     },
   },
@@ -85,6 +84,7 @@ export default {
             pathname: '/dashboard',
           })
         }
+        //登陆成功后回调
         callback&&callback()
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
         router.push({

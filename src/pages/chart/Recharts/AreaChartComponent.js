@@ -1,8 +1,8 @@
-import React from 'react'
-import { Row, Col, Card, Button } from 'antd'
-import * as d3 from 'd3-shape'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
-import Container from './Container'
+import React from 'react';
+import { Row, Col, Card, Button } from 'antd';
+import * as d3 from 'd3-shape';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import Container from './Container';
 
 const data = [
   {
@@ -47,7 +47,7 @@ const data = [
     pv: 4300,
     amt: 2100,
   },
-]
+];
 
 const mixData = [
   {
@@ -92,7 +92,7 @@ const mixData = [
     pv: 4300,
     amt: 2100,
   },
-]
+];
 
 const percentData = [
   {
@@ -137,12 +137,12 @@ const percentData = [
     b: 4300,
     c: 2100,
   },
-]
+];
 
 const colProps = {
   lg: 12,
   md: 24,
-}
+};
 
 const SimpleAreaChart = () => (
   <Container>
@@ -162,7 +162,7 @@ const SimpleAreaChart = () => (
       <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
     </AreaChart>
   </Container>
-)
+);
 
 const StackedAreaChart = () => (
   <Container>
@@ -202,23 +202,23 @@ const StackedAreaChart = () => (
       />
     </AreaChart>
   </Container>
-)
+);
 
 // StackedAreaChart
 
 const toPercent = (decimal, fixed = 0) => {
-  return `${(decimal * 100).toFixed(fixed)}%`
-}
+  return `${(decimal * 100).toFixed(fixed)}%`;
+};
 
 const getPercent = (value, total) => {
-  const ratio = total > 0 ? value / total : 0
+  const ratio = total > 0 ? value / total : 0;
 
-  return toPercent(ratio, 2)
-}
+  return toPercent(ratio, 2);
+};
 
 const renderTooltipContent = o => {
-  const { payload, label } = o
-  const total = payload.reduce((result, entry) => result + entry.value, 0)
+  const { payload, label } = o;
+  const total = payload.reduce((result, entry) => result + entry.value, 0);
 
   return (
     <div className="customized-tooltip-content">
@@ -236,8 +236,8 @@ const renderTooltipContent = o => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 const PercentAreaChart = () => (
   <Container>
@@ -278,10 +278,10 @@ const PercentAreaChart = () => (
       />
     </AreaChart>
   </Container>
-)
+);
 
 // CardinalAreaChart
-const cardinal = d3.curveCardinal.tension(0.2)
+const cardinal = d3.curveCardinal.tension(0.2);
 const CardinalAreaChart = () => (
   <Container>
     <AreaChart
@@ -313,7 +313,7 @@ const CardinalAreaChart = () => (
       />
     </AreaChart>
   </Container>
-)
+);
 
 const AreaChartPage = () => (
   <div className="content-inner">
@@ -355,6 +355,6 @@ const AreaChartPage = () => (
       </Col>
     </Row>
   </div>
-)
+);
 
-export default AreaChartPage
+export default AreaChartPage;

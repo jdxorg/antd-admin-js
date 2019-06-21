@@ -1,9 +1,9 @@
-import modelExtend from 'dva-model-extend'
-import api from 'api'
-import { pathMatchRegexp } from 'utils'
-import { pageModel } from '@/models/pageModel'
+import modelExtend from 'dva-model-extend';
+import api from 'api';
+import { pathMatchRegexp } from 'utils';
+import { pageModel } from '@/models/pageModel';
 
-const { queryPostList } = api
+const { queryPostList } = api;
 
 export default modelExtend(pageModel, {
   namespace: 'post',
@@ -18,15 +18,15 @@ export default modelExtend(pageModel, {
               status: 2,
               ...location.query,
             },
-          })
+          });
         }
-      })
+      });
     },
   },
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryPostList, payload)
+      const data = yield call(queryPostList, payload);
       if (data.success) {
         yield put({
           type: 'querySuccess',
@@ -38,10 +38,10 @@ export default modelExtend(pageModel, {
               total: data.total,
             },
           },
-        })
+        });
       } else {
-        throw data
+        throw data;
       }
     },
   },
-})
+});

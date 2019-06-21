@@ -1,6 +1,9 @@
-/**
- * 基类模态框
- * create by jiangdexiao 2019/6/4
+/*
+ * @Description: 基类模态框
+ * @Author: jiangdexiao
+ * @Date: 2019-06-19 14:24:05
+ * @LastEditTime: 2019-06-21 13:59:27
+ * @LastEditors: Please set LastEditors
  */
 import React from 'react';
 import { Modal,Spin } from 'antd';
@@ -29,10 +32,8 @@ export default class BaseModal extends React.Component{
     centered: true,
     className: 'customer-modal',
     onCancel:e=>{
-      console.log('onCancel',e)
     },
     onOk:e=>{
-      console.log('onOk',e)
     }
   };
 

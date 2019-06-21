@@ -75,7 +75,7 @@ class Layout extends Component {
   }
 
   render() {
-    const { location, children } = this.props
+    const { children } = this.props
     const { catalogs } = this.state
 
     let language = lang()

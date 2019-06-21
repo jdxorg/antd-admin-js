@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Button,Row,Col } from 'antd';
 
 export default class ButtonPage extends React.Component {
@@ -8,7 +8,7 @@ export default class ButtonPage extends React.Component {
       <div>
         <Row>
           <Col span={2}>
-            <Button type="primary" >click me</Button>
+            <Button type="primary">click me</Button>
           </Col>
           <Col span={2}>
             <Button type="dashed" disabled>disabled</Button>

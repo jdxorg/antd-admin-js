@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import { Color } from 'utils'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Color } from 'utils';
 import {
   LineChart,
   Line,
@@ -11,8 +11,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts'
-import styles from './sales.less'
+} from 'recharts';
+import styles from './sales.less';
 
 function Sales({ data }) {
   return (
@@ -23,7 +23,7 @@ function Sales({ data }) {
           <Legend
             verticalAlign="top"
             content={prop => {
-              const { payload } = prop
+              const { payload } = prop;
               return (
                 <ul
                   className={classnames({
@@ -41,7 +41,7 @@ function Sales({ data }) {
                     </li>
                   ))}
                 </ul>
-              )
+              );
             }}
           />
           <XAxis
@@ -69,13 +69,13 @@ function Sales({ data }) {
                   />
                   {`${item.name}:${item.value}`}
                 </li>
-              ))
+              ));
               return (
                 <div className={styles.tooltip}>
                   <p className={styles.tiptitle}>{content.label}</p>
                   <ul>{list}</ul>
                 </div>
-              )
+              );
             }}
           />
           <Line
@@ -105,11 +105,11 @@ function Sales({ data }) {
         </LineChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }
 
 Sales.propTypes = {
   data: PropTypes.array,
-}
+};
 
-export default Sales
+export default Sales;

@@ -39,19 +39,12 @@ class BaseForm extends Component {
   };
 
   /**
-   * 表单提交时触发
-   *
+   * @description: 表单提交时触发
    * @param e
+   * @return: 
    */
   onSubmit = e => {
     if (e) e.preventDefault(); // 阻止默认行为
-    this.submit();
-  };
-
-  /**
-   * 调用表单提交
-   */
-  submit = () => {
     const { form, formValues, onSubmit } = this.props;
     submitForm(form, formValues, onSubmit);
   };

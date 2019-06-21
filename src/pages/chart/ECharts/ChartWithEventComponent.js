@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 
 const ChartWithEventComponent = () => {
   const onChartReady = echart => {

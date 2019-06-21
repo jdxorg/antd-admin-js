@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Table, Tag } from 'antd'
-import { Color } from 'utils'
-import styles from './browser.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table, Tag } from 'antd';
+import { Color } from 'utils';
+import styles from './browser.less';
 
 const status = {
   1: {
@@ -17,7 +17,7 @@ const status = {
   4: {
     color: Color.yellow,
   },
-}
+};
 
 function Browser({ data }) {
   const columns = [
@@ -30,9 +30,12 @@ function Browser({ data }) {
       title: 'percent',
       dataIndex: 'percent',
       className: styles.percent,
-      render: (text, it) => <Tag color={status[it.status].color}>{text}%</Tag>,
+      render: (text, it) => <Tag color={status[it.status].color}>
+{text}
+%
+</Tag>,
     },
-  ]
+  ];
   return (
     <Table
       pagination={false}
@@ -41,11 +44,11 @@ function Browser({ data }) {
       rowKey={(record, key) => key}
       dataSource={data}
     />
-  )
+  );
 }
 
 Browser.propTypes = {
   data: PropTypes.array,
-}
+};
 
-export default Browser
+export default Browser;

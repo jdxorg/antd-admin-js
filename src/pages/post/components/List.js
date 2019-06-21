@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react'
-import { Table, Avatar } from 'antd'
-import { withI18n } from '@lingui/react'
-import { Ellipsis } from 'ant-design-pro'
-import styles from './List.less'
+import React, { PureComponent } from 'react';
+import { Table, Avatar } from 'antd';
+import { withI18n } from '@lingui/react';
+import { Ellipsis } from 'ant-design-pro';
+import styles from './List.less';
 
 @withI18n()
 class List extends PureComponent {
   render() {
-    const { i18n, ...tableProps } = this.props
+    const { i18n, ...tableProps } = this.props;
     const columns = [
       {
         title: i18n.t`Image`,
@@ -51,7 +51,7 @@ class List extends PureComponent {
         title: i18n.t`Publish.Date`,
         dataIndex: 'date',
       },
-    ]
+    ];
 
     return (
       <Table
@@ -67,8 +67,8 @@ class List extends PureComponent {
         simple
         rowKey={record => record.id}
       />
-    )
+    );
   }
 }
 
-export default List
+export default List;

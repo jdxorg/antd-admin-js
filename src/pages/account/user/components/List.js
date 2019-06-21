@@ -1,30 +1,30 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { Table, Modal, Avatar } from 'antd'
-import { DropOption,DataTable } from 'components'
-import { Trans, withI18n } from '@lingui/react'
-import Link from 'umi/link'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Modal, Avatar } from 'antd';
+import { DropOption,DataTable } from 'components';
+import { Trans, withI18n } from '@lingui/react';
+import Link from 'umi/link';
 
-const { confirm } = Modal
+const { confirm } = Modal;
 
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n } = this.props
+    const { onDeleteItem, onEditItem, i18n } = this.props;
     if (e.key === '1') {
-      onEditItem(record)
+      onEditItem(record);
     } else if (e.key === '2') {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
-          onDeleteItem(record.id)
+          onDeleteItem(record.id);
         },
-      })
+      });
     }
   }
 
   render() {
-    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
+    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props;
 
     const columns = [
       {
@@ -90,10 +90,10 @@ class List extends PureComponent {
                 { key: '2', name: i18n.t`Delete` },
               ]}
             />
-          )
+          );
         },
       },
-    ]
+    ];
 
     return (
       <DataTable
@@ -101,7 +101,7 @@ class List extends PureComponent {
         pagination={tableProps.pagination}
         columns={columns}
       />
-    )
+    );
   }
 }
 
@@ -109,6 +109,6 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
-}
+};
 
-export default List
+export default List;

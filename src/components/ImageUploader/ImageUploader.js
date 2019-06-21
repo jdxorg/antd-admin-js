@@ -1,5 +1,5 @@
 import React from 'react'
-import { Upload,Button,Icon,message } from 'antd'
+import { Upload,Button,Icon } from 'antd'
 
 export default class ImageUpload extends React.Component{
 
@@ -29,7 +29,6 @@ export default class ImageUpload extends React.Component{
         onRemove && typeof onRemove ==='function'&&onRemove(info)
       },
       onError:(event)=>{
-        console.log('onError',event)
         onError && typeof onError === 'function' && onError(event)
       }
     }

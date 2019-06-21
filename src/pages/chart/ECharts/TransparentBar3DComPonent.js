@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
-import 'echarts-gl'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import 'echarts-gl';
 
 const hours = [
   '12a',
@@ -27,7 +27,7 @@ const hours = [
   '9p',
   '10p',
   '11p',
-]
+];
 const days = [
   'Saturday',
   'Friday',
@@ -36,7 +36,7 @@ const days = [
   'Tuesday',
   'Monday',
   'Sunday',
-]
+];
 
 const data = [
   [0, 0, 5],
@@ -207,7 +207,7 @@ const data = [
   [6, 21, 2],
   [6, 22, 2],
   [6, 23, 6],
-]
+];
 
 const option = {
   tooltip: {},
@@ -258,7 +258,7 @@ const option = {
       data: data.map(item => {
         return {
           value: [item[1], item[0], item[2]],
-        }
+        };
       }),
       shading: 'color',
 
@@ -287,7 +287,7 @@ const option = {
       },
     },
   ],
-}
+};
 
 const TransparentBar3DComPonent = () => {
   return (
@@ -296,7 +296,7 @@ const TransparentBar3DComPonent = () => {
       style={{ height: '700px', width: '100%' }}
       className="react_for_echarts"
     />
-  )
-}
+  );
+};
 
-export default TransparentBar3DComPonent
+export default TransparentBar3DComPonent;

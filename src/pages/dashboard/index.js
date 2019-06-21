@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Row, Col, Card } from 'antd'
-import { Color } from 'utils'
-import { Page, ScrollBar } from 'components'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Row, Col, Card } from 'antd';
+import { Color } from 'utils';
+import { Page, ScrollBar } from 'components';
 import {
   NumberCard,
   Quote,
@@ -15,15 +15,15 @@ import {
   Browser,
   Cpu,
   User,
-} from './components'
-import styles from './index.less'
+} from './components';
+import styles from './index.less';
 
 const bodyStyle = {
   bodyStyle: {
     height: 432,
     background: '#fff',
   },
-}
+};
 
 @connect(({ app, dashboard, loading }) => ({
   avatar: app.user.avatar,
@@ -33,7 +33,7 @@ const bodyStyle = {
 }))
 class Dashboard extends PureComponent {
   render() {
-    const { avatar, username, dashboard, loading } = this.props
+    const { avatar, username, dashboard, loading } = this.props;
     const {
       weather,
       sales,
@@ -45,13 +45,13 @@ class Dashboard extends PureComponent {
       browser,
       cpu,
       user,
-    } = dashboard
+    } = dashboard;
 
     const numberCards = numbers.map((item, key) => (
       <Col key={key} lg={6} md={12}>
         <NumberCard {...item} />
       </Col>
-    ))
+    ));
 
     return (
       <Page
@@ -149,7 +149,7 @@ class Dashboard extends PureComponent {
           </Col>
         </Row>
       </Page>
-    )
+    );
   }
 }
 
@@ -158,6 +158,6 @@ Dashboard.propTypes = {
   username: PropTypes.string,
   dashboard: PropTypes.object,
   loading: PropTypes.object,
-}
+};
 
-export default Dashboard
+export default Dashboard;

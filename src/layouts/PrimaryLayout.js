@@ -1,4 +1,3 @@
-/* global window */
 /* global document */
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
@@ -8,11 +7,10 @@ import { MyLayout } from 'components'
 import { BackTop, Layout, Drawer } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
-import { config, pathMatchRegexp,queryAncestors } from 'utils'
-import { lang } from 'utils/local'
+import { config,queryAncestors } from 'utils'
 import Error from '../pages/404'
 import styles from './PrimaryLayout.less'
-import { ROLE_TYPE } from '@/sys/enum/constant'
+import { ROLE_TYPE } from '@/utils/sys/enum/constant'
 import _ from 'lodash'
 
 const { Content } = Layout
@@ -61,8 +59,6 @@ class PrimaryLayout extends PureComponent {
     const { onCollapseChange } = this
 
     // Localized route name.
-
-    const language = lang()
 
     const selectedItems = queryAncestors(routeList,location.pathname)
     // Find a route that matches the pathname.

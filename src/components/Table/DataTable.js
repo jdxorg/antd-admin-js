@@ -2,12 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
 import styles from './DataTable.less'
-import { Trans, withI18n } from '@lingui/react'
+import { withI18n } from '@lingui/react'
 @withI18n()
-export default class DataTable extends React.Component {
-  constructor (props) {
-    super(props)
-  }
+class DataTable extends React.Component {
 
   render () {
     const { 
@@ -28,7 +25,14 @@ export default class DataTable extends React.Component {
         className={className||styles.table}
         scroll={scroll||{ x: 1200 }}
         loading={loading}
-        pagination={{...pagination,...{showTotal: total => i18n.t`Total ${total} Items`}}}
+        pagination={{
+          ...pagination,
+          ...{
+            showTotal: total => i18n.t`Total ${total} Items`,
+            showSizeChanger: true,
+            showQuickJumper: true,}
+          }
+        }
         dataSource={dataSource}
         columns = {this.props.columns}
         rowKey={row => row[rowKey]||row.id}
@@ -48,3 +52,5 @@ DataTable.propTypes = {
   dataSource:PropTypes.array.isRequired,
   tableProps:PropTypes.object
 }
+
+export default DataTable

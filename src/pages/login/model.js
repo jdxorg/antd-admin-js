@@ -1,7 +1,7 @@
-import { router, pathMatchRegexp } from 'utils'
-import api from 'api'
+import { router, pathMatchRegexp } from 'utils';
+import api from 'api';
 
-const { loginUser } = api
+const { loginUser } = api;
 
 export default {
   namespace: 'login',
@@ -10,21 +10,21 @@ export default {
 
   effects: {
     *login({ payload }, { put, call, select }) {
-      const data = yield call(loginUser, payload)
-      const { locationQuery } = yield select(_ => _.app)
+      const data = yield call(loginUser, payload);
+      const { locationQuery } = yield select(_ => _.app);
       if (data.success) {
-        const { from } = locationQuery
+        const { from } = locationQuery;
         yield put({ type: 'app/query' ,payload:{callback:e=>{
           if (!pathMatchRegexp('/login', from)) {
-            if (from === '/') router.push('/dashboard')
-            else router.push(from)
+            if (from === '/') router.push('/dashboard');
+            else router.push(from);
           } else {
-            router.push('/dashboard')
+            router.push('/dashboard');
           }
-        }}})
+        }}});
       } else {
-        throw data
+        throw data;
       }
     },
   },
-}
+};

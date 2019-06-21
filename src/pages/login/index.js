@@ -1,33 +1,34 @@
-import React, { PureComponent, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Button, Row, Form, Icon, Input } from 'antd'
-import { GlobalFooter } from 'ant-design-pro'
-import { Trans, withI18n } from '@lingui/react'
-import { setLocale } from 'utils/local'
-import { config } from 'utils'
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Button, Row, Form, Icon, Input } from 'antd';
+import { GlobalFooter } from 'ant-design-pro';
+import { Trans, withI18n } from '@lingui/react';
+import { setLocale } from 'utils/local';
+import { config } from 'utils';
 
 import styles from './index.less'
-const FormItem = Form.Item
+;
+const FormItem = Form.Item;
 
 @withI18n()
 @connect(({ loading }) => ({ loading }))
 @Form.create()
 class Login extends PureComponent {
   handleOk = () => {
-    const { dispatch, form } = this.props
-    const { validateFieldsAndScroll } = form
+    const { dispatch, form } = this.props;
+    const { validateFieldsAndScroll } = form;
     validateFieldsAndScroll((errors, values) => {
       if (errors) {
-        return
+        return;
       }
-      dispatch({ type: 'login/login', payload: values })
-    })
+      dispatch({ type: 'login/login', payload: values });
+    });
   }
 
   render() {
-    const { loading, form, i18n } = this.props
-    const { getFieldDecorator } = form
+    const { loading, form, i18n } = this.props;
+    const { getFieldDecorator } = form;
     let footerLinks = [
       {
         key: 'github',
@@ -35,7 +36,7 @@ class Login extends PureComponent {
         href: 'https://github.com/zuiidea/antd-admin',
         blankTarget: true,
       },
-    ]
+    ];
 
     if (config.i18n) {
       footerLinks = footerLinks.concat(
@@ -45,7 +46,7 @@ class Login extends PureComponent {
             <span onClick={setLocale.bind(null, item.key)}>{item.title}</span>
           ),
         }))
-      )
+      );
     }
 
     return (
@@ -110,7 +111,7 @@ class Login extends PureComponent {
           <GlobalFooter links={footerLinks} copyright={config.copyright} />
         </div>
       </Fragment>
-    )
+    );
   }
 }
 
@@ -118,6 +119,6 @@ Login.propTypes = {
   form: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
-}
+};
 
-export default Login
+export default Login;

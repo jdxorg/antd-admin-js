@@ -31,4 +31,4 @@ module.exports = {
     ],
     defaultLanguage: 'zh',
   },
-}
+};

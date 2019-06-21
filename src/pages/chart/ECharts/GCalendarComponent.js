@@ -1,22 +1,22 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
-import echarts from 'echarts'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 
 const GCalendarComponent = () => {
   const getVirtulData = year => {
-    year = year || '2017'
-    let date = +echarts.number.parseDate(`${year}-01-01`)
-    let end = +echarts.number.parseDate(`${+year + 1}-01-01`)
-    let dayTime = 3600 * 24 * 1000
-    let data = []
+    year = year || '2017';
+    const date = +echarts.number.parseDate(`${year}-01-01`);
+    const end = +echarts.number.parseDate(`${+year + 1}-01-01`);
+    const dayTime = 3600 * 24 * 1000;
+    const data = [];
     for (let time = date; time < end; time += dayTime) {
       data.push([
         echarts.format.formatTime('yyyy-MM-dd', time),
         Math.floor(Math.random() * 1000),
-      ])
+      ]);
     }
-    return data
-  }
+    return data;
+  };
 
   const option = {
     tooltip: {
@@ -57,7 +57,7 @@ const GCalendarComponent = () => {
         data: getVirtulData(2016),
       },
     ],
-  }
+  };
 
   return (
     <div className="examples">
@@ -70,7 +70,7 @@ const GCalendarComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GCalendarComponent
+export default GCalendarComponent;

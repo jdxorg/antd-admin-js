@@ -1,40 +1,26 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { router } from 'utils'
-import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
-import { withI18n } from '@lingui/react'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Row, Col, Button, Popconfirm } from 'antd';
+import { withI18n } from '@lingui/react';
 
-import { Page } from 'components'
-import { stringify } from 'qs'
-import List from './components/List'
-import Filter from './components/Filter'
-import Modal from './components/Modal'
+import { Page } from 'components';
+import List from './components/List';
+import Filter from './components/Filter';
+import Modal from './components/Modal';
 
 @withI18n()
 @connect(({ user,modal, loading }) => ({ user,modal, loading }))
 class User extends PureComponent {
   render() {
-    const { location, dispatch, user,modal, loading, i18n } = this.props
-    const { query, pathname } = location
+    const { dispatch, user,modal, loading, i18n } = this.props;
     const {
       list,
       pagination,
       modalType,
       selectedRowKeys,
-    } = user
-    const handleRefresh = newQuery => {
-      router.push({
-        pathname,
-        search: stringify(
-          {
-            ...query,
-            ...newQuery,
-          },
-          { arrayFormat: 'repeat' }
-        ),
-      })
-    }
+    } = user;
+    const handleRefresh = payload => dispatch({ type:'user/query',payload });
 
     const modalProps = {
       ...modal,
@@ -46,15 +32,15 @@ class User extends PureComponent {
           type: `user/${modalType}`,
           payload: data,
         }).then(() => {
-          handleRefresh()
-        })
+          handleRefresh();
+        });
       },
       onCancel() {
         dispatch({
           type: 'modal/hideModal',
-        })
+        });
       },
-    }
+    };
 
     const listProps = {
       dataSource: list,
@@ -62,9 +48,9 @@ class User extends PureComponent {
       pagination,
       onChange(page) {
         handleRefresh({
-          page: page.current,
+          current: page.current,
           pageSize: page.pageSize,
-        })
+        });
       },
       onDeleteItem(id) {
         dispatch({
@@ -72,12 +58,12 @@ class User extends PureComponent {
           payload: id,
         }).then(() => {
           handleRefresh({
-            page:
+            current:
               list.length === 1 && pagination.current > 1
                 ? pagination.current - 1
                 : pagination.current,
-          })
-        })
+          });
+        });
       },
       onEditItem(item) {
         dispatch({
@@ -86,7 +72,7 @@ class User extends PureComponent {
             modalType: 'update',
             currentItem: item,
           },
-        })
+        });
       },
       rowSelection: {
         selectedRowKeys,
@@ -96,20 +82,17 @@ class User extends PureComponent {
             payload: {
               selectedRowKeys: keys,
             },
-          })
+          });
         },
       },
-    }
+    };
 
     const filterProps = {
-      filter: {
-        ...query,
-      },
-      onFilterChange(value) {
+      onSearch(value) {
         handleRefresh({
           ...value,
-          page: 1,
-        })
+          current: 1,
+        });
       },
       onAdd() {
         dispatch({
@@ -117,9 +100,9 @@ class User extends PureComponent {
           payload: {
             modalType: 'create',
           },
-        })
+        });
       },
-    }
+    };
 
     const handleDeleteItems = () => {
       dispatch({
@@ -129,13 +112,13 @@ class User extends PureComponent {
         },
       }).then(() => {
         handleRefresh({
-          page:
+          current:
             list.length === selectedRowKeys.length && pagination.current > 1
               ? pagination.current - 1
               : pagination.current,
-        })
-      })
-    }
+        });
+      });
+    };
 
     return (
       <Page inner>
@@ -159,15 +142,14 @@ class User extends PureComponent {
         <List {...listProps} />
         {modal.visible && <Modal {...modalProps} />}
       </Page>
-    )
+    );
   }
 }
 
 User.propTypes = {
-  user: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
-}
+  user: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
+};
 
-export default User
+export default User;

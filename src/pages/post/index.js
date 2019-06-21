@@ -1,27 +1,27 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Tabs } from 'antd'
-import { router } from 'utils'
-import { stringify } from 'qs'
-import { withI18n } from '@lingui/react'
-import { Page } from 'components'
-import List from './components/List'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Tabs } from 'antd';
+import { router } from 'utils';
+import { stringify } from 'qs';
+import { withI18n } from '@lingui/react';
+import { Page } from 'components';
+import List from './components/List';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 
 const EnumPostStatus = {
   UNPUBLISH: 1,
   PUBLISHED: 2,
-}
+};
 
 @withI18n()
 @connect(({ post, loading }) => ({ post, loading }))
 class Post extends PureComponent {
   render() {
-    const { post, loading, location, i18n } = this.props
-    const { list, pagination } = post
-    const { query, pathname } = location
+    const { post, loading, location, i18n } = this.props;
+    const { list, pagination } = post;
+    const { query, pathname } = location;
 
     const listProps = {
       pagination,
@@ -35,9 +35,9 @@ class Post extends PureComponent {
             page: page.current,
             pageSize: page.pageSize,
           }),
-        })
+        });
       },
-    }
+    };
 
     const handleTabClick = key => {
       router.push({
@@ -45,8 +45,8 @@ class Post extends PureComponent {
         search: stringify({
           status: key,
         }),
-      })
-    }
+      });
+    };
 
     return (
       <Page inner>
@@ -72,7 +72,7 @@ class Post extends PureComponent {
           </TabPane>
         </Tabs>
       </Page>
-    )
+    );
   }
 }
 
@@ -81,6 +81,6 @@ Post.propTypes = {
   loading: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
-}
+};
 
-export default Post
+export default Post;

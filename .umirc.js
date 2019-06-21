@@ -1,6 +1,6 @@
 // https://umijs.org/config/
 import { resolve } from 'path'
-import { i18n } from './src/sys/config'
+import { i18n } from './src/utils/sys/config'
 export default {
   ignoreMomentLocale: true,
   targets: { ie: 9 },
@@ -79,7 +79,7 @@ export default {
   alias: {
     api: resolve(__dirname, './src/services/'),
     components: resolve(__dirname, './src/components'),
-    config: resolve(__dirname, './src/sys/config'),
+    config: resolve(__dirname, './src/utils/sys/config'),
     models: resolve(__dirname, './src/models'),
     routes: resolve(__dirname, './src/routes'),
     services: resolve(__dirname, './src/services'),

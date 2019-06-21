@@ -15,4 +15,10 @@ export default {
   queryPostList: '/posts',
 
   queryDashboard: '/dashboard',
-}
+
+  queryRoleList:'/account/roles',
+  createRole: '/account/role',
+  updateRole: '/account/role/:id',
+  removeRole: '/account/role/:id',
+  removeRoleList:'/account/role/delete',
+};

@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
-import echarts from 'echarts'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 
 const TreemapComponent = () => {
-  let diskData = [
+  const diskData = [
     {
       value: 180,
       name: 'Accounts',
@@ -184,8 +184,8 @@ const TreemapComponent = () => {
         },
       ],
     },
-  ]
-  let formatUtil = echarts.format
+  ];
+  const formatUtil = echarts.format;
   function getLevelOption() {
     return [
       {
@@ -212,7 +212,7 @@ const TreemapComponent = () => {
           },
         },
       },
-    ]
+    ];
   }
   const option = {
     title: {
@@ -222,11 +222,11 @@ const TreemapComponent = () => {
 
     tooltip: {
       formatter(info) {
-        let { value, treePathInfo } = info
-        let treePath = []
+        const { value, treePathInfo } = info;
+        const treePath = [];
 
         for (let i = 1; i < treePathInfo.length; i++) {
-          treePath.push(treePathInfo[i].name)
+          treePath.push(treePathInfo[i].name);
         }
 
         return [
@@ -234,7 +234,7 @@ const TreemapComponent = () => {
             treePath.join('/')
           )}</div>`,
           `Disk Usage: ${formatUtil.addCommas(value)} KB`,
-        ].join('')
+        ].join('');
       },
     },
 
@@ -256,7 +256,7 @@ const TreemapComponent = () => {
         data: diskData,
       },
     ],
-  }
+  };
 
   return (
     <div className="examples">
@@ -269,7 +269,7 @@ const TreemapComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TreemapComponent
+export default TreemapComponent;

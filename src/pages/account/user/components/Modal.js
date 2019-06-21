@@ -1,46 +1,43 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import { Trans, withI18n } from '@lingui/react'
-import city from '@/sys/city'
-import { BaseModal } from 'components'
-const FormItem = Form.Item
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Form, Input, InputNumber, Radio, Cascader } from 'antd';
+import { Trans, withI18n } from '@lingui/react';
+import city from '@/utils/sys/city';
+import { BaseModal } from 'components';
+import { formItemLayout } from '@/utils/sys/props';
 
-const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-}
+const FormItem = Form.Item;
+
 @withI18n()
 @Form.create()
 class UserModal extends PureComponent {
   handleOk = () => {
-    const { item = {}, onOk, form } = this.props
-    const { validateFields, getFieldsValue } = form
+    const { item = {}, onOk, form } = this.props;
+    const { validateFields, getFieldsValue } = form;
 
     validateFields(errors => {
       if (errors) {
-        return
+        return;
       }
       const data = {
         ...getFieldsValue(),
         key: item.key,
-      }
-      data.address = data.address.join(' ')
-      onOk(data)
-    })
+      };
+      data.address = data.address.join(' ');
+      onOk(data);
+    });
   }
 
   render() {
-    const { item = {}, onOk, form, i18n,modal, ...modalProps } = this.props
-    const { getFieldDecorator } = form
+    const { item = {}, onOk, form, i18n,modal, ...modalProps } = this.props;
+    const { getFieldDecorator } = form;
     
     return (
-      <BaseModal {...modalProps} onOk={this.handleOk} children={
-        <Form layout="horizontal">
+      <BaseModal
+        {...modalProps}
+        onOk={this.handleOk}
+        children={
+  <Form layout="horizontal">
           <FormItem label={i18n.t`Name`} hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
@@ -133,8 +130,9 @@ class UserModal extends PureComponent {
             )}
           </FormItem>
         </Form>
-      } />
-    )
+      }
+      />
+    );
   }
 }
 
@@ -142,6 +140,6 @@ UserModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-}
+};
 
-export default UserModal
+export default UserModal;

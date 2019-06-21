@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 
 const ModuleLoadChartComponent = () => {
   const option = {
@@ -16,22 +16,26 @@ const ModuleLoadChartComponent = () => {
         data: [5, 20, 36, 10, 10, 20],
       },
     ],
-  }
+  };
 
-  let code =
+  const code =
     '<ReactEcharts \n' +
     '    option={this.getOtion()} \n' +
     "    style={{height: '350px', width: '100%'}}  \n" +
     "    modules={['echarts/lib/chart/bar', 'echarts/lib/component/tooltip', 'echarts/lib/component/title']} \n" +
-    "    className='react_for_echarts' />"
+    "    className='react_for_echarts' />";
   return (
     <div className="examples">
       <div className="parent">
         <label>
           {' '}
-          load echarts module as you wish <strong>
+          load echarts module as you wish 
+{' '}
+<strong>
             reduce the file size
-          </strong>:{' '}
+          </strong>
+:
+{' '}
         </label>
         <ReactEcharts
           option={option}
@@ -49,7 +53,7 @@ const ModuleLoadChartComponent = () => {
         </pre>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ModuleLoadChartComponent
+export default ModuleLoadChartComponent;

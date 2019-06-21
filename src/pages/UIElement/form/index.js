@@ -1,13 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { Button, Input, InputNumber, Row, Col, Checkbox, Radio, Form, message, Card } from 'antd';
-import { BaseComponent,BaseForm,DrawerForm,SearchForm,ModalForm } from '../../../components/Form';
-import { renderFormItem, renderSelect, renderRadioGroup } from '../../../components/Form/BaseForm';
+import { BaseComponent,DrawerForm,SearchForm,ModalForm } from '@/components/Form';
+import { renderFormItem, renderSelect, renderRadioGroup } from '@/components/Form/BaseForm';
+
 const { TextArea } = Input;
 
 /**
  * 自定义表单控件
  */
 class SizeInput extends Component {
+  /**
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
   triggerChange = (changedValue, isWidth) => {
     const { onChange, value } = this.props;
     if (onChange) {
@@ -18,8 +24,18 @@ class SizeInput extends Component {
     }
   };
 
+  /**
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
   handleWidthChange = val => this.triggerChange({ width: val }, true);
 
+  /**
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
   handleHeightChange = val => this.triggerChange({ height: val });
 
   render() {

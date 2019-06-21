@@ -1,14 +1,11 @@
 import React from 'react';
-import { Table,Modal,Icon } from 'antd';
-import API from '../../../../services/api';
-import {DataTable} from 'components'
-import { OPERATION } from '@/sys/enum/constant';
-const confirm = Modal.confirm;
-const { DETAIL, UPDATE,DELETE } = OPERATION
+import { Modal,Icon } from 'antd';
+import {DataTable} from 'components';
+import { OPERATION } from '@/utils/sys/enum/constant';
+
+const {confirm} = Modal;
+const {  UPDATE,DELETE } = OPERATION;
 export default class ListView extends React.Component{
-  constructor (props) {
-    super(props)
-  }
 
   render(){
     const columns = [
@@ -16,7 +13,7 @@ export default class ListView extends React.Component{
         title: 'id',
         dataIndex:'id',
         width: 172,
-        fixed:'left'
+        fixed:'left',
       },
       {
         title: 'name ',
@@ -47,14 +44,14 @@ export default class ListView extends React.Component{
                 onClick={handleDeleteItem.bind(null, record,this)}
               />
             </div>
-          )
-        }
+          );
+        },
       }];
       const handleDeleteItem = (record,_this) => {
         confirm({
           title: '您确定要删除此问卷吗?',
           onOk() {
-            _this.props.onEvent(record,DELETE)
+            _this.props.onEvent(record,DELETE);
           },
         });
       };
@@ -63,7 +60,7 @@ export default class ListView extends React.Component{
         onRef={this.props.onRef} 
         columns={columns} 
         fetch={{url:`/api/v1/users`}}
-         />
+      />
     );
   }
 }

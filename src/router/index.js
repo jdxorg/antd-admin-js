@@ -11,4 +11,4 @@ module.exports = [
     component:'../pages/dashboard/index',
     models:() => [import('../pages/dashboard/model')],
   },
-]
+];

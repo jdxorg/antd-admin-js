@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import { Color } from 'utils'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Color } from 'utils';
 import {
   AreaChart,
   Area,
@@ -11,8 +11,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts'
-import styles from './completed.less'
+} from 'recharts';
+import styles from './completed.less';
 
 function Completed({ data }) {
   return (
@@ -23,7 +23,7 @@ function Completed({ data }) {
           <Legend
             verticalAlign="top"
             content={prop => {
-              const { payload } = prop
+              const { payload } = prop;
               return (
                 <ul
                   className={classnames({
@@ -41,7 +41,7 @@ function Completed({ data }) {
                     </li>
                   ))}
                 </ul>
-              )
+              );
             }}
           />
           <XAxis
@@ -69,13 +69,13 @@ function Completed({ data }) {
                   />
                   {`${item.name}:${item.value}`}
                 </li>
-              ))
+              ));
               return (
                 <div className={styles.tooltip}>
                   <p className={styles.tiptitle}>{content.label}</p>
                   <ul>{list}</ul>
                 </div>
-              )
+              );
             }}
           />
           <Area
@@ -99,11 +99,11 @@ function Completed({ data }) {
         </AreaChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }
 
 Completed.propTypes = {
   data: PropTypes.array,
-}
+};
 
-export default Completed
+export default Completed;

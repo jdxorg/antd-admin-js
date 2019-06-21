@@ -15,8 +15,6 @@ export const pageModel = modelExtend(model, {
   state: {
     list: [],
     pagination: {
-      showSizeChanger: true,
-      showQuickJumper: true,
       current: 1,
       total: 0,
       pageSize: 10,

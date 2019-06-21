@@ -1,10 +1,10 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
-import echarts from 'echarts'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 
 const LunarCalendarComponent = () => {
   const getOtion = () => {
-    let dateList = [
+    const dateList = [
       ['2017-1-1', '初四'],
       ['2017-1-2', '初五'],
       ['2017-1-3', '初六'],
@@ -370,19 +370,19 @@ const LunarCalendarComponent = () => {
       ['2017-12-29', '十二'],
       ['2017-12-30', '十三'],
       ['2017-12-31', '十四'],
-    ]
+    ];
 
-    let heatmapData = []
-    let lunarData = []
+    const heatmapData = [];
+    const lunarData = [];
     for (let i = 0; i < dateList.length; i++) {
-      heatmapData.push([dateList[i][0], Math.random() * 300])
-      lunarData.push([dateList[i][0], 1, dateList[i][1], dateList[i][2]])
+      heatmapData.push([dateList[i][0], Math.random() * 300]);
+      lunarData.push([dateList[i][0], 1, dateList[i][1], dateList[i][2]]);
     }
 
     const option = {
       tooltip: {
         formatter(params) {
-          return `降雨量: ${params.value[1].toFixed(2)}`
+          return `降雨量: ${params.value[1].toFixed(2)}`;
         },
       },
 
@@ -433,8 +433,8 @@ const LunarCalendarComponent = () => {
             normal: {
               show: true,
               formatter(params) {
-                let d = echarts.number.parseDate(params.value[0])
-                return `${d.getDate()}\n\n${params.value[2]}\n\n`
+                const d = echarts.number.parseDate(params.value[0]);
+                return `${d.getDate()}\n\n${params.value[2]}\n\n`;
               },
               textStyle: {
                 color: '#000',
@@ -451,7 +451,7 @@ const LunarCalendarComponent = () => {
             normal: {
               show: true,
               formatter(params) {
-                return `\n\n\n${params.value[3] || ''}`
+                return `\n\n\n${params.value[3] || ''}`;
               },
               textStyle: {
                 fontSize: 14,
@@ -469,9 +469,9 @@ const LunarCalendarComponent = () => {
           data: heatmapData,
         },
       ],
-    }
-    return option
-  }
+    };
+    return option;
+  };
 
   return (
     <div className="examples">
@@ -484,7 +484,7 @@ const LunarCalendarComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LunarCalendarComponent
+export default LunarCalendarComponent;

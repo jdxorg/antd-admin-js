@@ -9,13 +9,13 @@
     typeof exports.nodeName !== 'string'
   ) {
     // CommonJS
-    factory(exports, require('echarts'))
+    factory(exports, require('echarts'));
   } else {
     // Browser globals
-    factory({}, root.echarts)
+    factory({}, root.echarts);
   }
 })(this, (exports, echarts) => {
-  let log = function(msg) {
+  const log = function(msg) {
     if (typeof console !== 'undefined') {
       /* eslint-disable */
       console && console.error && console.error(msg)

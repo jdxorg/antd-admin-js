@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Table, Tag } from 'antd'
-import { Color } from 'utils'
-import styles from './comments.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table, Tag } from 'antd';
+import { Color } from 'utils';
+import styles from './comments.less';
 
 const status = {
   1: {
@@ -17,7 +17,7 @@ const status = {
     color: Color.red,
     text: 'REJECTED',
   },
-}
+};
 
 function Comments({ data }) {
   const columns = [
@@ -47,7 +47,7 @@ function Comments({ data }) {
         </div>
       ),
     },
-  ]
+  ];
   return (
     <div className={styles.comments}>
       <Table
@@ -58,11 +58,11 @@ function Comments({ data }) {
         dataSource={data.filter((item, key) => key < 3)}
       />
     </div>
-  )
+  );
 }
 
 Comments.propTypes = {
   data: PropTypes.array,
-}
+};
 
-export default Comments
+export default Comments;

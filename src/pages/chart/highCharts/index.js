@@ -1,10 +1,10 @@
-import React from 'react'
-import { Radio } from 'antd'
-import { Page } from 'components'
-import HighChartsComponent from './HighChartsComponent'
-import styles from './index.less'
+import React from 'react';
+import { Radio } from 'antd';
+import { Page } from 'components';
+import HighChartsComponent from './HighChartsComponent';
+import styles from './index.less';
 
-const RadioGroup = Radio.Group
+const RadioGroup = Radio.Group;
 
 const chartList = [
   {
@@ -19,21 +19,23 @@ const chartList = [
     label: 'HighMore',
     value: 'HighMore',
   },
-]
+];
 
 class Chart extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       type: '',
-    }
-    this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this)
+    };
+    this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this);
   }
+
   handleRadioGroupChange(e) {
     this.setState({
       type: e.target.value,
-    })
+    });
   }
+
   render() {
     return (
       <Page inner>
@@ -46,8 +48,8 @@ class Chart extends React.Component {
           <HighChartsComponent type={this.state.type} />
         </div>
       </Page>
-    )
+    );
   }
 }
 
-export default Chart
+export default Chart;

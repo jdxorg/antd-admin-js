@@ -1,10 +1,10 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 
-require('echarts/map/js/china.js')
+require('echarts/map/js/china.js');
 
 const AirportCoordComponent = () => {
-  let geoCoordMap = {
+  const geoCoordMap = {
     上海: [121.4648, 31.2891],
     东莞: [113.8953, 22.901],
     东营: [118.7073, 37.5513],
@@ -119,9 +119,9 @@ const AirportCoordComponent = () => {
     阳泉: [113.4778, 38.0951],
     青岛: [120.4651, 36.3373],
     韶关: [113.7964, 24.7028],
-  }
+  };
 
-  let BJData = [
+  const BJData = [
     [{ name: '北京' }, { name: '上海', value: 95 }],
     [{ name: '北京' }, { name: '广州', value: 90 }],
     [{ name: '北京' }, { name: '大连', value: 80 }],
@@ -132,9 +132,9 @@ const AirportCoordComponent = () => {
     [{ name: '北京' }, { name: '包头', value: 30 }],
     [{ name: '北京' }, { name: '重庆', value: 20 }],
     [{ name: '北京' }, { name: '常州', value: 10 }],
-  ]
+  ];
 
-  let SHData = [
+  const SHData = [
     [{ name: '上海' }, { name: '包头', value: 95 }],
     [{ name: '上海' }, { name: '昆明', value: 90 }],
     [{ name: '上海' }, { name: '广州', value: 80 }],
@@ -145,9 +145,9 @@ const AirportCoordComponent = () => {
     [{ name: '上海' }, { name: '北京', value: 30 }],
     [{ name: '上海' }, { name: '丹东', value: 20 }],
     [{ name: '上海' }, { name: '大连', value: 10 }],
-  ]
+  ];
 
-  let GZData = [
+  const GZData = [
     [{ name: '广州' }, { name: '福州', value: 95 }],
     [{ name: '广州' }, { name: '太原', value: 90 }],
     [{ name: '广州' }, { name: '长春', value: 80 }],
@@ -158,30 +158,30 @@ const AirportCoordComponent = () => {
     [{ name: '广州' }, { name: '北京', value: 30 }],
     [{ name: '广州' }, { name: '北海', value: 20 }],
     [{ name: '广州' }, { name: '海口', value: 10 }],
-  ]
+  ];
 
-  let planePath =
-    'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z'
+  const planePath =
+    'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
 
-  let convertData = function(data) {
-    let res = []
+  const convertData = function(data) {
+    const res = [];
     for (let i = 0; i < data.length; i += 1) {
-      let dataItem = data[i]
-      let fromCoord = geoCoordMap[dataItem[0].name]
-      let toCoord = geoCoordMap[dataItem[1].name]
+      const dataItem = data[i];
+      const fromCoord = geoCoordMap[dataItem[0].name];
+      const toCoord = geoCoordMap[dataItem[1].name];
       if (fromCoord && toCoord) {
         res.push({
           fromName: dataItem[0].name,
           toName: dataItem[1].name,
           coords: [fromCoord, toCoord],
-        })
+        });
       }
     }
-    return res
-  }
+    return res;
+  };
 
-  let color = ['#a6c84c', '#ffa022', '#46bee9']
-  let series = []
+  const color = ['#a6c84c', '#ffa022', '#46bee9'];
+  const series = []
   ;[['北京', BJData], ['上海', SHData], ['广州', GZData]].forEach((item, i) => {
     series.push(
       {
@@ -243,7 +243,7 @@ const AirportCoordComponent = () => {
           },
         },
         symbolSize(val) {
-          return val[2] / 8
+          return val[2] / 8;
         },
         itemStyle: {
           normal: {
@@ -254,13 +254,13 @@ const AirportCoordComponent = () => {
           return {
             name: dataItem[1].name,
             value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value]),
-          }
+          };
         }),
       }
-    )
-  })
+    );
+  });
 
-  let option = {
+  const option = {
     backgroundColor: '#404a59',
     title: {
       text: '模拟迁徙',
@@ -302,7 +302,7 @@ const AirportCoordComponent = () => {
       },
     },
     series,
-  }
+  };
 
   return (
     <div className="examples">
@@ -315,7 +315,7 @@ const AirportCoordComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AirportCoordComponent
+export default AirportCoordComponent;

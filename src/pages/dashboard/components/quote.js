@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styles from './quote.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './quote.less';
 
 function Quote({ name, content, title, avatar }) {
   return (
@@ -8,7 +8,11 @@ function Quote({ name, content, title, avatar }) {
       <div className={styles.inner}>{content}</div>
       <div className={styles.footer}>
         <div className={styles.description}>
-          <p>-{name}-</p>
+          <p>
+-
+{name}
+-
+</p>
           <p>{title}</p>
         </div>
         <div
@@ -17,7 +21,7 @@ function Quote({ name, content, title, avatar }) {
         />
       </div>
     </div>
-  )
+  );
 }
 
 Quote.propTypes = {
@@ -25,6 +29,6 @@ Quote.propTypes = {
   content: PropTypes.string,
   title: PropTypes.string,
   avatar: PropTypes.string,
-}
+};
 
-export default Quote
+export default Quote;

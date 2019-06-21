@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { Menu, Icon } from 'antd'
 import Navlink from 'umi/navlink'
 import withRouter from 'umi/withRouter'
-import {
-  arrayToTree,
-  queryAncestors,
-  pathMatchRegexp,
-} from 'utils'
+import { queryAncestors } from 'utils'
 import store from 'store'
 
 const { SubMenu } = Menu

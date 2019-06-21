@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Color } from 'utils'
-import CountUp from 'react-countup'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Color } from 'utils';
+import CountUp from 'react-countup';
 import {
   LineChart,
   Line,
@@ -9,8 +9,8 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-} from 'recharts'
-import styles from './cpu.less'
+} from 'recharts';
+import styles from './cpu.less';
 
 const countUpProps = {
   start: 0,
@@ -18,7 +18,7 @@ const countUpProps = {
   useEasing: true,
   useGrouping: true,
   separator: ',',
-}
+};
 
 function Cpu({ usage = 0, space = 0, cpu = 0, data }) {
   return (
@@ -66,7 +66,7 @@ function Cpu({ usage = 0, space = 0, cpu = 0, data }) {
         </LineChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }
 
 Cpu.propTypes = {
@@ -74,6 +74,6 @@ Cpu.propTypes = {
   usage: PropTypes.number,
   space: PropTypes.number,
   cpu: PropTypes.number,
-}
+};
 
-export default Cpu
+export default Cpu;

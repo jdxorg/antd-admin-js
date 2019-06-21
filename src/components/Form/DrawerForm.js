@@ -36,9 +36,9 @@ class DrawerForm extends PopupForm {
   };
 
   /**
-   * 绘制组件按钮
-   *
-   * @returns {*}
+   * @description: 绘制组件按钮
+   * @param {type} 
+   * @return: 
    */
   renderFooter = () => {
     const { okText, cancelText } = this.props;

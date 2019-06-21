@@ -1,5 +1,5 @@
-import React from 'react'
-import { request,config } from 'utils'
+import React from 'react';
+import { request,config } from 'utils';
 import {
   Row,
   Col,
@@ -11,74 +11,75 @@ import {
   Form,
   Icon,
   Checkbox,
-} from 'antd'
-import classnames from 'classnames'
-import { Trans } from '@lingui/react'
-import api from '@/services/api'
-import { Page } from 'components'
+} from 'antd';
+import classnames from 'classnames';
+import { Trans } from '@lingui/react';
+import api from '@/services/api';
+import { Page } from 'components';
 
 import styles from './index.less'
-const { apiPrefix }  = config
-const { Option } = Select
-const InputGroup = Input.Group
-const methods = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
+;
+const { apiPrefix }  = config;
+const { Option } = Select;
+const InputGroup = Input.Group;
+const methods = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'];
 
 const methodTagColor = {
   GET: 'green',
   POST: 'orange',
   DELETE: 'red',
   PUT: 'geekblue',
-}
+};
 
 const requests = Object.values(api).map(item => {
-  let url = apiPrefix + item
-  let method = 'GET'
-  const paramsArray = item.split(' ')
+  let url = apiPrefix + item;
+  let method = 'GET';
+  const paramsArray = item.split(' ');
   if (paramsArray.length === 2) {
-    method = paramsArray[0]
-    url = apiPrefix + paramsArray[1]
+    method = paramsArray[0];
+    url = apiPrefix + paramsArray[1];
   }
   return {
     method,
     url,
-  }
-})
+  };
+});
 
-let uuid = 2
+let uuid = 2;
 @Form.create()
 class RequestPage extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       method: 'GET',
       url: '/api/v1/routes',
       keys: [1],
       result: null,
       visible: true,
-    }
+    };
   }
 
   handleRequest = () => {
-    const { method, url } = this.state
+    const { method, url } = this.state;
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const params = {}
+        const params = {};
         if (values.key) {
           values.key.forEach((item, index) => {
             if (item && values.check[index]) {
-              params[item] = values.value[index]
+              params[item] = values.value[index];
             }
-          })
+          });
         }
 
         request({ method, url, data: params }).then(data => {
           this.setState({
             result: JSON.stringify(data),
-          })
-        })
+          });
+        });
       }
-    })
+    });
   }
 
   handleClickListItem = ({ method, url }) => {
@@ -87,46 +88,46 @@ class RequestPage extends React.Component {
       url,
       keys: [uuid++],
       result: null,
-    })
+    });
   }
 
   handleInputChange = e => {
     this.setState({
       url: e.target.value,
-    })
+    });
   }
 
   handleSelectChange = method => {
     this.setState({
       method,
-    })
+    });
   }
 
   handleAddField = () => {
-    const { keys } = this.state
-    const nextKeys = keys.concat(uuid)
-    uuid++
+    const { keys } = this.state;
+    const nextKeys = keys.concat(uuid);
+    uuid++;
     this.setState({
       keys: nextKeys,
-    })
+    });
   }
 
   handleRemoveField = key => {
-    const { keys } = this.state
+    const { keys } = this.state;
     this.setState({
       keys: keys.filter(item => item !== key),
-    })
+    });
   }
 
   handleVisible = () => {
     this.setState({
       visible: !this.state.visible,
-    })
+    });
   }
 
   render() {
-    const { result, url, method, keys, visible } = this.state
-    const { getFieldDecorator } = this.props.form
+    const { result, url, method, keys, visible } = this.state;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <Page inner>
@@ -246,8 +247,8 @@ class RequestPage extends React.Component {
           </Col>
         </Row>
       </Page>
-    )
+    );
   }
 }
 
-export default RequestPage
+export default RequestPage;

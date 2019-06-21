@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
-import echarts from 'echarts'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 
 const currentData = [
   [
@@ -45,7 +45,7 @@ const currentData = [
     [38225, 81.4, 64715810, 'United Kingdom', 2015],
     [53354, 79.1, 321773631, 'United States', 2015],
   ],
-]
+];
 
 const option = {
   backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [
@@ -86,13 +86,13 @@ const option = {
       data: currentData[0],
       type: 'scatter',
       symbolSize(data) {
-        return Math.sqrt(data[2]) / 5e2
+        return Math.sqrt(data[2]) / 5e2;
       },
       label: {
         emphasis: {
           show: true,
           formatter(param) {
-            return param.data[3]
+            return param.data[3];
           },
           position: 'top',
         },
@@ -120,13 +120,13 @@ const option = {
       data: currentData[1],
       type: 'scatter',
       symbolSize(data) {
-        return Math.sqrt(data[2]) / 5e2
+        return Math.sqrt(data[2]) / 5e2;
       },
       label: {
         emphasis: {
           show: true,
           formatter(param) {
-            return param.data[3]
+            return param.data[3];
           },
           position: 'top',
         },
@@ -150,7 +150,7 @@ const option = {
       },
     },
   ],
-}
+};
 
 const BubbleGradientComponent = () => {
   return (
@@ -159,7 +159,7 @@ const BubbleGradientComponent = () => {
       style={{ height: '700px', width: '100%' }}
       className="react_for_echarts"
     />
-  )
-}
+  );
+};
 
-export default BubbleGradientComponent
+export default BubbleGradientComponent;

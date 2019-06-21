@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactEcharts from 'echarts-for-react'
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 
-require('echarts-liquidfill')
+require('echarts-liquidfill');
 
 const LiquidfillComponent = () => {
   const option = {
@@ -11,7 +11,7 @@ const LiquidfillComponent = () => {
         data: [0.6],
       },
     ],
-  }
+  };
   return (
     <div className="examples">
       <div className="parent">
@@ -26,7 +26,7 @@ const LiquidfillComponent = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LiquidfillComponent
+export default LiquidfillComponent;

@@ -13,21 +13,21 @@ export default class BaseComponent extends PureComponent {
   }
 
   /**
-   * 获取动态路由的参数
-   *
-   * @returns {{}}
+   * @description: 获取动态路由的参数
+   * @param {{}}
+   * @return: 
    */
   getRouteParams = () => {
     const { match: { params } = {} } = this.props || {};
     return params || {};
-  };
+  }; 
 
   /**
-   * 显示弹框
-   *
-   * @param type
-   * @param ifShow
-   * @param formValues
+   * @description: 显示弹框
+   * @param {type} 
+   * @param {ifShow} 
+   * @param {formValues} 
+   * @return: 
    */
   showPopup = (type, ifShow = true, formValues = {}) => {
     this.setState(state => ({

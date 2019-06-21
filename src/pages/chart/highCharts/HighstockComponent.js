@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactHighstock from 'react-highcharts/ReactHighstock.src'
+import React from 'react';
+import ReactHighstock from 'react-highcharts/ReactHighstock.src';
 
 const data = [
   [1220832000000, 22.56],
@@ -72,7 +72,7 @@ const data = [
   [1228953600000, 13.57],
   [1229040000000, 14.04],
   [1229299200000, 13.54],
-]
+];
 
 const config = {
   rangeSelector: {
@@ -90,10 +90,10 @@ const config = {
       },
     },
   ],
-}
+};
 
 const HighstockComponent = () => {
-  return <ReactHighstock config={config} />
-}
+  return <ReactHighstock config={config} />;
+};
 
-export default HighstockComponent
+export default HighstockComponent;
