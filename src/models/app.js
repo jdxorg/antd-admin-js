@@ -4,7 +4,7 @@ import { router } from 'utils'
 import { stringify } from 'qs'
 import store from 'store'
 import { queryLayout, pathMatchRegexp } from 'utils'
-import { CANCEL_REQUEST_MESSAGE } from '@/utils/sys/enum/constant'
+import { CANCEL_REQUEST_MESSAGE } from '../constant/message';
 import api from 'api'
 import config from 'config'
 

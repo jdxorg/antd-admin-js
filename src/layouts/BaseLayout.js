@@ -12,6 +12,7 @@ import PublicLayout from './PublicLayout'
 import PrimaryLayout from './PrimaryLayout'
 import './BaseLayout.less'
 
+
 const LayoutMap = {
   primary: PrimaryLayout,
   public: PublicLayout,

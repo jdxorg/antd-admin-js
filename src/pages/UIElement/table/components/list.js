@@ -1,10 +1,9 @@
 import React from 'react';
 import { Modal,Icon } from 'antd';
 import {DataTable} from 'components';
-import { OPERATION } from '@/utils/sys/enum/constant';
+import { UPDATE,DELETE } from '@/constant/options';
 
 const {confirm} = Modal;
-const {  UPDATE,DELETE } = OPERATION;
 export default class ListView extends React.Component{
 
   render(){
@@ -57,9 +56,7 @@ export default class ListView extends React.Component{
       };
     return (
       <DataTable 
-        onRef={this.props.onRef} 
         columns={columns} 
-        fetch={{url:`/api/v1/users`}}
       />
     );
   }

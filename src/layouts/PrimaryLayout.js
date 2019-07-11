@@ -1,17 +1,17 @@
 /* global document */
-import React, { PureComponent, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import withRouter from 'umi/withRouter'
-import { connect } from 'dva'
-import { MyLayout } from 'components'
-import { BackTop, Layout, Drawer } from 'antd'
-import { GlobalFooter } from 'ant-design-pro'
-import { enquireScreen, unenquireScreen } from 'enquire-js'
-import { config,queryAncestors } from 'utils'
-import Error from '../pages/404'
-import styles from './PrimaryLayout.less'
-import { ROLE_TYPE } from '@/utils/sys/enum/constant'
-import _ from 'lodash'
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import withRouter from 'umi/withRouter';
+import { connect } from 'dva';
+import { MyLayout } from 'components';
+import { BackTop, Layout, Drawer } from 'antd';
+import { GlobalFooter } from 'ant-design-pro';
+import { enquireScreen, unenquireScreen } from 'enquire-js';
+import { config,queryAncestors } from 'utils';
+import {isArray} from 'lodash';
+import Error from '../pages/404';
+import styles from './PrimaryLayout.less';
+import { ADMIN ,DEFAULT,DEVELOPER} from '../constant/role';
 
 const { Content } = Layout
 const { Header, Bread, Sider } = MyLayout
@@ -65,10 +65,10 @@ class PrimaryLayout extends PureComponent {
     const currentRoute = selectedItems?selectedItems[selectedItems.length-1]:null
     // Query whether you have permission to enter this page
     let hasPermission = false
-    if( permissions.role === ROLE_TYPE.ADMIN||permissions.role === ROLE_TYPE.DEFAULT||permissions.role === ROLE_TYPE.DEVELOPER ){
+    if( permissions.role === ADMIN||permissions.role === DEFAULT||permissions.role === DEVELOPER ){
       hasPermission = true
     }else{
-      if( permissions.visit && _.isArray(permissions.visit) ){
+      if( permissions.visit && isArray(permissions.visit) ){
         hasPermission = currentRoute ? permissions.visit.includes(currentRoute.id): false
       }
     }

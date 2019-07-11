@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table } from 'antd'
 import styles from './DataTable.less'
 import { withI18n } from '@lingui/react'
+
 @withI18n()
 class DataTable extends React.Component {
 

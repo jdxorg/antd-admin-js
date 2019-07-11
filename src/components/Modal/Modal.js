@@ -2,12 +2,14 @@
  * @Description: 基类模态框
  * @Author: jiangdexiao
  * @Date: 2019-06-19 14:24:05
- * @LastEditTime: 2019-06-21 13:59:27
+ * @LastEditTime: 2019-07-11 11:07:32
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
 import { Modal,Spin } from 'antd';
 import PropTypes from 'prop-types';
+import {debounce} from 'lodash';
+
 export default class BaseModal extends React.Component{
   static propTypes = {
     hideRequiredMark: PropTypes.bool,
@@ -44,6 +46,12 @@ export default class BaseModal extends React.Component{
    */
   getTitle = () => '';
 
+  handleOnOk = debounce(e=>{
+    const { onOk } = this.props;
+    e.persist();
+    onOk();
+  },500,{leading:true});
+  
   render() {
     const { children, title, width, visible, okText, cancelText,loading,footer, ...restProps } = this.props;
     return (

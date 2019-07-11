@@ -147,9 +147,9 @@ class User extends PureComponent {
 }
 
 User.propTypes = {
-  user: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  loading: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  dispatch: PropTypes.func,
+  loading: PropTypes.object,
 };
 
 export default User;

@@ -15,6 +15,7 @@ const languages = {
 
 @withRouter
 class Layout extends Component {
+
   state = {
     catalogs: {},
   }
@@ -29,6 +30,13 @@ class Layout extends Component {
     this.language = language
     this.loadCatalog(language)
   }
+
+  
+  ///组件初始化时不调用，组件接受新的props时调用。
+  componentWillReceiveProps(nextProps){
+    // console.log('componentWillReceiveProps',nextProps)
+  }
+  
   ///组件接受新的state或者props时调用
   shouldComponentUpdate(nextProps, nextState) {
     const language = lang()
@@ -44,22 +52,22 @@ class Layout extends Component {
 
     return true
   }
-  ///组件初始化时不调用，组件接受新的props时调用。
-  componentWillReceiveProps(nextProps){
-    // console.log('componentWillReceiveProps',nextProps)
-  }
+
   ///组件初始化时不调用，只有在组件将要更新时才调用，此时可以修改state
   componentWillUpdate(nextProps,nextState){
     // console.log('componentWillUpdate',nextProps)
   }
+
   ///组件初始化时不调用，组件更新完成后调用，此时可以获取dom节点。
   componentDidUpdate(){
     // console.log('componentDidUpdate')
   }
+
   ///组件将要卸载时调用，一些事件监听和定时器需要在此时清除。
   componentWillUnmount(){
     // console.log('componentWillUnmount')
   }
+
   loadCatalog = async language => {
     const catalog = await import(
       /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */

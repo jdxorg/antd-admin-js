@@ -106,9 +106,8 @@ class List extends PureComponent {
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  location: PropTypes.object,
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
 };
 
 export default List;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card } from 'antd';
-import { Page } from 'components'
+import { Page } from 'components';
 import SearchBar from './components/search';
 import ListView from './components/list';
 import ModalForm from './components/modal';
-import { OPERATION } from '@/utils/sys/enum/constant';
-const {UPDATE,DELETE,ADD } = OPERATION;
+import { UPDATE,DELETE,ADD } from '@/constant/options';
+
 export default class TablePage extends React.Component {
   _props(){
     const searchProps = {
@@ -33,6 +33,7 @@ export default class TablePage extends React.Component {
               onSubmit: data => data, 
             });
           break;
+          default:break;
         }
       },
       onRef:(ref) => {
