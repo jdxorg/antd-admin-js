@@ -104,12 +104,12 @@ class ChartAPIComponent extends React.Component {
           <label>
             {' '}
             use echarts API With 
-{' '}
-<strong> getEchartsInstance() </strong>
+            {' '}
+            <strong> getEchartsInstance() </strong>
 : (the
             API will return the echarts instance, then you can use any API of
             echarts.)
-</label>
+          </label>
           <ReactEcharts
             ref={e => {
               this.echarts_react = e;

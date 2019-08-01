@@ -21,7 +21,7 @@ function Weather({ city, icon, dateTime, temperature, name, loading }) {
           <p className={styles.description}>
             {city}
 ,
-{dateTime}
+            {dateTime}
           </p>
         </div>
       </div>

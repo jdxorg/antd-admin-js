@@ -105,7 +105,7 @@ class Chart extends React.Component {
         </div>
         <div style={{ pading: 24, marginTop: 24 }}>
           All demos from
-{' '}
+          {' '}
           <a href="https://github.com/hustcc/echarts-for-react">
             https://github.com/hustcc/echarts-for-react
           </a>

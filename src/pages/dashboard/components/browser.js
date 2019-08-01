@@ -30,10 +30,12 @@ function Browser({ data }) {
       title: 'percent',
       dataIndex: 'percent',
       className: styles.percent,
-      render: (text, it) => <Tag color={status[it.status].color}>
-{text}
+      render: (text, it) => (
+        <Tag color={status[it.status].color}>
+          {text}
 %
-</Tag>,
+        </Tag>
+),
     },
   ];
   return (

@@ -8,6 +8,7 @@ const {confirm} = Modal;
 export default class ListView extends React.Component{
 
   render(){
+    const {onEvent } = this.props;
     const columns = [
       {
         title: 'id',
@@ -35,7 +36,7 @@ export default class ListView extends React.Component{
                 className="icon"
                 type="edit"
                 title="edit"
-                onClick={this.props.onEvent.bind(null, record,UPDATE)}
+                onClick={onEvent.bind(null, record,UPDATE)}
               />
               <Icon
                 className="icon"
@@ -47,11 +48,11 @@ export default class ListView extends React.Component{
           );
         },
       }];
-      const handleDeleteItem = (record,_this) => {
+      const handleDeleteItem = (record) => {
         confirm({
-          title: '您确定要删除此问卷吗?',
+          title: '您确定要删除吗?',
           onOk() {
-            _this.props.onEvent(record,DELETE);
+            onEvent(record,DELETE);
           },
         });
       };

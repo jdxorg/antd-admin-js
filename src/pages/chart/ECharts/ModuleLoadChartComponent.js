@@ -30,12 +30,12 @@ const ModuleLoadChartComponent = () => {
         <label>
           {' '}
           load echarts module as you wish 
-{' '}
-<strong>
+          {' '}
+          <strong>
             reduce the file size
           </strong>
 :
-{' '}
+          {' '}
         </label>
         <ReactEcharts
           option={option}

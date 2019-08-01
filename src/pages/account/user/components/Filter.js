@@ -29,7 +29,7 @@ class Filter extends Component {
           <Select 
             style={{width:150}}  
             placeholder={i18n.t`Pick.an.state`}
-            allowClear={true}
+            allowClear
           >
             <Select.Option value={1}>启用</Select.Option>
             <Select.Option value={0}>禁用</Select.Option>

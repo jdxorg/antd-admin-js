@@ -71,10 +71,10 @@ const SimpleChartComponent = () => {
         <label>
           {' '}
           render a Simple echart With 
-{' '}
-<strong>option and height</strong>
+          {' '}
+          <strong>option and height</strong>
 :
-{' '}
+          {' '}
         </label>
         <ReactEcharts
           option={option}

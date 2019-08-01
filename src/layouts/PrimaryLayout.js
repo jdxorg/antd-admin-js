@@ -29,13 +29,13 @@ class PrimaryLayout extends PureComponent {
       if (isMobile !== mobile) {
         this.setState({
           isMobile: mobile,
-        })
+        });
       }
-    })
+    });
   }
 
   componentWillUnmount() {
-    unenquireScreen(this.enquireHandler)
+    unenquireScreen(this.enquireHandler);
   }
 
   onCollapseChange = collapsed => {
@@ -145,7 +145,7 @@ class PrimaryLayout extends PureComponent {
           </div>
         </Layout>
       </Fragment>
-    )
+    );
   }
 }
 
@@ -155,6 +155,11 @@ PrimaryLayout.propTypes = {
   dispatch: PropTypes.func,
   app: PropTypes.object,
   loading: PropTypes.object,
-}
-
-export default PrimaryLayout
+};
+PrimaryLayout.defaultProps = {
+  location:{},
+  dispatch:()=>{},
+  app:{},
+  loading:{},
+};
+export default PrimaryLayout;

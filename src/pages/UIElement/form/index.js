@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button, Input, InputNumber, Row, Col, Checkbox, Radio, Form, message, Card } from 'antd';
-import { BaseComponent,DrawerForm,SearchForm,ModalForm } from '@/components/Form';
-import { renderFormItem, renderSelect, renderRadioGroup } from '@/components/Form/BaseForm';
+import { BaseComponent,DrawerForm,SearchForm,ModalForm } from '@/components/antd-design/Form';
+import { renderFormItem, renderSelect, renderRadioGroup } from '@/components/antd-design/Form/BaseForm';
 
 const { TextArea } = Input;
 

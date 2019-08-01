@@ -6,6 +6,7 @@ import city from '@/utils/sys/city';
 import { BaseModal ,ImageUploader} from 'components';
 import { formItemLayout } from '@/utils/sys/props';
 import {uplodaFile} from '@/services/api';
+import { ACCESS_TOKEN } from '@/constant';
 
 const FormItem = Form.Item;
 
@@ -170,7 +171,12 @@ class UserModal extends PureComponent {
                 getFieldDecorator('avatar',{
                   initialValue:item.avatar||'',
                 })(
-                  <ImageUploader action={uplodaFile} />
+                  <ImageUploader 
+                    action={uplodaFile}  
+                    headers={
+                      {Authorization: `bearer ${localStorage.getItem(ACCESS_TOKEN)}`}
+                    }
+                  />
                 )
               }
             </FormItem>

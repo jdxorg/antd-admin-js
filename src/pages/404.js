@@ -1,7 +1,7 @@
-import React from 'react'
-import { Icon } from 'antd'
-import { Page } from 'components'
-import styles from './404.less'
+import React from 'react';
+import { Icon } from 'antd';
+import { Page } from 'components';
+import styles from './404.less';
 
 const Error = () => (
   <Page inner>
@@ -10,6 +10,6 @@ const Error = () => (
       <h1>404 Not Found</h1>
     </div>
   </Page>
-)
+);
 
-export default Error
+export default Error;

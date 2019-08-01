@@ -1,6 +1,8 @@
 // https://umijs.org/config/
 import { resolve } from 'path'
 import { i18n } from './src/utils/sys/config'
+const path = require('path');
+
 export default {
   ignoreMomentLocale: true,
   targets: { ie: 9 },
@@ -19,7 +21,7 @@ export default {
         antd: true,
         dynamicImport: {
           webpackChunkName: true,
-          loadingComponent: './components/Loader/Loader',
+          loadingComponent: './components/antd-design/Loader/Loader',
         },
         routes: {
           exclude: [
@@ -82,6 +84,7 @@ export default {
     },
   },
   alias: {
+    '@': path.resolve(__dirname, 'src/'),
     api: resolve(__dirname, './src/services/'),
     components: resolve(__dirname, './src/components'),
     config: resolve(__dirname, './src/utils/sys/config'),

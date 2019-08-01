@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Row, Col, Button, Popconfirm } from 'antd';
+// import { Row, Col, Button, Popconfirm } from 'antd';
 import { withI18n } from '@lingui/react';
 
 import { Page } from 'components';
@@ -142,21 +142,21 @@ class User extends PureComponent {
       },
     };
 
-    const handleDeleteItems = () => {
-      dispatch({
-        type: 'user/multiDelete',
-        payload: {
-          ids: selectedRowKeys,
-        },
-      }).then(() => {
-        handleRefresh({
-          current:
-            list.length === selectedRowKeys.length && pagination.current > 1
-              ? pagination.current - 1
-              : pagination.current,
-        });
-      });
-    };
+    // const handleDeleteItems = () => {
+    //   dispatch({
+    //     type: 'user/multiDelete',
+    //     payload: {
+    //       ids: selectedRowKeys,
+    //     },
+    //   }).then(() => {
+    //     handleRefresh({
+    //       current:
+    //         list.length === selectedRowKeys.length && pagination.current > 1
+    //           ? pagination.current - 1
+    //           : pagination.current,
+    //     });
+    //   });
+    // };
 
     return (
       <Page inner>
@@ -190,5 +190,9 @@ User.propTypes = {
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 };
-
+User.defaultProps = {
+  user:{},
+  dispatch:()=>{},
+  loading:{},
+};
 export default User;

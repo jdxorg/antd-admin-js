@@ -84,11 +84,11 @@ class ChartShowLoadingComponent extends React.Component {
           <label>
             {' '}
             Chart loading With 
-{' '}
-<strong> showLoading </strong>
+            {' '}
+            <strong> showLoading </strong>
 : (when chart
             ready, hide the loading mask.)
-</label>
+          </label>
           <ReactEcharts
             option={getOtion()}
             onChartReady={this.onChartReady}

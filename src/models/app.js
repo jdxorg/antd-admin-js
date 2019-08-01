@@ -1,14 +1,14 @@
 /* global window */
 
-import { stringify } from 'qs'
-import store from 'store'
-import { router,queryLayout, pathMatchRegexp } from 'utils'
-import api from 'api'
-import {layouts} from 'config'
+import { stringify } from 'qs';
+import store from 'store';
+import { router,queryLayout, pathMatchRegexp } from 'utils';
+import api from 'api';
+import {layouts} from 'config';
 import { CANCEL_REQUEST_MESSAGE } from '../constant/message';
 import { ACCESS_TOKEN } from '../constant';
 
-const { logoutUser, queryUserInfo } = api
+const { logoutUser, queryUserInfo } = api;
 
 export default {
   namespace: 'app',
@@ -39,25 +39,25 @@ export default {
             locationPathname: location.pathname,
             locationQuery: location.query,
           },
-        })
-      })
+        });
+      });
     },
 
     setupRequestCancel({ history }) {
       history.listen(() => {
-        const { cancelRequest = new Map() } = window
+        const { cancelRequest = new Map() } = window;
 
         cancelRequest.forEach((value, key) => {
           if (value.pathname !== window.location.pathname) {
-            value.cancel(CANCEL_REQUEST_MESSAGE)
-            cancelRequest.delete(key)
+            value.cancel(CANCEL_REQUEST_MESSAGE);
+            cancelRequest.delete(key);
           }
-        })
-      })
+        });
+      });
     },
 
     setup({ dispatch }) {
-      dispatch({ type: 'query' })
+      dispatch({ type: 'query' });
     },
   },
   effects: {
@@ -102,19 +102,20 @@ export default {
       }
     },
 
-    *signOut({ payload }, { call, put }) {
-      const data = yield call(logoutUser)
+    *signOut({payload}, { call, put }) {
+      const data = yield call(logoutUser);
       if (data.success) {
         localStorage.removeItem(ACCESS_TOKEN);
         yield put({
           type: 'updateState',
           payload: {
             user: {},
+            ...payload,
           },
         });
-        yield put({ type: 'query' })
+        yield put({ type: 'query' });
       } else {
-        throw data
+        throw data;
       }
     },
   },
@@ -123,21 +124,21 @@ export default {
       return {
         ...state,
         ...payload,
-      }
+      };
     },
 
     handleThemeChange(state, { payload }) {
-      store.set('theme', payload)
-      state.theme = payload
+      store.set('theme', payload);
+      state.theme = payload;
     },
 
     handleCollapseChange(state, { payload }) {
-      store.set('collapsed', payload)
-      state.collapsed = payload
+      store.set('collapsed', payload);
+      state.collapsed = payload;
     },
 
     allNotificationsRead(state) {
-      state.notifications = []
+      state.notifications = [];
     },
   },
-}
+};

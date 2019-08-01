@@ -1,4 +1,4 @@
-import modelExtend from 'dva-model-extend'
+import modelExtend from 'dva-model-extend';
 
 export const model = {
   reducers: {

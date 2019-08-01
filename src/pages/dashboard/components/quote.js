@@ -10,9 +10,9 @@ function Quote({ name, content, title, avatar }) {
         <div className={styles.description}>
           <p>
 -
-{name}
+            {name}
 -
-</p>
+          </p>
           <p>{title}</p>
         </div>
         <div

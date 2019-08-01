@@ -46,8 +46,8 @@ function RecentSales({ data }) {
       render: (text, it) => (
         <span style={{ color: status[it.status].color }}>
 $
-{text}
-</span>
+          {text}
+        </span>
       ),
     },
   ];

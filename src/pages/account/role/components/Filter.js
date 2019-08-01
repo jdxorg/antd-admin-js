@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { SearchForm } from 'components'
-import { withI18n } from '@lingui/react'
-import { Form,Input } from 'antd'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { SearchForm } from 'components';
+import { withI18n } from '@lingui/react';
+import { Form,Input } from 'antd';
 
 const { Search } = Input;
 

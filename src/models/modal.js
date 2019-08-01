@@ -6,14 +6,14 @@ export default {
   },
   reducers: {
     showModal (state, action) {
-      return { ...state, visible: true, ...action.payload }
+      return { ...state, visible: true, ...action.payload };
     },
     hideModal (state) {
-      return { ...state, visible: false, item: {} }
+      return { ...state, visible: false, item: {} };
     },
     setItem (state, action) {
-      const { item } = action.payload
-      return { ...state, item }
+      const { item } = action.payload;
+      return { ...state, item };
     },
   },
-}
+};

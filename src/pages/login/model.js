@@ -1,6 +1,6 @@
 import api from 'api';
-import { ACCESS_TOKEN } from '../../constant';
 import { message } from 'antd';
+import { ACCESS_TOKEN } from '../../constant';
 
 const { loginUser } = api;
 
@@ -30,7 +30,7 @@ export default {
           message.error(msg);
         }
       } catch (error) {
-        console.log('error',error)
+        console.log('error',error);
       }
     },
   },

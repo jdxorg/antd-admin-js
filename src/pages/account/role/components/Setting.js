@@ -5,7 +5,7 @@ import { withI18n } from '@lingui/react';
 import { BaseModal } from 'components';
 
 @withI18n()
-class RoleModal extends PureComponent {
+class RoleSettingModal extends PureComponent {
 
   state = {
     targetKeys: null,
@@ -26,7 +26,7 @@ class RoleModal extends PureComponent {
     onOk({userIds:targetKeys,id:item.id});
   }
 
-  handleChange = (nextTargetKeys, direction, moveKeys) => {
+  handleChange = (nextTargetKeys) => {
     this.setState({ targetKeys: nextTargetKeys });
 
     // console.log('targetKeys: ', nextTargetKeys);
@@ -67,9 +67,9 @@ class RoleModal extends PureComponent {
   }
 }
 
-RoleModal.propTypes = {
+RoleSettingModal.propTypes = {
   item: PropTypes.object.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default RoleModal;
+export default RoleSettingModal;

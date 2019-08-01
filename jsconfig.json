@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "experimentalDecorators": true
-  }
+  },
+  ///exclude和include中的文件路径是相对于jsconfig.json的位置
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

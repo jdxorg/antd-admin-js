@@ -1,3 +1,3 @@
 export default ({ children }) => {
-  return children
-}
+  return children;
+};

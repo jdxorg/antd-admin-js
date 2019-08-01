@@ -106,6 +106,7 @@
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
     "lint:js": "eslint --ext .js src",
+    "lint:fix": "eslint --ext .js src --fix",
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",
     "dev": "cross-env BROWSER=none PROXY=false ESLINT=none PORT=7000 umi dev",
     "dev:proxy": "cross-env BROWSER=none PROXY=true NO_PROXY=true ESLINT=none PORT=7000 umi dev",

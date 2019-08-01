@@ -1,4 +1,5 @@
-import {ModalForm} from '@/components/Form';
+import {ModalForm} from '@/components/antd-design/Form';
+
 export default class Modal extends ModalForm {
   getTitle = () => '模态框式表单2';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input,Row,Col,Form,Button } from 'antd';
-import { SearchForm } from '@/components/Form';
+import { SearchForm } from '@/components';
 import { Trans, withI18n } from '@lingui/react';
 
 const ColProps = {

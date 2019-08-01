@@ -107,15 +107,15 @@ const ThemeChartComponent = () => {
         <label>
           {' '}
           render a echart With 
-{' '}
-<strong>theme</strong>
+          {' '}
+          <strong>theme</strong>
 , should
-{' '}
+          {' '}
           <strong>echarts.registerTheme(themeName, themeObj)</strong>
-{' '}
+          {' '}
 before
           use.
-</label>
+        </label>
         <ReactEcharts option={option} theme="my_theme" />
         <label>
           {' '}

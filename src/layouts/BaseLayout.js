@@ -1,22 +1,22 @@
-import React, { PureComponent, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Helmet } from 'react-helmet'
-import { Loader } from 'components'
-import { queryLayout } from 'utils'
-import NProgress from 'nprogress'
-import {config} from 'utils'
-import withRouter from 'umi/withRouter'
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Helmet } from 'react-helmet';
+import { Loader } from 'components';
+import { queryLayout ,config} from 'utils';
+import NProgress from 'nprogress';
 
-import PublicLayout from './PublicLayout'
-import PrimaryLayout from './PrimaryLayout'
-import './BaseLayout.less'
+import withRouter from 'umi/withRouter';
+
+import PublicLayout from './PublicLayout';
+import PrimaryLayout from './PrimaryLayout';
+import './BaseLayout.less';
 
 
 const LayoutMap = {
   primary: PrimaryLayout,
   public: PublicLayout,
-}
+};
 
 @withRouter
 @connect(({ loading }) => ({ loading }))
@@ -24,17 +24,17 @@ class BaseLayout extends PureComponent {
   previousPath = ''
 
   render() {
-    const { loading, children, location } = this.props
-    const Container = LayoutMap[queryLayout(config.layouts, location.pathname)]
+    const { loading, children, location } = this.props;
+    const Container = LayoutMap[queryLayout(config.layouts, location.pathname)];
 
-    const currentPath = location.pathname + location.search
+    const currentPath = location.pathname + location.search;
     if (currentPath !== this.previousPath) {
-      NProgress.start()
+      NProgress.start();
     }
 
     if (!loading.global) {
-      NProgress.done()
-      this.previousPath = currentPath
+      NProgress.done();
+      this.previousPath = currentPath;
     }
 
     return (
@@ -45,12 +45,14 @@ class BaseLayout extends PureComponent {
         <Loader fullScreen spinning={loading.effects['app/query']} />
         <Container>{children}</Container>
       </Fragment>
-    )
+    );
   }
 }
 
 BaseLayout.propTypes = {
   loading: PropTypes.object,
-}
-
-export default BaseLayout
+};
+BaseLayout.defaultProps = {
+  loading:{},
+};
+export default BaseLayout;

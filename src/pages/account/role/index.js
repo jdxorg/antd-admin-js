@@ -179,5 +179,9 @@ Role.propTypes = {
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 };
-
+Role.defaultProps = {
+  role:{},
+  dispatch:()=>{},
+  loading:{},
+};
 export default Role;

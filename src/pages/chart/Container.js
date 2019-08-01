@@ -23,5 +23,9 @@ Container.propTypes = {
   minHeight: PropTypes.number,
   maxHeight: PropTypes.number,
 };
-
+Container.defaultProps = {
+  ratio:0,
+  minHeight:0,
+  maxHeight:0,
+};
 export default Container;

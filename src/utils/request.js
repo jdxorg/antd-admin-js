@@ -28,7 +28,8 @@ axios.interceptors.response.use(response=> {
 });
 
 export default function request(options) {
-  let { data, url, method = 'get'} = options;
+  const { data, method = 'get'} = options;
+  let { url } = options;
   const cloneData = cloneDeep(data);
   
   try {

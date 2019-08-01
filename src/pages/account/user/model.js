@@ -36,7 +36,7 @@ export default modelExtend(pageModel, {
   effects: {
     *query({ payload = {} }, { call, put,select }) {
       const {pagination,roles} = yield select(state=> {
-        return {pagination:state.user.pagination,roles:state.app.user.roles}
+        return {pagination:state.user.pagination,roles:state.app.user.roles};
       } );
 
       yield put({type:'updateState',payload:{roles} });

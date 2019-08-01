@@ -79,9 +79,11 @@ class RoleModal extends PureComponent {
 }
 
 RoleModal.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.string.isRequired,
   item: PropTypes.object,
-  onOk: PropTypes.func,
+  onOk: PropTypes.func.isRequired,
 };
-
+RoleModal.defaultProps = {
+  item:{},
+};
 export default RoleModal;
