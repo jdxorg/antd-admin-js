@@ -8,29 +8,33 @@ import { Page } from 'components';
 import List from './components/List';
 import Filter from './components/Filter';
 import Modal from './components/Modal';
+import Setting from './components/Setting';
 
 @withI18n()
-@connect(({ user,modal, loading }) => ({ user,modal, loading }))
+@connect(({ user,modal, loading }) => ({ user,modal,loading }))
 class User extends PureComponent {
   render() {
     const { dispatch, user,modal, loading, i18n } = this.props;
     const {
       list,
       pagination,
-      modalType,
       selectedRowKeys,
+      roles,
     } = user;
     const handleRefresh = payload => dispatch({ type:'user/query',payload });
-
+    const { item } = modal;
     const modalProps = {
       ...modal,
       loading:loading.effects['user/showModal'],
-      confirmLoading: loading.effects[`user/${modalType}`],
-      title: modalType === 'create' ? i18n.t`Create.User` : i18n.t`Update.User`,
+      title: item&&item.id ? i18n.t`Update.User` : i18n.t`Create.User`,
       onOk(data) {
+        const modalType = item&&item.id?'update':'create';
         dispatch({
           type: `user/${modalType}`,
-          payload: data,
+          payload: {
+            id:item.id,
+            ...data,
+          },
         }).then(() => {
           handleRefresh();
         });
@@ -42,7 +46,24 @@ class User extends PureComponent {
       },
     };
 
+    const settingModalProps = {
+      ...user,
+      ...modal,
+      loading:loading.effects['user/showSettingModal'],
+      title:'Setting',
+      onOk: data=>{
+        dispatch({
+          type:'user/updatePermission',
+          payload:data,
+        });
+      },
+      onCancel:()=>{
+        dispatch({type:'modal/hideModal'});
+      },
+    };
+
     const listProps = {
+      roles,
       dataSource: list,
       loading: loading.effects['user/query'],
       pagination,
@@ -65,12 +86,19 @@ class User extends PureComponent {
           });
         });
       },
-      onEditItem(item) {
+      onEditItem(currentItem) {
         dispatch({
           type: 'user/showModal',
           payload: {
-            modalType: 'update',
-            currentItem: item,
+            currentItem,
+          },
+        });
+      },
+      onSettingItem(currentItem){
+        dispatch({
+          type:'user/showSettingModal',
+          payload:{
+            currentItem,
           },
         });
       },
@@ -89,17 +117,27 @@ class User extends PureComponent {
 
     const filterProps = {
       onSearch(value) {
+        if(value&&value.addressCode&&value.addressCode.length>0){
+          value.addressCode = JSON.stringify(value.addressCode);
+        }
+        let createBegin;
+        let createEnd;
+        if(value&&value.createTime){
+          createBegin = new Date(value.createTime[0]).getTime();
+          createEnd = new Date(value.createTime[1]).getTime();
+          delete value.createTime;
+        }
         handleRefresh({
-          ...value,
           current: 1,
+          createBegin,
+          createEnd,
+          ...value,
         });
       },
       onAdd() {
         dispatch({
           type: 'user/showModal',
-          payload: {
-            modalType: 'create',
-          },
+          payload:{},
         });
       },
     };
@@ -123,7 +161,7 @@ class User extends PureComponent {
     return (
       <Page inner>
         <Filter {...filterProps} />
-        {selectedRowKeys.length > 0 && (
+        {/* {selectedRowKeys.length > 0 && (
           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
             <Col>
               {`Selected ${selectedRowKeys.length} items `}
@@ -138,9 +176,10 @@ class User extends PureComponent {
               </Popconfirm>
             </Col>
           </Row>
-        )}
+        )} */}
         <List {...listProps} />
-        {modal.visible && <Modal {...modalProps} />}
+        {modal.visible && modal.type ==='modal' && <Modal {...modalProps} />}
+        {modal.visible && modal.type === 'setting' && <Setting {...settingModalProps} />}
       </Page>
     );
   }

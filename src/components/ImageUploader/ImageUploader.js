@@ -1,47 +1,105 @@
 import React from 'react'
-import { Upload,Button,Icon } from 'antd'
+import { Upload,Icon,message } from 'antd'
+import { ACCESS_TOKEN } from '@/constant';
 
 export default class ImageUpload extends React.Component{
 
+  state = {
+    imageUrl:'',
+    loading:false,
+  }
+
+  constructor(props) {
+    super(props);
+    const value = props.value;
+    this.state = {
+      imageUrl:value||'',
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Should be a controlled component.
+    if ('value' in nextProps) {
+      const {value} = nextProps;
+      this.setState({imageUrl:value});
+    }
+  }
+
+  getBase64 = (img, callback)=> {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+  
   getProps=()=>{
     const { 
       action,
-      fileList,
-      onChange,
-      onRemove,
-      onError
-     } = this.props
+     } = this.props;
+
     const imgUploadProps={
-      withCredentials:true,
-      name:'image',
-      accept:"image/*",
-      listType: 'picture',
-      className: 'upload-list-inline',
       action,
-      fileList,
       headers: {
-        authorization: 'authorization-text',
+        Authorization: `bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
       },
-      onChange:info=> {
-        onChange && typeof onChange === 'function' && onChange(info)
+      beforeUpload:(file)=>{
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+          message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
       },
-      onRemove:info=>{
-        onRemove && typeof onRemove ==='function'&&onRemove(info)
+      onChange:info => {
+        if (info.file.status === 'uploading') {
+          this.setState({ loading: true });
+        }else if (info.file.status === 'done') {
+          // Get this url from response in real world.
+          // this.getBase64(info.file.originFileObj, imageUrl =>{
+            
+          // });
+          this.setState({
+            imageUrl:info.file.response.data,
+            loading: false,
+          });
+          this.triggerChange(info.file.response.data);
+        }
       },
-      onError:(event)=>{
-        onError && typeof onError === 'function' && onError(event)
-      }
     }
-    return imgUploadProps
+    return imgUploadProps;
+  }
+
+  triggerChange = (changedValue) => {
+    // Should provide an event to pass value to Form.
+    const {onChange} = this.props;
+    if (onChange) {
+      onChange(changedValue);
+    }
   }
 
   render(){
-    const imgUploadProps = this.getProps()
+    const {imageUrl,loading} = this.state;
+
+    const imgUploadProps = this.getProps();
+    const uploadButton = (
+      <div>
+        <Icon type={loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return(
-      <Upload  {...imgUploadProps}>
-        <Button>
-          <Icon type="upload" /> Upload
-        </Button>
+      <Upload 
+        withCredentials={true}
+        name='file'
+        accept="image/*"
+        listType='picture-card'
+        className='avatar-uploader'
+        showUploadList={false}
+        {...imgUploadProps}
+      >
+        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
     );
   }

@@ -4,16 +4,16 @@ import api from './api';
 
 const { apiPrefix } = config;
 const gen = params => {
-  let url = apiPrefix + params;
+  let url = params;
   let method = 'GET';
 
   const paramsArray = params.split(' ');
   if (paramsArray.length === 2) {
     method = paramsArray[0];
-    url = apiPrefix + paramsArray[1];
+    url = paramsArray[1];
   }
 
-  return function(data) {
+  return data=> {
     return request({
       url,
       data,

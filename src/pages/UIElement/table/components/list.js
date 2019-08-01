@@ -1,8 +1,9 @@
 import React from 'react';
 import { Modal,Icon } from 'antd';
 import {DataTable} from 'components';
-import { UPDATE,DELETE } from '@/constant/options';
+import { HandleType } from '@/constant';
 
+const { UPDATE,DELETE } = HandleType;
 const {confirm} = Modal;
 export default class ListView extends React.Component{
 

@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { SearchForm } from 'components'
 import { withI18n } from '@lingui/react'
-import { Form, Row, Col, Input } from 'antd'
-import { ColProps,TwoColProps } from '@/utils/sys/props'
-const { Search } = Input
+import { Form,Input } from 'antd'
+
+const { Search } = Input;
 
 @withI18n()
 @Form.create()
 class Filter extends Component {
   render() {
-    const { onAdd,onSearch,i18n } = this.props
+    const { onAdd,onSearch,i18n } = this.props;
     
     const children = [
       {
-        id:'name',
-        key:'name',
+        id:'roleName',
+        key:'roleName',
         child:<Search
           placeholder={i18n.t`Search.Name`}
         />,
@@ -26,16 +26,15 @@ class Filter extends Component {
       <SearchForm
         onCreate={onAdd}
         onSearch={onSearch}
-        children={children}
+        child={children}
       />
-    )
+    );
   }
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  form: PropTypes.object,
-  onSearch: PropTypes.func,
-}
+  onAdd: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+};
 
-export default Filter
+export default Filter;

@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash';
 import pathToRegexp from 'path-to-regexp';
 /**
  * Query objects that specify keys and values in an array where all values are objects.
@@ -15,40 +14,6 @@ export function queryArray(array, key, value) {
 }
 
 /**
- * Convert an array to a tree-structured array.
- * @param   {array}     array     The Array need to Converted.
- * @param   {string}    id        The alias of the unique ID of the object in the array.
- * @param   {string}    parentId       The alias of the parent ID of the object in the array.
- * @param   {string}    children  The alias of children of the object in the array.
- * @return  {array}    Return a tree-structured array.
- */
-export function arrayToTree(
-  array,
-  id = 'id',
-  parentId = 'pid',
-  children = 'children'
-) {
-  const result = [];
-  const hash = {};
-  const data = cloneDeep(array);
-
-  data.forEach((item, index) => {
-    hash[data[index][id]] = data[index];
-  });
-
-  data.forEach(item => {
-    const hashParent = hash[item[parentId]];
-    if (hashParent) {
-      !hashParent[children] && (hashParent[children] = []);
-      hashParent[children].push(item);
-    } else {
-      result.push(item);
-    }
-  });
-  return result;
-}
-
-/**
  * Whether the path matches the regexp if the language prefix is ignored, https://github.com/pillarjs/path-to-regexp.
  * @param   {string|regexp|array}     regexp     Specify a string, array of strings, or a regular expression.
  * @param   {string}                  pathname   Specify the pathname to match.
@@ -62,18 +27,23 @@ export function queryAncestors(menus,pathname){
   const array = pathname.substring(1,pathname.length).split('/');
   let path = `/${array[0]}`;
   let root = menus.find(_=>_.route && pathMatchRegexp(_.route,path) );
-  const selectedItems=[root];
-  const getMenu = (_menus,path) =>{
-    root = _menus.find(_=>_.route && pathMatchRegexp(_.route,path ) );
-    if( root )
-      selectedItems.push(root);
-  };
-  for(let i=0;i<array.length;i++){
-    if( i==0 )continue;
-    path += `/${array[i]}`;
-    if( root && root.children ){
-      getMenu(root.children,path);
+  let selectedItems;
+  if( root ){
+    selectedItems=[root];
+    const getMenu = (_menus,_path) =>{
+      root = _menus.find(_=>_.route && pathMatchRegexp(_.route,_path ) );
+      if( root )
+        selectedItems.push(root);
+    };
+    for(let i=0;i<array.length;i++){
+      if( i===0 )continue;
+      path += `/${array[i]}`;
+      if( root && root.children ){
+        getMenu(root.children,path);
+      }
     }
+  }else{
+    selectedItems=[path];
   }
   return selectedItems;
 }

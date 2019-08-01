@@ -3,8 +3,9 @@ import { Form,Row,Col,Button,Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { Trans, withI18n } from '@lingui/react';
 import { submitForm } from './BaseForm';
-import { ADD } from '../../constant/options';
+import { HandleType } from '../../constant';
 
+const {ADD} = HandleType;
 /**
  * 搜索表单
  */
@@ -21,7 +22,7 @@ class SearchForm extends Component {
     onCreate: PropTypes.func,
     onReset: PropTypes.func,
     layout: PropTypes.string,
-    children: PropTypes.array,
+    child: PropTypes.array,
     showCreateButton: PropTypes.bool,
   };
 
@@ -30,7 +31,7 @@ class SearchForm extends Component {
     onCreate: undefined,
     onReset: undefined,
     layout: 'inline',
-    children: [],
+    child: [],
     showCreateButton:true,
   };
 
@@ -70,16 +71,14 @@ class SearchForm extends Component {
     form.resetFields();
     if(onReset){
       onReset(form);
-    } else {
-      if(searchOnReset !== false) {
-        const fields = form.getFieldsValue();
-        this.search(fields);
-      }
+    } else if(searchOnReset !== false){
+      const fields = form.getFieldsValue();
+      this.search(fields);
     }
   };
 
   render() {
-    const { children, hideRequiredMark,showCreateButton, layout,form:{ getFieldDecorator } } = this.props;
+    const { child, hideRequiredMark,showCreateButton, layout,form:{ getFieldDecorator } } = this.props;
     return (
       <Form 
         hideRequiredMark={hideRequiredMark} 
@@ -94,7 +93,7 @@ class SearchForm extends Component {
           <Col span={20}>
             <Row type='flex'>
               {
-                children&&children.map(_=> {
+                child&&child.map(_=> {
                   return _.display!==false?(
                     <Col id={_.id||_.key} key={_.key} style={{marginRight:20,paddingBottom:5,paddingTop:5}}>
                       {

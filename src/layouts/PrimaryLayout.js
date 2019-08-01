@@ -11,10 +11,10 @@ import { config,queryAncestors } from 'utils';
 import {isArray} from 'lodash';
 import Error from '../pages/404';
 import styles from './PrimaryLayout.less';
-import { ADMIN ,DEFAULT,DEVELOPER} from '../constant/role';
+import { Role } from '../constant';
 
-const { Content } = Layout
-const { Header, Bread, Sider } = MyLayout
+const { Content } = Layout;
+const { Header, Bread, Sider } = MyLayout;
 
 @withRouter
 @connect(({ app, loading }) => ({ app, loading }))
@@ -25,7 +25,7 @@ class PrimaryLayout extends PureComponent {
 
   componentDidMount() {
     this.enquireHandler = enquireScreen(mobile => {
-      const { isMobile } = this.state
+      const { isMobile } = this.state;
       if (isMobile !== mobile) {
         this.setState({
           isMobile: mobile,
@@ -39,38 +39,39 @@ class PrimaryLayout extends PureComponent {
   }
 
   onCollapseChange = collapsed => {
-    this.props.dispatch({
+    const {dispatch} = this.props;
+    dispatch({
       type: 'app/handleCollapseChange',
       payload: collapsed,
-    })
+    });
   }
 
   render() {
-    const { app, location, dispatch, children } = this.props
+    const { app, location, dispatch, children } = this.props;
     const {
       user,
       theme,
       routeList,
       collapsed,
-      permissions,
       notifications,
-    } = app
-    const { isMobile } = this.state
-    const { onCollapseChange } = this
+    } = app;
+    const { isMobile } = this.state;
+    const { onCollapseChange } = this;
 
     // Localized route name.
 
-    const selectedItems = queryAncestors(routeList,location.pathname)
+    const selectedItems = queryAncestors(routeList,location.pathname);
     // Find a route that matches the pathname.
-    const currentRoute = selectedItems?selectedItems[selectedItems.length-1]:null
+    const currentRoute = selectedItems?selectedItems[selectedItems.length-1]:null;
     // Query whether you have permission to enter this page
-    let hasPermission = false
-    if( permissions.role === ADMIN||permissions.role === DEFAULT||permissions.role === DEVELOPER ){
-      hasPermission = true
-    }else{
-      if( permissions.visit && isArray(permissions.visit) ){
-        hasPermission = currentRoute ? permissions.visit.includes(currentRoute.id): false
-      }
+    let hasPermission = false;
+    const { roles , visit } = user;
+    if( roles&&~roles.indexOf(Role.ADMIN)
+      ||roles&&~roles.indexOf(Role.DEFAULT)
+      ||roles&&~roles.indexOf(Role.DEVELOPER)){
+      hasPermission = true;
+    }else if(visit && isArray(visit)){
+      hasPermission = currentRoute ? visit.includes(currentRoute.id): false;
     }
     const headerProps = {
       menus:routeList,
@@ -78,15 +79,15 @@ class PrimaryLayout extends PureComponent {
       notifications,
       onCollapseChange,
       avatar: user.avatar,
-      username: user.username,
+      username: user.userName,
       fixed: config.fixedHeader,
       onAllNotificationsRead() {
-        dispatch({ type: 'app/allNotificationsRead' })
+        dispatch({ type: 'app/allNotificationsRead' });
       },
       onSignOut() {
-        dispatch({ type: 'app/signOut' })
+        dispatch({ type: 'app/signOut' });
       },
-    }
+    };
 
     const siderProps = {
       theme,
@@ -94,13 +95,13 @@ class PrimaryLayout extends PureComponent {
       isMobile,
       collapsed,
       onCollapseChange,
-      onThemeChange(theme) {
+      onThemeChange(myTheme) {
         dispatch({
           type: 'app/handleThemeChange',
-          payload: theme,
-        })
+          payload: myTheme,
+        });
       },
-    }
+    };
 
     return (
       <Fragment>

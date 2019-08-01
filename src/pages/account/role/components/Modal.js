@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input } from 'antd';
+import { Form, Input ,Select} from 'antd';
 import { withI18n } from '@lingui/react';
 import { BaseModal } from 'components';
 import { formItemLayout } from '@/utils/sys/props';
@@ -34,36 +34,44 @@ class RoleModal extends PureComponent {
       <BaseModal
         {...modalProps}
         onOk={this.handleOk}
-        children={
-  <Form layout="horizontal">
-          <FormItem label={i18n.t`RoleName`} hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleName', {
-              initialValue: item.roleName,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label={i18n.t`RoleType`} hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleType', {
-              initialValue: item.roleType,
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem label={i18n.t`Description`} hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleDesc', {
-              initialValue: item.roleDesc,
-            })(
-              <TextArea />
-            )}
-          </FormItem>
-        </Form>
+        child={
+          <Form layout="horizontal">
+            <FormItem label={i18n.t`RoleName`} hasFeedback {...formItemLayout}>
+              {getFieldDecorator('roleName', {
+                initialValue: item.roleName,
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+              })(<Input />)}
+            </FormItem>
+            <FormItem label={i18n.t`RoleType`} hasFeedback {...formItemLayout}>
+              {getFieldDecorator('roleType', {
+                initialValue: item.roleType,
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+              })
+              (
+                <Select placeholder={i18n.t`Pick an RoleType`}>
+                  <Select.Option value={0}>系统角色</Select.Option>
+                  <Select.Option value={1}>PC角色</Select.Option>
+                  <Select.Option value={2}>APP角色</Select.Option>
+                  <Select.Option value={3}>公众号角色</Select.Option>
+                </Select>
+              )}
+            </FormItem>
+            <FormItem label={i18n.t`Description`} hasFeedback {...formItemLayout}>
+              {getFieldDecorator('roleDesc', {
+                initialValue: item.roleDesc,
+              })(
+                <TextArea />
+              )}
+            </FormItem>
+          </Form>
       }
       />
     );

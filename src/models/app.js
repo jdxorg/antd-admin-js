@@ -1,22 +1,19 @@
 /* global window */
 
-import { router } from 'utils'
 import { stringify } from 'qs'
 import store from 'store'
-import { queryLayout, pathMatchRegexp } from 'utils'
-import { CANCEL_REQUEST_MESSAGE } from '../constant/message';
+import { router,queryLayout, pathMatchRegexp } from 'utils'
 import api from 'api'
-import config from 'config'
+import {layouts} from 'config'
+import { CANCEL_REQUEST_MESSAGE } from '../constant/message';
+import { ACCESS_TOKEN } from '../constant';
 
-const { queryRouteList, logoutUser, queryUserInfo } = api
+const { logoutUser, queryUserInfo } = api
 
 export default {
   namespace: 'app',
   state: {
     user: {},
-    permissions: {
-      visit: [],
-    },
     routeList: [],
     locationPathname: '',
     locationQuery: {},
@@ -65,47 +62,56 @@ export default {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      const { success, user } = yield call(queryUserInfo)
-      const { locationPathname } = yield select(_ => _.app)
-      const callback = payload?payload.callback:null
-      if (success && user) {
-        const { list } = yield call(queryRouteList)
-        const { permissions } = user
-        yield put({
-          type: 'updateState',
-          payload: {
-            user,
-            permissions,
-            routeList:list,
-          },
-        })
-        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
-          router.push({
-            pathname: '/dashboard',
-          })
-        }
-        //登陆成功后回调
-        callback&&callback()
-      } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
+      const { locationPathname } = yield select(_ => _.app);
+      const token = localStorage.getItem(ACCESS_TOKEN);
+      if(!token){
         router.push({
           pathname: '/login',
           search: stringify({
             from: locationPathname,
           }),
-        })
+        });
+        return;
+      }
+      //获取当前登录用户信息
+      const { success, data } = yield call(queryUserInfo);
+      if (success && data) {
+        //获取用户菜单
+        // const result = yield call(queryRouteList);
+        const { menus } = data;
+        delete data.menus;
+        yield put({
+          type: 'updateState',
+          payload: {
+            user:data,
+            routeList:menus,
+          },
+        });
+        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
+          router.push({
+            pathname: '/dashboard',
+          });
+        }
+      } else if (queryLayout(layouts, locationPathname) !== 'public') {
+        router.push({
+          pathname: '/login',
+          search: stringify({
+            from: locationPathname,
+          }),
+        });
       }
     },
 
     *signOut({ payload }, { call, put }) {
       const data = yield call(logoutUser)
       if (data.success) {
+        localStorage.removeItem(ACCESS_TOKEN);
         yield put({
           type: 'updateState',
           payload: {
             user: {},
-            permissions: { visit: [] },
           },
-        })
+        });
         yield put({ type: 'query' })
       } else {
         throw data

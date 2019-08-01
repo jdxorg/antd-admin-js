@@ -4033,12 +4033,12 @@ const tree = list => {
   return dataTree;
 };
 
-const DICT_FIXED = (function() {
+const DICT_FIXED = (()=> {
   const fixed = [];
   for (const id in DICT) {
     if ({}.hasOwnProperty.call(DICT, id)) {
       let pid;
-      const tmpObj = { id, value: DICT[id], label: DICT[id] };
+      const tmpObj = { id, value: id, label: DICT[id] };
       if (id.slice(2, 6) !== '0000') {
         pid =
           id.slice(4, 6) === '00'

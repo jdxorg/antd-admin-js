@@ -1,5 +1,6 @@
-import { router, pathMatchRegexp } from 'utils';
 import api from 'api';
+import { ACCESS_TOKEN } from '../../constant';
+import { message } from 'antd';
 
 const { loginUser } = api;
 
@@ -8,22 +9,28 @@ export default {
 
   state: {},
 
+  subscriptions: {
+    setup({ dispatch, history }) {
+      history.listen(location => {
+        
+      });
+    },
+  },
+
   effects: {
-    *login({ payload }, { put, call, select }) {
-      const data = yield call(loginUser, payload);
-      const { locationQuery } = yield select(_ => _.app);
-      if (data.success) {
-        const { from } = locationQuery;
-        yield put({ type: 'app/query' ,payload:{callback:e=>{
-          if (!pathMatchRegexp('/login', from)) {
-            if (from === '/') router.push('/dashboard');
-            else router.push(from);
-          } else {
-            router.push('/dashboard');
-          }
-        }}});
-      } else {
-        throw data;
+    *login({ payload }, { put, call }) {
+      try {
+        const result = yield call(loginUser, payload);
+        const { success,data,msg } = result;
+        if (success && data) {
+          const token = result.data;//得到token
+          localStorage.setItem(ACCESS_TOKEN,token);
+          yield put({ type: 'app/query'});
+        } else {
+          message.error(msg);
+        }
+      } catch (error) {
+        console.log('error',error)
       }
     },
   },

@@ -17,8 +17,8 @@ import { Trans } from '@lingui/react';
 import api from '@/services/api';
 import { Page } from 'components';
 
-import styles from './index.less'
-;
+import styles from './index.less';
+
 const { apiPrefix }  = config;
 const { Option } = Select;
 const InputGroup = Input.Group;

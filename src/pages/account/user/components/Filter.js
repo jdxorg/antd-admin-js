@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchForm } from 'components';
 import { withI18n } from '@lingui/react';
-import {  DatePicker, Input, Cascader } from 'antd';
+import {  DatePicker, Input, Cascader,Select } from 'antd';
 import city from '@/utils/sys/city';
 
 const { Search } = Input;
@@ -16,15 +16,29 @@ class Filter extends Component {
     const { onAdd, onSearch,i18n } = this.props;
     const children = [
       {
-        id:'name',
-        key:'name',
+        id:'userName',
+        key:'userName',
         child:<Search
-          placeholder={i18n.t`Search.Name`}
+          placeholder={i18n.t`Search.UserName`}
         />,
       },
       {
+        id:'state',
+        key:'state',
+        child:(
+          <Select 
+            style={{width:150}}  
+            placeholder={i18n.t`Pick.an.state`}
+            allowClear={true}
+          >
+            <Select.Option value={1}>启用</Select.Option>
+            <Select.Option value={0}>禁用</Select.Option>
+          </Select>
+        ),
+      },
+      {
         id:'addressCascader',
-        key:'address',
+        key:'addressCode',
         child:<Cascader
           style={{ width: '100%' }}
           options={city}
@@ -49,7 +63,7 @@ class Filter extends Component {
       <SearchForm
         onSearch={onSearch}
         onCreate={onAdd}
-        children={children}
+        child={children}
       />
     ); 
   }

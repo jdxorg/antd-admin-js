@@ -35,7 +35,7 @@ class SiderMenu extends PureComponent {
 
   generateMenus = (data,lang) => {
     return data.map(item => {
-      if( !item.hideInMenu ){
+      if( item.display ){
 
         if (item.children) {
           return (

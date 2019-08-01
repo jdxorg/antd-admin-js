@@ -53,7 +53,7 @@ export default class BaseModal extends React.Component{
   },500,{leading:true});
   
   render() {
-    const { children, title, width, visible, okText, cancelText,loading,footer, ...restProps } = this.props;
+    const { child, title, width, visible, okText, cancelText,loading,footer, ...restProps } = this.props;
     return (
       <Modal
         visible
@@ -67,7 +67,7 @@ export default class BaseModal extends React.Component{
         destroyOnClose
         footer={footer}
       >
-        {loading?<Spin style={{ display: 'block' }} spinning={loading} tip="loading...." />:children }
+        {loading?<Spin style={{ display: 'block' }} spinning={loading} tip="loading...." />:child }
       </Modal>
     )
   }

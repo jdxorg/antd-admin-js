@@ -4,7 +4,7 @@ import { Page } from 'components';
 import SearchBar from './components/search';
 import ListView from './components/list';
 import ModalForm from './components/modal';
-import { UPDATE,DELETE,ADD } from '@/constant/options';
+import { HandleType } from '@/constant';
 
 export default class TablePage extends React.Component {
   _props(){
@@ -25,9 +25,9 @@ export default class TablePage extends React.Component {
     const listProps = {
       onEvent: (item, operate) => {
         switch(operate){
-          case DELETE:break;
-          case UPDATE:
-          case ADD:
+          case HandleType.DELETE:break;
+          case HandleType.UPDATE:
+          case HandleType.ADD:
             ModalForm.open({ 
               layout: 'vertical',
               onSubmit: data => data, 

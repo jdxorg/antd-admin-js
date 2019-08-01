@@ -6,9 +6,8 @@ import { GlobalFooter } from 'ant-design-pro';
 import { Trans, withI18n } from '@lingui/react';
 import { setLocale } from 'utils/local';
 import { config } from 'utils';
+import styles from './index.less';
 
-import styles from './index.less'
-;
 const FormItem = Form.Item;
 
 @withI18n()

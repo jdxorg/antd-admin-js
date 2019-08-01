@@ -3,29 +3,34 @@ import { cloneDeep } from 'lodash';
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
 import { CANCEL_REQUEST_MESSAGE } from '@/constant/message';
+import { ACCESS_TOKEN } from '@/constant';
 
-const { CancelToken } = axios;
+// const { CancelToken } = axios;
 window.cancelRequest = new Map();
 axios.defaults.timeout = 15000;
 axios.defaults.withCredentials = true;
 axios.defaults.crossDomain = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(config=> {
+  const AUTH_TOKEN = localStorage.getItem(ACCESS_TOKEN);
+  if(AUTH_TOKEN){
+    config.headers.Authorization = `bearer ${AUTH_TOKEN}`;
+  }
   return config;
-}, function (error) {
+}, error=> {
   return Promise.reject(error);
 });
 
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(response=> {
   return response;
-}, function (error) {
+}, error=> {
   return Promise.reject(error);
 });
 
 export default function request(options) {
   let { data, url, method = 'get'} = options;
   const cloneData = cloneDeep(data);
-
+  
   try {
     let domain = '';
     const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/);
@@ -42,19 +47,19 @@ export default function request(options) {
         delete cloneData[item.name];
       }
     }
-    url = domain + url;
+    options.url = domain + url;
   } catch (e) {
     message.error(e.message);
   }
 
-  options.cancelToken = new CancelToken(cancel => {
-    window.cancelRequest.set(Symbol(Date.now()), {
-      pathname: window.location.pathname,
-      cancel,
-    });
-  });
+  // options.cancelToken = new CancelToken(cancel => {
+  //   window.cancelRequest.set(Symbol(Date.now()), {
+  //     pathname: window.location.pathname,
+  //     cancel,
+  //   });
+  // });
   if( method.toLocaleLowerCase() === 'get' ){
-    options.params = data;
+    options.params = cloneData;
   }else{
     options.data = data;
   }

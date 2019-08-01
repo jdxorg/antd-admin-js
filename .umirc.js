@@ -5,6 +5,11 @@ export default {
   ignoreMomentLocale: true,
   targets: { ie: 9 },
   treeShaking: true,
+  define: {
+    "process.env": {
+      PROXY: process.env.PROXY,
+    }
+  },
   plugins: [
     [
       // https://umijs.org/plugin/umi-plugin-react.html
