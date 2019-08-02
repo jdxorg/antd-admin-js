@@ -11,5 +11,6 @@ import SearchForm from './Form/SearchForm';
 import * as MyLayout from './Layout';
 import Page from './Page';
 
+export *  from './DatePicker';
 export { MyLayout, Editor, FilterItem, DropOption, Loader, Page, ScrollBar,DataTable,CTabs,ImageUploader,BaseModal,
   SearchForm };

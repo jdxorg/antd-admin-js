@@ -63,7 +63,7 @@ export default {
   effects: {
     *query({ payload }, { call, put, select }) {
       const { locationPathname } = yield select(_ => _.app);
-      const token = localStorage.getItem(ACCESS_TOKEN);
+      const token = sessionStorage.getItem(ACCESS_TOKEN);
       if(!token){
         router.push({
           pathname: '/login',
@@ -105,7 +105,7 @@ export default {
     *signOut({payload}, { call, put }) {
       const data = yield call(logoutUser);
       if (data.success) {
-        localStorage.removeItem(ACCESS_TOKEN);
+        sessionStorage.removeItem(ACCESS_TOKEN);
         yield put({
           type: 'updateState',
           payload: {

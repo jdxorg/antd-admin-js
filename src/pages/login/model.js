@@ -24,7 +24,7 @@ export default {
         const { success,data,msg } = result;
         if (success && data) {
           const token = result.data;//得到token
-          localStorage.setItem(ACCESS_TOKEN,token);
+          sessionStorage.setItem(ACCESS_TOKEN,token);
           yield put({ type: 'app/query'});
         } else {
           message.error(msg);

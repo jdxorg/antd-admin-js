@@ -12,7 +12,7 @@ axios.defaults.withCredentials = true;
 axios.defaults.crossDomain = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.interceptors.request.use(config=> {
-  const AUTH_TOKEN = localStorage.getItem(ACCESS_TOKEN);
+  const AUTH_TOKEN = sessionStorage.getItem(ACCESS_TOKEN);
   if(AUTH_TOKEN){
     config.headers.Authorization = `bearer ${AUTH_TOKEN}`;
   }

@@ -174,7 +174,7 @@ class UserModal extends PureComponent {
                   <ImageUploader 
                     action={uplodaFile}  
                     headers={
-                      {Authorization: `bearer ${localStorage.getItem(ACCESS_TOKEN)}`}
+                      {Authorization: `bearer ${sessionStorage.getItem(ACCESS_TOKEN)}`}
                     }
                   />
                 )
