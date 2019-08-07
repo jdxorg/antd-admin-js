@@ -17,7 +17,8 @@
 ### git分支说明
 ```
   master 分支接口全部使用mock数据，无需连接远程服务器
-  proxy  分支增加账户模块使用远程服务器接口，其余部分使用mock接口演示
+  proxy  分支增加账户模块使用远程服务器接口，其余部分使用mock接口演示 （服务端项目 https://github.com/jdxorg/koa2-ts-server）
+  
 ```
 ### Setting
 ```
