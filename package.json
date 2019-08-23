@@ -3,6 +3,8 @@
   "version": "5.0.6",
   "private": true,
   "description": "An admin dashboard application demo built upon Ant Design and UmiJS",
+  "author": "jdx 289608944@qq.com",
+  "license": "MIT",
   "dependencies": {
     "@lingui/react": "^2.7.0",
     "ant-design-pro": "^2.3.0",

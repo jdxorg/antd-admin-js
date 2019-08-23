@@ -2,13 +2,14 @@
  * @Description: 基类模态框
  * @Author: jiangdexiao
  * @Date: 2019-06-19 14:24:05
- * @LastEditTime: 2019-08-01 18:03:03
+ * @LastEditTime: 2019-08-23 15:26:46
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
 import { Modal,Spin } from 'antd';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
+import './Modal.less'
 
 export default class BaseModal extends React.Component{
   static propTypes = {
