@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-07 14:54:05
+ * @LastEditTime: 2019-08-15 17:40:47
+ * @LastEditors: Please set LastEditors
+ */
 // https://umijs.org/config/
 import { resolve } from 'path'
 import { i18n } from './src/utils/sys/config'
@@ -82,7 +89,7 @@ export default {
     config: resolve(__dirname, './src/utils/sys/config'),
     models: resolve(__dirname, './src/models'),
     routes: resolve(__dirname, './src/routes'),
-    services: resolve(__dirname, './src/services'),
+    // services: resolve(__dirname, './src/services'),
     themes: resolve(__dirname, './src/themes'),
     utils: resolve(__dirname, './src/utils'),
   },
