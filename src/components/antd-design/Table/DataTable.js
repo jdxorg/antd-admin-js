@@ -1,3 +1,10 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:32
+ * @LastEditTime: 2019-08-27 16:20:51
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
@@ -19,13 +26,14 @@ class DataTable extends React.Component {
       i18n,
       ...tableProps
     } = this.props;
+
     return (
       <Table
         bordered
         className={className||styles.table}
         scroll={scroll||{ x: 1200 }}
         loading={loading}
-        pagination={{
+        pagination={pagination===false?false:{
           ...pagination,
           ...{
             showTotal: total => i18n.t`Total ${total} Items`,

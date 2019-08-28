@@ -1,3 +1,10 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:32
+ * @LastEditTime: 2019-08-27 11:58:38
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import React from 'react';
 import { Upload,Icon,message } from 'antd';
 
@@ -35,6 +42,7 @@ export default class ImageUpload extends React.Component{
 
     const imgUploadProps={
       action,
+      ...rest,
       beforeUpload:(file)=>{
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -50,10 +58,6 @@ export default class ImageUpload extends React.Component{
         if (info.file.status === 'uploading') {
           this.setState({ loading: true });
         }else if (info.file.status === 'done') {
-          // Get this url from response in real world.
-          // this.getBase64(info.file.originFileObj, imageUrl =>{
-            
-          // });
           this.setState({
             imageUrl:info.file.response.data,
             loading: false,
@@ -61,7 +65,6 @@ export default class ImageUpload extends React.Component{
           this.triggerChange(info.file.response.data);
         }
       },
-      ...rest,
     };
     return imgUploadProps;
   }

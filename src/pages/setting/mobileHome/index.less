@@ -1,0 +1,57 @@
+.mobileContainer {
+  position: relative;
+}
+.mobilePng {
+  position: absolute;
+  width:375px;
+  // float: right;
+  right: 0;
+}
+.searchBar {
+  position: absolute;
+  right: 35px;
+  top: 80px;
+  width:300px;
+}
+.banner{
+  position: absolute;
+  right: 26px;
+  top: 125px;
+  img{
+    width:325px;
+    height:100px;
+  }
+}
+.navbar{
+  position: absolute;
+  right: 36px;
+  top: 250px;
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  .navbarItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img{
+      width:30px;
+      height:30px;
+    }
+  }
+}
+:global{
+  .ant-carousel {
+    width:325px;
+  }
+  .ant-carousel .slick-slide {
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h3 {
+    color: #fff;
+  }
+}

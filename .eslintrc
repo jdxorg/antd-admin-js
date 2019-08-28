@@ -50,7 +50,7 @@
     //禁止使用按位运算符
     "no-bitwise": [0],
     //语句分号结尾
-    "semi": "warn",
+    "semi": 0,
     //禁止在条件表达式中使用赋值语句
     "no-cond-assign": [0],
     "import/no-unresolved": [0],

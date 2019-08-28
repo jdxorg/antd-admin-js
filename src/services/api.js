@@ -1,3 +1,10 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-27 16:11:49
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import { config } from 'utils';
 
 const { apiPrefix,ACCOUNT_API,UPLOAD_API } = config;
@@ -31,6 +38,17 @@ export default {
 
   queryPostList: '/posts',
   queryDashboard: `${apiPrefix}/dashboard`,
+
+  queryMobileHome: `${ACCOUNT_API}/mobile/home`,
+  removeBanner: `DELETE ${ACCOUNT_API}/mobile/banner/:id`,
+  createBanner: `POST ${ACCOUNT_API}/mobile/banner`,
+  updateBanner: `Put ${ACCOUNT_API}/mobile/banner/:id`,
+  queryBanner: `${ACCOUNT_API}/mobile/banner/:id`,
+
+  removeNavbar: `DELETE ${ACCOUNT_API}/mobile/navbar/:id`,
+  createNavbar: `POST ${ACCOUNT_API}/mobile/navbar`,
+  updateNavbar: `Put ${ACCOUNT_API}/mobile/navbar/:id`,
+  queryNavbar: `${ACCOUNT_API}/mobile/navbar/:id`,
 
 };
 
