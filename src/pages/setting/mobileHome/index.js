@@ -2,7 +2,7 @@
  * @Author: dexiaojiang 289608944@qq.com
  * @Description: In User Settings Edit
  * @Date: 2019-08-26 16:35:45
- * @LastEditTime: 2019-08-27 17:09:20
+ * @LastEditTime: 2019-09-02 11:13:00
  * @LastEditors: dexiaojiang 289608944@qq.com
  */
 
@@ -10,7 +10,7 @@ import React from 'react'
 import { Page } from 'components'
 import { Row, Col, Carousel } from 'antd'
 import { connect } from 'dva'
-import { withI18n } from '@lingui/react'
+// import { withI18n } from '@lingui/react';
 
 import styles from './index.less'
 import mobilePng from '../../../../assets/images/mobile.png'
@@ -68,10 +68,10 @@ const MobileHome = props => {
                 })}
               </Carousel>
             </div>
-            <div className={styles.navbar}>
-              {navbars.map(nav => {
+            <div className={styles.innerContainer}>
+              {navbars.map((nav, i) => {
                 return (
-                  <div className={styles.navbarItem}>
+                  <div key={i.toString()} className={styles.navbarItem}>
                     <img src={nav.image} alt={nav.name} />
                     <span>{nav.name}</span>
                   </div>

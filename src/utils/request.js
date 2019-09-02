@@ -1,10 +1,18 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-09-02 11:23:45
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import axios from 'axios'
-import { cloneDeep } from 'lodash'
+import _ from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
 import { CANCEL_REQUEST_MESSAGE } from '@/constant/message'
 import { ACCESS_TOKEN } from '@/constant'
 
+const { cloneDeep } = _
 // const { CancelToken } = axios;
 window.cancelRequest = new Map()
 axios.defaults.timeout = 15000
@@ -73,16 +81,16 @@ export default function request(options) {
   }
   return axios(options)
     .then(response => {
-      const { statusText, status, data } = response
-
+      const { statusText, status } = response
+      const res = response.data
       let result = {}
-      if (typeof data === 'object') {
-        result = data
-        if (Array.isArray(data)) {
-          result.list = data
+      if (typeof res === 'object') {
+        result = res
+        if (Array.isArray(res)) {
+          result.list = res
         }
       } else {
-        result.data = data
+        result.data = res
       }
 
       return Promise.resolve({
@@ -93,9 +101,9 @@ export default function request(options) {
       })
     })
     .catch(error => {
-      const { response, message } = error
+      const { response } = error
 
-      if (String(message) === CANCEL_REQUEST_MESSAGE) {
+      if (String(message.message) === CANCEL_REQUEST_MESSAGE) {
         return {
           success: false,
         }
@@ -105,9 +113,9 @@ export default function request(options) {
       let statusCode
 
       if (response && response instanceof Object) {
-        const { data, statusText } = response
+        const { statusText } = response
         statusCode = response.status
-        msg = data.message || statusText
+        msg = response.data.message || statusText
       } else {
         statusCode = 600
         msg = error.message || 'Network Error'

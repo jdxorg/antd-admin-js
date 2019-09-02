@@ -1,7 +1,14 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-29 16:44:04
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+import { Row, Col, Button, Popconfirm, message } from 'antd'
 import { withI18n } from '@lingui/react'
 import { Page } from 'components'
 import List from './components/List'
@@ -16,7 +23,7 @@ class Role extends PureComponent {
     const { dispatch, role, modal, loading, i18n } = this.props
     const { list, pagination, selectedRowKeys } = role
     const handleRefresh = payload => dispatch({ type: 'role/query', payload })
-
+    const hideModal = () => dispatch({ type: 'modal/hideModal' })
     const { item } = modal
     const modalProps = {
       ...modal,
@@ -30,14 +37,20 @@ class Role extends PureComponent {
             id: item.id,
             ...data,
           },
-        }).then(() => {
-          handleRefresh()
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel() {
-        dispatch({
-          type: 'modal/hideModal',
-        })
+        hideModal()
       },
     }
 
@@ -52,11 +65,19 @@ class Role extends PureComponent {
             ...data,
           },
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel: () => {
-        dispatch({
-          type: 'modal/hideModal',
-        })
+        hideModal()
       },
     }
 
@@ -74,14 +95,16 @@ class Role extends PureComponent {
         dispatch({
           type: 'role/delete',
           payload: id,
-        }).then(() => {
-          handleRefresh({
-            current:
-              list.length === 1 && pagination.current > 1
-                ? pagination.current - 1
-                : pagination.current,
-          })
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onEditItem(currentItem) {
         dispatch({

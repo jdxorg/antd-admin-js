@@ -1,7 +1,13 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-29 16:45:10
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
-import { message } from 'antd'
 import { pageModel } from '@/models/pageModel'
 
 const {
@@ -51,16 +57,8 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *delete({ payload }, { call, put }) {
-      const result = yield call(removeRole, { id: payload })
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({
-          type: 'query',
-        })
-      } else {
-        message.error(msg)
-      }
+    *delete({ payload }, { call }) {
+      return yield call(removeRole, { id: payload })
     },
 
     *multiDelete({ payload }, { call, put }) {
@@ -72,36 +70,15 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
-      const result = yield call(createRole, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *create({ payload }, { call }) {
+      return yield call(createRole, payload)
     },
 
-    *update({ payload }, { call, put }) {
-      const result = yield call(updateRole, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *update({ payload }, { call }) {
+      return yield call(updateRole, payload)
     },
-    *saveUserRole({ payload }, { call, put }) {
-      const result = yield call(saveUserRole, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *saveUserRole({ payload }, { call }) {
+      return yield call(saveUserRole, payload)
     },
     *showModal({ payload }, { call, put }) {
       const { currentItem } = payload

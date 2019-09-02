@@ -1,7 +1,14 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-29 15:05:35
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd';
+import { message } from 'antd'
 import { withI18n } from '@lingui/react'
 
 import { Page } from 'components'
@@ -17,6 +24,7 @@ class User extends PureComponent {
     const { dispatch, user, modal, loading, i18n } = this.props
     const { list, pagination, selectedRowKeys, roles } = user
     const handleRefresh = payload => dispatch({ type: 'user/query', payload })
+    const hideModal = () => dispatch({ type: 'modal/hideModal' })
     const { item } = modal
     const modalProps = {
       ...modal,
@@ -30,14 +38,20 @@ class User extends PureComponent {
             id: item.id,
             ...data,
           },
-        }).then(() => {
-          handleRefresh()
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel() {
-        dispatch({
-          type: 'modal/hideModal',
-        })
+        hideModal()
       },
     }
 
@@ -51,9 +65,19 @@ class User extends PureComponent {
           type: 'user/updatePermission',
           payload: data,
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel: () => {
-        dispatch({ type: 'modal/hideModal' })
+        hideModal()
       },
     }
 
@@ -72,14 +96,16 @@ class User extends PureComponent {
         dispatch({
           type: 'user/delete',
           payload: id,
-        }).then(() => {
-          handleRefresh({
-            current:
-              list.length === 1 && pagination.current > 1
-                ? pagination.current - 1
-                : pagination.current,
-          })
         })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onEditItem(currentItem) {
         dispatch({

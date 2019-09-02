@@ -8,11 +8,12 @@ import { BackTop, Layout, Drawer } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { config, queryAncestors } from 'utils'
-import { isArray } from 'lodash'
+import _ from 'lodash'
 import Error from '../pages/404'
 import styles from './PrimaryLayout.less'
 import { Role } from '../constant'
 
+const { isArray } = _
 const { Content } = Layout
 const { Header, Bread, Sider } = MyLayout
 

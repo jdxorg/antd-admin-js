@@ -2,7 +2,7 @@
  * @Author: dexiaojiang 289608944@qq.com
  * @Description: In User Settings Edit
  * @Date: 2019-08-26 18:08:21
- * @LastEditTime: 2019-08-27 16:10:19
+ * @LastEditTime: 2019-08-29 16:58:45
  * @LastEditors: dexiaojiang 289608944@qq.com
  */
 import React from 'react'
@@ -10,9 +10,11 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import { message } from '../../../../../../node_modules/antd/lib/index'
 
 const Navbar = ({ dispatch, loading, modal, list, tabKey }) => {
   const handleRefresh = payload => dispatch({ type: 'mobile/query', payload })
+  const hideModal = () => dispatch({ type: 'modal/hideModal' })
   const { item } = modal
   const filterProps = {
     onSearch(value) {
@@ -33,6 +35,15 @@ const Navbar = ({ dispatch, loading, modal, list, tabKey }) => {
         type: 'mobile/removeNavbarFunc',
         payload: id,
       })
+        .then(result => {
+          const { success, msg } = result
+          if (success) {
+            handleRefresh()
+          } else {
+            message.error(msg)
+          }
+        })
+        .catch(e => message.error(e.message))
     },
     onEditItem(currentItem) {
       dispatch({
@@ -58,11 +69,19 @@ const Navbar = ({ dispatch, loading, modal, list, tabKey }) => {
           ...data,
         },
       })
+        .then(result => {
+          const { success, msg } = result
+          if (success) {
+            handleRefresh()
+            hideModal()
+          } else {
+            message.error(msg)
+          }
+        })
+        .catch(e => message.error(e.message))
     },
     onCancel() {
-      dispatch({
-        type: 'modal/hideModal',
-      })
+      hideModal()
     },
   }
 

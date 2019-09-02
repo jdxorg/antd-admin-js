@@ -22,17 +22,20 @@
     height: 100px;
   }
 }
-.navbar {
+.innerContainer {
   position: absolute;
-  right: 36px;
   top: 250px;
-  width: 300px;
+  right: 30px;
   display: flex;
   justify-content: space-around;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  width: 300px;
   .navbarItem {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 15px;
     img {
       width: 30px;
       height: 30px;

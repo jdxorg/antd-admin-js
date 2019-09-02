@@ -95,7 +95,9 @@
     "no-plusplus": 0,
     //禁止使用continue
     "no-continue": 0,
-    "no-unused-expressions":[0]
+    "no-unused-expressions":[0],
+    "sort-comp":"off",
+    "no-console":"off"
   },
   "parserOptions": {
     "ecmaFeatures": {

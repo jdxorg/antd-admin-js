@@ -1,5 +1,4 @@
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'
 import { pageModel } from '@/models/pageModel'
@@ -56,58 +55,23 @@ export default modelExtend(pageModel, {
         })
       }
     },
-    *delete({ payload }, { call, put }) {
-      const result = yield call(removeUser, { id: payload })
-      const { success, msg } = result
-      if (success) {
-        yield put({
-          type: 'query',
-        })
-      } else {
-        message.error(msg)
-      }
+    *delete({ payload }, { call }) {
+      return yield call(removeUser, { id: payload })
     },
 
-    *multiDelete({ payload }, { call, put }) {
-      const result = yield call(removeUserList, payload)
-      const { success, msg } = result
-      if (success) {
-        yield put({ type: 'query' })
-      } else {
-        message.error(msg)
-      }
+    *multiDelete({ payload }, { call }) {
+      return yield call(removeUserList, payload)
     },
 
-    *create({ payload }, { call, put }) {
-      const result = yield call(createUser, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *create({ payload }, { call }) {
+      return yield call(createUser, payload)
     },
 
-    *update({ payload }, { call, put }) {
-      const result = yield call(updateUser, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *update({ payload }, { call }) {
+      return yield call(updateUser, payload)
     },
-    *updatePermission({ payload }, { call, put }) {
-      const result = yield call(updatePermission, payload)
-      const { success, data, msg } = result
-      if (success && data) {
-        yield put({ type: 'query' })
-        yield put({ type: 'modal/hideModal' })
-      } else {
-        message.error(msg)
-      }
+    *updatePermission({ payload }, { call }) {
+      return yield call(updatePermission, payload)
     },
     *showModal({ payload }, { call, put }) {
       const { currentItem } = payload
