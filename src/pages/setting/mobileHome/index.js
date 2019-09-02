@@ -2,50 +2,46 @@
  * @Author: dexiaojiang 289608944@qq.com
  * @Description: In User Settings Edit
  * @Date: 2019-08-26 16:35:45
- * @LastEditTime: 2019-08-27 17:09:20
+ * @LastEditTime: 2019-09-02 11:13:00
  * @LastEditors: dexiaojiang 289608944@qq.com
  */
 
 import React from 'react'
 import { Page } from 'components'
-import { Row,Col,Carousel } from 'antd'
-import { connect } from 'dva';
-import { withI18n } from '@lingui/react';
+import { Row, Col, Carousel } from 'antd'
+import { connect } from 'dva'
+// import { withI18n } from '@lingui/react';
 
 import styles from './index.less'
 import mobilePng from '../../../../assets/images/mobile.png'
 import searchBar from '../../../../assets/images/search-bar.png'
-import { CTabs } from '../../../components/antd-design/index';
+import { CTabs } from '../../../components/antd-design/index'
 import CBanner from './components/banner'
 import CNavbar from './components/navbar'
 
 const MobileHome = props => {
   const {
-    mobile:{
-      banners = [],
-      navbars = [],
-      tabKey,
-    },
+    mobile: { banners = [], navbars = [], tabKey },
     dispatch,
   } = props
 
   const tabsProps = {
     tabs: [
       {
-        key:0,
-        name:'Banner',
-        component:<CBanner {...{list:banners,tabKey}} />,
+        key: 0,
+        name: 'Banner',
+        component: <CBanner {...{ list: banners, tabKey }} />,
       },
       {
-        key:1,
-        name:'Navbar',
-        component:<CNavbar {...{list:navbars,tabKey}} />,
+        key: 1,
+        name: 'Navbar',
+        component: <CNavbar {...{ list: navbars, tabKey }} />,
       },
     ],
     onChange: key => {
       dispatch({
-        type:'mobile/updateState',
-        payload:{
+        type: 'mobile/updateState',
+        payload: {
           tabKey: Number(key),
         },
       })
@@ -63,36 +59,34 @@ const MobileHome = props => {
             <img alt="searchbar" src={searchBar} className={styles.searchBar} />
             <div className={styles.banner}>
               <Carousel autoplay>
-                {
-                  banners.map( b => {
-                    return (
-                      <div key={b.id}>
-                        <img src={b.image} alt={b.name} />
-                      </div>
-                    )
-                  })
-                }
+                {banners.map(b => {
+                  return (
+                    <div key={b.id}>
+                      <img src={b.image} alt={b.name} />
+                    </div>
+                  )
+                })}
               </Carousel>
             </div>
-            <div className={styles.navbar}>
-              {
-                navbars.map(nav => {
-                  return (
-                    <div className={styles.navbarItem}>
-                      <img src={nav.image} alt={nav.name} />
-                      <span>{nav.name}</span>
-                    </div>
-                  );
-                })
-              }
+            <div className={styles.innerContainer}>
+              {navbars.map((nav, i) => {
+                return (
+                  <div key={i.toString()} className={styles.navbarItem}>
+                    <img src={nav.image} alt={nav.name} />
+                    <span>{nav.name}</span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </Col>
       </Row>
     </Page>
-  );
+  )
 }
 
-export default connect( 
-    ({ modal, loading,...state }) => ({ modal,loading,mobile:state.mobile })
-  )(MobileHome)
+export default connect(({ modal, loading, ...state }) => ({
+  modal,
+  loading,
+  mobile: state.mobile,
+}))(MobileHome)

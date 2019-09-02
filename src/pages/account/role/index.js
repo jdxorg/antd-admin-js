@@ -1,68 +1,85 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'dva';
-import { Row, Col, Button, Popconfirm } from 'antd';
-import { withI18n } from '@lingui/react';
-import { Page } from 'components';
-import List from './components/List';
-import Filter from './components/Filter';
-import Modal from './components/Modal';
-import Setting from './components/Setting';
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-29 16:44:04
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'dva'
+import { Row, Col, Button, Popconfirm, message } from 'antd'
+import { withI18n } from '@lingui/react'
+import { Page } from 'components'
+import List from './components/List'
+import Filter from './components/Filter'
+import Modal from './components/Modal'
+import Setting from './components/Setting'
 
 @withI18n()
-@connect(({ role,modal, loading }) => ({ role,modal, loading }))
+@connect(({ role, modal, loading }) => ({ role, modal, loading }))
 class Role extends PureComponent {
   render() {
-    const { dispatch, role,modal, loading, i18n } = this.props;
-    const {
-      list,
-      pagination,
-      selectedRowKeys,
-    } = role;
-    const handleRefresh = payload => dispatch({ type:'role/query',payload });
-
-    const { item } = modal;
+    const { dispatch, role, modal, loading, i18n } = this.props
+    const { list, pagination, selectedRowKeys } = role
+    const handleRefresh = payload => dispatch({ type: 'role/query', payload })
+    const hideModal = () => dispatch({ type: 'modal/hideModal' })
+    const { item } = modal
     const modalProps = {
       ...modal,
-      loading:loading.effects['role/showModal'],
-      title: item&&item.id? i18n.t`Create` : i18n.t`Update`,
-      onOk:(data) => {
-        const modalType = item&&item.id?'update':'create';
+      loading: loading.effects['role/showModal'],
+      title: item && item.id ? i18n.t`Create` : i18n.t`Update`,
+      onOk: data => {
+        const modalType = item && item.id ? 'update' : 'create'
         dispatch({
           type: `role/${modalType}`,
           payload: {
-            id:item.id,
+            id: item.id,
             ...data,
           },
-        }).then(() => {
-          handleRefresh();
-        });
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel() {
-        dispatch({
-          type: 'modal/hideModal',
-        });
+        hideModal()
       },
-    };
+    }
 
     const settingModalProps = {
       ...modal,
-      loading:loading.effects['role/showSettingModal'],
-      title:'Setting',
+      loading: loading.effects['role/showSettingModal'],
+      title: 'Setting',
       onOk: data => {
         dispatch({
-          type:'role/saveUserRole',
-          payload:{
+          type: 'role/saveUserRole',
+          payload: {
             ...data,
           },
-        });
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
-      onCancel:() => {
-        dispatch({
-          type:'modal/hideModal',
-        });
+      onCancel: () => {
+        hideModal()
       },
-    };
+    }
 
     const listProps = {
       dataSource: list,
@@ -72,20 +89,22 @@ class Role extends PureComponent {
         handleRefresh({
           current: page.current,
           pageSize: page.pageSize,
-        });
+        })
       },
       onDeleteItem(id) {
         dispatch({
           type: 'role/delete',
           payload: id,
-        }).then(() => {
-          handleRefresh({
-            current:
-              list.length === 1 && pagination.current > 1
-                ? pagination.current - 1
-                : pagination.current,
-          });
-        });
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onEditItem(currentItem) {
         dispatch({
@@ -93,15 +112,15 @@ class Role extends PureComponent {
           payload: {
             currentItem,
           },
-        });
+        })
       },
       onSettingItem(currentItem) {
         dispatch({
-          type:'role/showSettingModal',
-          payload:{
+          type: 'role/showSettingModal',
+          payload: {
             currentItem,
           },
-        });
+        })
       },
       rowSelection: {
         selectedRowKeys,
@@ -111,25 +130,25 @@ class Role extends PureComponent {
             payload: {
               selectedRowKeys: keys,
             },
-          });
+          })
         },
       },
-    };
+    }
 
     const filterProps = {
       onSearch(value) {
         handleRefresh({
           ...value,
           current: 1,
-        });
+        })
       },
       onAdd() {
         dispatch({
           type: 'role/showModal',
-          payload:{},
-        });
+          payload: {},
+        })
       },
-    };
+    }
 
     const handleDeleteItems = () => {
       dispatch({
@@ -143,9 +162,9 @@ class Role extends PureComponent {
             list.length === selectedRowKeys.length && pagination.current > 1
               ? pagination.current - 1
               : pagination.current,
-        });
-      });
-    };
+        })
+      })
+    }
 
     return (
       <Page inner>
@@ -168,9 +187,11 @@ class Role extends PureComponent {
         )}
         <List {...listProps} />
         {modal.visible && modal.type === 'edit' && <Modal {...modalProps} />}
-        {modal.visible && modal.type === 'setting' && <Setting {...settingModalProps} />}
+        {modal.visible && modal.type === 'setting' && (
+          <Setting {...settingModalProps} />
+        )}
       </Page>
-    );
+    )
   }
 }
 
@@ -178,10 +199,10 @@ Role.propTypes = {
   role: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
-};
+}
 Role.defaultProps = {
-  role:{},
-  dispatch:()=>{},
-  loading:{},
-};
-export default Role;
+  role: {},
+  dispatch: () => {},
+  loading: {},
+}
+export default Role

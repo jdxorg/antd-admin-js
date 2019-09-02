@@ -1,56 +1,71 @@
-import axios from 'axios';
-import { cloneDeep } from 'lodash';
-import pathToRegexp from 'path-to-regexp';
-import { message } from 'antd';
-import { CANCEL_REQUEST_MESSAGE } from '@/constant/message';
-import { ACCESS_TOKEN } from '@/constant';
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-09-02 11:23:45
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
+import axios from 'axios'
+import _ from 'lodash'
+import pathToRegexp from 'path-to-regexp'
+import { message } from 'antd'
+import { CANCEL_REQUEST_MESSAGE } from '@/constant/message'
+import { ACCESS_TOKEN } from '@/constant'
 
+const { cloneDeep } = _
 // const { CancelToken } = axios;
-window.cancelRequest = new Map();
-axios.defaults.timeout = 15000;
-axios.defaults.withCredentials = true;
-axios.defaults.crossDomain = true;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.interceptors.request.use(config=> {
-  const AUTH_TOKEN = sessionStorage.getItem(ACCESS_TOKEN);
-  if(AUTH_TOKEN){
-    config.headers.Authorization = `bearer ${AUTH_TOKEN}`;
+window.cancelRequest = new Map()
+axios.defaults.timeout = 15000
+axios.defaults.withCredentials = true
+axios.defaults.crossDomain = true
+axios.defaults.headers.post['Content-Type'] =
+  'application/x-www-form-urlencoded;charset=UTF-8'
+axios.interceptors.request.use(
+  config => {
+    const AUTH_TOKEN = sessionStorage.getItem(ACCESS_TOKEN)
+    if (AUTH_TOKEN) {
+      config.headers.Authorization = `bearer ${AUTH_TOKEN}`
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
   }
-  return config;
-}, error=> {
-  return Promise.reject(error);
-});
+)
 
-axios.interceptors.response.use(response=> {
-  return response;
-}, error=> {
-  return Promise.reject(error);
-});
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 export default function request(options) {
-  const { data, method = 'get'} = options;
-  let { url } = options;
-  const cloneData = cloneDeep(data);
-  
+  const { data, method = 'get' } = options
+  let { url } = options
+  const cloneData = cloneDeep(data)
+
   try {
-    let domain = '';
-    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/);
+    let domain = ''
+    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
     if (urlMatch) {
-      ;[domain] = urlMatch;
-      url = url.slice(domain.length);
+      ;[domain] = urlMatch
+      url = url.slice(domain.length)
     }
 
-    const match = pathToRegexp.parse(url);
-    url = pathToRegexp.compile(url)(data);
+    const match = pathToRegexp.parse(url)
+    url = pathToRegexp.compile(url)(data)
 
     for (const item of match) {
       if (item instanceof Object && item.name in cloneData) {
-        delete cloneData[item.name];
+        delete cloneData[item.name]
       }
     }
-    options.url = domain + url;
+    options.url = domain + url
   } catch (e) {
-    message.error(e.message);
+    message.error(e.message)
   }
 
   // options.cancelToken = new CancelToken(cancel => {
@@ -59,23 +74,23 @@ export default function request(options) {
   //     cancel,
   //   });
   // });
-  if( method.toLocaleLowerCase() === 'get' ){
-    options.params = cloneData;
-  }else{
-    options.data = data;
+  if (method.toLocaleLowerCase() === 'get') {
+    options.params = cloneData
+  } else {
+    options.data = data
   }
   return axios(options)
     .then(response => {
-      const { statusText, status, data } = response;
-
-      let result = {};
-      if (typeof data === 'object') {
-        result = data;
-        if (Array.isArray(data)) {
-          result.list = data;
+      const { statusText, status } = response
+      const res = response.data
+      let result = {}
+      if (typeof res === 'object') {
+        result = res
+        if (Array.isArray(res)) {
+          result.list = res
         }
       } else {
-        result.data = data;
+        result.data = res
       }
 
       return Promise.resolve({
@@ -83,27 +98,27 @@ export default function request(options) {
         message: statusText,
         statusCode: status,
         ...result,
-      });
+      })
     })
     .catch(error => {
-      const { response, message } = error;
+      const { response } = error
 
-      if (String(message) === CANCEL_REQUEST_MESSAGE) {
+      if (String(message.message) === CANCEL_REQUEST_MESSAGE) {
         return {
           success: false,
-        };
+        }
       }
 
-      let msg;
-      let statusCode;
+      let msg
+      let statusCode
 
       if (response && response instanceof Object) {
-        const { data, statusText } = response;
-        statusCode = response.status;
-        msg = data.message || statusText;
+        const { statusText } = response
+        statusCode = response.status
+        msg = response.data.message || statusText
       } else {
-        statusCode = 600;
-        msg = error.message || 'Network Error';
+        statusCode = 600
+        msg = error.message || 'Network Error'
       }
 
       /* eslint-disable */

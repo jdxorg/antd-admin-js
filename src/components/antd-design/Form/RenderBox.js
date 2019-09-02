@@ -1,7 +1,15 @@
-import React from 'react';
-import { Form, Input, Radio, Select } from 'antd';
-import { isArray, isFunction, isPlainObject } from 'lodash';
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:32
+ * @LastEditTime: 2019-08-30 16:34:48
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
+import React from 'react'
+import { Form, Input, Radio, Select } from 'antd'
+import _ from 'lodash'
 
+const { isArray, isFunction, isPlainObject } = _
 /**
  * 对象转为entry数组
  *
@@ -12,7 +20,7 @@ import { isArray, isFunction, isPlainObject } from 'lodash';
 function entries(object, callback = item => item) {
   return isPlainObject(object)
     ? Object.entries(object).map(([key, value]) => callback({ key, value }))
-    : null;
+    : null
 }
 
 /**
@@ -30,16 +38,18 @@ export function fillFormItems(items, formValues = {}) {
       required,
       initialValue = formValues[name],
       valuePropName = 'value',
-    } = item;
+    } = item
     return {
       options: {
-        rules: required ? [{ required: true, message: `请输入${label}` }] : null,
+        rules: required
+          ? [{ required: true, message: `请输入${label}` }]
+          : null,
         initialValue,
         valuePropName,
       },
       ...item,
-    };
-  });
+    }
+  })
 }
 
 /**
@@ -51,20 +61,28 @@ export function fillFormItems(items, formValues = {}) {
  * @returns {*}
  */
 export function renderFormItem(item, getFieldDecorator, formLayout) {
-  const { label, name, options, layout = formLayout, itemRender, itemRender2, ...props } = item;
-  let child;
+  const {
+    label,
+    name,
+    options,
+    layout = formLayout,
+    itemRender,
+    itemRender2,
+    ...props
+  } = item
+  let child
   if (isFunction(itemRender)) {
-    child = itemRender(getFieldDecorator);
+    child = itemRender(getFieldDecorator)
   } else {
     child = getFieldDecorator(name, options)(
       itemRender || <Input placeholder="请输入" {...props} />
-    );
+    )
   }
   return (
     <Form.Item key={name} label={label} {...layout}>
       {child}
     </Form.Item>
-  );
+  )
 }
 
 /**
@@ -82,11 +100,13 @@ export function renderGroupComponent(iterable, Parent, Item, props) {
       <Item key={key} value={key}>
         {value}
       </Item>
-    );
-    const child = isArray(iterable) ? iterable.map(forEach) : entries(iterable, forEach);
-    return <Parent {...props}>{child}</Parent>;
+    )
+    const child = isArray(iterable)
+      ? iterable.map(forEach)
+      : entries(iterable, forEach)
+    return <Parent {...props}>{child}</Parent>
   }
-  return null;
+  return null
 }
 
 /**
@@ -98,7 +118,7 @@ export function renderGroupComponent(iterable, Parent, Item, props) {
  * @returns {*}
  */
 export function renderRadioGroup(iterable, Item = Radio, props) {
-  return renderGroupComponent(iterable, Radio.Group, Item, props);
+  return renderGroupComponent(iterable, Radio.Group, Item, props)
 }
 
 /**
@@ -113,8 +133,8 @@ export function renderSelect(iterable, props) {
     placeholder: '请选择',
     style: { width: '100%' },
     ...props,
-  };
-  return renderGroupComponent(iterable, Select, Select.Option, newProps);
+  }
+  return renderGroupComponent(iterable, Select, Select.Option, newProps)
 }
 
 /**
@@ -128,11 +148,11 @@ export function submitForm(form, formValues, callback) {
   if (form) {
     form.validateFields((err, fieldsValue) => {
       if (!err && isFunction(callback)) {
-        callback({ ...formValues, ...fieldsValue }, form);
+        callback({ ...formValues, ...fieldsValue }, form)
       }
-    });
+    })
   } else {
     // eslint-disable-next-line no-console
-    console.warn('form is not defined');
+    console.warn('form is not defined')
   }
 }

@@ -2,13 +2,12 @@
  * @Author: dexiaojiang 289608944@qq.com
  * @Description: In User Settings Edit
  * @Date: 2019-08-23 15:20:32
- * @LastEditTime: 2019-08-26 17:12:35
+ * @LastEditTime: 2019-08-30 17:29:54
  * @LastEditors: dexiaojiang 289608944@qq.com
  */
 // https://umijs.org/config/
 import { resolve } from 'path'
-import { i18n } from './src/utils/sys/config'
-const path = require('path');
+import webpackPlugin from './config/webpack.config'
 
 export default {
   ignoreMomentLocale: true,
@@ -46,27 +45,6 @@ export default {
             /chart\/Recharts\/.+Component\.js$/,
             /chart\/Recharts\/Container\.js$/,
           ],
-          // update: routes => {
-          //   if (!i18n) return routes
-
-          //   const newRoutes = []
-          //   for (const item of routes[0].routes) {
-          //     newRoutes.push(item)
-          //     if (item.path) {
-          //       newRoutes.push(
-          //         Object.assign({}, item, {
-          //           path:
-          //             `/:lang(${i18n.languages
-          //               .map(item => item.key)
-          //               .join('|')})` + item.path,
-          //         })
-          //       )
-          //     }
-          //   }
-          //   routes[0].routes = newRoutes
-
-          //   return routes
-          // },
         },
         dll: {
           include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch', 'antd/es'],
@@ -91,7 +69,7 @@ export default {
     },
   },
   alias: {
-    '@': path.resolve(__dirname, 'src/'),
+    '@': resolve(__dirname, 'src/'),
     api: resolve(__dirname, './src/services/'),
     components: resolve(__dirname, './src/components'),
     config: resolve(__dirname, './src/utils/sys/config'),
@@ -102,15 +80,7 @@ export default {
     utils: resolve(__dirname, './src/utils'),
   },
   extraBabelPresets: ['@lingui/babel-preset-react'],
-  extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'lodash',
-        libraryDirectory: '',
-        camel2DashComponentName: false,
-      },
-      'lodash',
-    ],
-  ],
+  extraBabelPlugins: [],
+  treeShaking: true,
+  chainWebpack: webpackPlugin
 }

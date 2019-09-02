@@ -3,7 +3,7 @@
 }
 .mobilePng {
   position: absolute;
-  width:375px;
+  width: 375px;
   // float: right;
   right: 0;
 }
@@ -11,37 +11,40 @@
   position: absolute;
   right: 35px;
   top: 80px;
-  width:300px;
+  width: 300px;
 }
-.banner{
+.banner {
   position: absolute;
   right: 26px;
   top: 125px;
-  img{
-    width:325px;
-    height:100px;
+  img {
+    width: 325px;
+    height: 100px;
   }
 }
-.navbar{
+.innerContainer {
   position: absolute;
-  right: 36px;
   top: 250px;
-  width: 300px;
+  right: 30px;
   display: flex;
   justify-content: space-around;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  width: 300px;
   .navbarItem {
     display: flex;
     flex-direction: column;
     align-items: center;
-    img{
-      width:30px;
-      height:30px;
+    margin: 0 15px;
+    img {
+      width: 30px;
+      height: 30px;
     }
   }
 }
-:global{
+:global {
   .ant-carousel {
-    width:325px;
+    width: 325px;
   }
   .ant-carousel .slick-slide {
     text-align: center;
@@ -50,7 +53,7 @@
     background: #364d79;
     overflow: hidden;
   }
-  
+
   .ant-carousel .slick-slide h3 {
     color: #fff;
   }

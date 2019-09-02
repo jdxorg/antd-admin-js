@@ -1,66 +1,85 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'dva';
-// import { Row, Col, Button, Popconfirm } from 'antd';
-import { withI18n } from '@lingui/react';
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-08-23 15:20:33
+ * @LastEditTime: 2019-08-29 15:05:35
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'dva'
+import { message } from 'antd'
+import { withI18n } from '@lingui/react'
 
-import { Page } from 'components';
-import List from './components/List';
-import Filter from './components/Filter';
-import Modal from './components/Modal';
-import Setting from './components/Setting';
+import { Page } from 'components'
+import List from './components/List'
+import Filter from './components/Filter'
+import Modal from './components/Modal'
+import Setting from './components/Setting'
 
 @withI18n()
-@connect(({ user,modal, loading }) => ({ user,modal,loading }))
+@connect(({ user, modal, loading }) => ({ user, modal, loading }))
 class User extends PureComponent {
   render() {
-    const { dispatch, user,modal, loading, i18n } = this.props;
-    const {
-      list,
-      pagination,
-      selectedRowKeys,
-      roles,
-    } = user;
-    const handleRefresh = payload => dispatch({ type:'user/query',payload });
-    const { item } = modal;
+    const { dispatch, user, modal, loading, i18n } = this.props
+    const { list, pagination, selectedRowKeys, roles } = user
+    const handleRefresh = payload => dispatch({ type: 'user/query', payload })
+    const hideModal = () => dispatch({ type: 'modal/hideModal' })
+    const { item } = modal
     const modalProps = {
       ...modal,
-      loading:loading.effects['user/showModal'],
-      title: item&&item.id ? i18n.t`Update.User` : i18n.t`Create.User`,
+      loading: loading.effects['user/showModal'],
+      title: item && item.id ? i18n.t`Update.User` : i18n.t`Create.User`,
       onOk(data) {
-        const modalType = item&&item.id?'update':'create';
+        const modalType = item && item.id ? 'update' : 'create'
         dispatch({
           type: `user/${modalType}`,
           payload: {
-            id:item.id,
+            id: item.id,
             ...data,
           },
-        }).then(() => {
-          handleRefresh();
-        });
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onCancel() {
-        dispatch({
-          type: 'modal/hideModal',
-        });
+        hideModal()
       },
-    };
+    }
 
     const settingModalProps = {
       ...user,
       ...modal,
-      loading:loading.effects['user/showSettingModal'],
-      title:'Setting',
-      onOk: data=>{
+      loading: loading.effects['user/showSettingModal'],
+      title: 'Setting',
+      onOk: data => {
         dispatch({
-          type:'user/updatePermission',
-          payload:data,
-        });
+          type: 'user/updatePermission',
+          payload: data,
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+              hideModal()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
-      onCancel:()=>{
-        dispatch({type:'modal/hideModal'});
+      onCancel: () => {
+        hideModal()
       },
-    };
+    }
 
     const listProps = {
       roles,
@@ -71,20 +90,22 @@ class User extends PureComponent {
         handleRefresh({
           current: page.current,
           pageSize: page.pageSize,
-        });
+        })
       },
       onDeleteItem(id) {
         dispatch({
           type: 'user/delete',
           payload: id,
-        }).then(() => {
-          handleRefresh({
-            current:
-              list.length === 1 && pagination.current > 1
-                ? pagination.current - 1
-                : pagination.current,
-          });
-        });
+        })
+          .then(result => {
+            const { success, msg } = result
+            if (success) {
+              handleRefresh()
+            } else {
+              message.error(msg)
+            }
+          })
+          .catch(e => message.error(e.message))
       },
       onEditItem(currentItem) {
         dispatch({
@@ -92,15 +113,15 @@ class User extends PureComponent {
           payload: {
             currentItem,
           },
-        });
+        })
       },
-      onSettingItem(currentItem){
+      onSettingItem(currentItem) {
         dispatch({
-          type:'user/showSettingModal',
-          payload:{
+          type: 'user/showSettingModal',
+          payload: {
             currentItem,
           },
-        });
+        })
       },
       rowSelection: {
         selectedRowKeys,
@@ -110,37 +131,37 @@ class User extends PureComponent {
             payload: {
               selectedRowKeys: keys,
             },
-          });
+          })
         },
       },
-    };
+    }
 
     const filterProps = {
       onSearch(value) {
-        if(value&&value.addressCode&&value.addressCode.length>0){
-          value.addressCode = JSON.stringify(value.addressCode);
+        if (value && value.addressCode && value.addressCode.length > 0) {
+          value.addressCode = JSON.stringify(value.addressCode)
         }
-        let createBegin;
-        let createEnd;
-        if(value&&value.createTime){
-          createBegin = new Date(value.createTime[0]).getTime();
-          createEnd = new Date(value.createTime[1]).getTime();
-          delete value.createTime;
+        let createBegin
+        let createEnd
+        if (value && value.createTime) {
+          createBegin = new Date(value.createTime[0]).getTime()
+          createEnd = new Date(value.createTime[1]).getTime()
+          delete value.createTime
         }
         handleRefresh({
           current: 1,
           createBegin,
           createEnd,
           ...value,
-        });
+        })
       },
       onAdd() {
         dispatch({
           type: 'user/showModal',
-          payload:{},
-        });
+          payload: {},
+        })
       },
-    };
+    }
 
     // const handleDeleteItems = () => {
     //   dispatch({
@@ -178,10 +199,12 @@ class User extends PureComponent {
           </Row>
         )} */}
         <List {...listProps} />
-        {modal.visible && modal.type ==='modal' && <Modal {...modalProps} />}
-        {modal.visible && modal.type === 'setting' && <Setting {...settingModalProps} />}
+        {modal.visible && modal.type === 'modal' && <Modal {...modalProps} />}
+        {modal.visible && modal.type === 'setting' && (
+          <Setting {...settingModalProps} />
+        )}
       </Page>
-    );
+    )
   }
 }
 
@@ -189,10 +212,10 @@ User.propTypes = {
   user: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
-};
+}
 User.defaultProps = {
-  user:{},
-  dispatch:()=>{},
-  loading:{},
-};
-export default User;
+  user: {},
+  dispatch: () => {},
+  loading: {},
+}
+export default User
