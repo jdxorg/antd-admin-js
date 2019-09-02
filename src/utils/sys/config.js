@@ -1,3 +1,10 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-09-02 11:42:42
+ * @LastEditTime: 2019-09-02 11:42:42
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 const MOCK_API = 'http://localhost:7000'
 const ACCOUNT_API = 'http://127.0.0.1:4000'
 const UPLOAD_API = 'http://127.0.0.1:4000'
