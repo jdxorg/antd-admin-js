@@ -1,3 +1,10 @@
+/*
+ * @Author: dexiaojiang 289608944@qq.com
+ * @Description: In User Settings Edit
+ * @Date: 2019-05-29 14:47:12
+ * @LastEditTime: 2019-09-02 12:44:55
+ * @LastEditors: dexiaojiang 289608944@qq.com
+ */
 import { Mock, Constant, qs, randomAvatar } from './_utils'
 
 const { ApiPrefix } = Constant
@@ -31,7 +38,7 @@ const EnumRoleType = {
 
 const userPermission = {
   DEFAULT: {
-    visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
+    visit: ['1', '2', '21', '7', '5', '51', '52', '53','4','41','42','43','44'],
     role: EnumRoleType.DEFAULT,
   },
   ADMIN: {
