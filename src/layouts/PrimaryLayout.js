@@ -1,17 +1,17 @@
 /* global document */
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import withRouter from 'umi/withRouter';
-import { connect } from 'dva';
-import { MyLayout } from 'components';
-import { BackTop, Layout, Drawer } from 'antd';
-import { GlobalFooter } from 'ant-design-pro';
-import { enquireScreen, unenquireScreen } from 'enquire-js';
-import { config,queryAncestors } from 'utils';
-import {isArray} from 'lodash';
-import Error from '../pages/404';
-import styles from './PrimaryLayout.less';
-import { ADMIN ,DEFAULT,DEVELOPER} from '../constant/role';
+import React, { PureComponent, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import withRouter from 'umi/withRouter'
+import { connect } from 'dva'
+import { MyLayout } from 'components'
+import { BackTop, Layout, Drawer } from 'antd'
+import { GlobalFooter } from 'ant-design-pro'
+import { enquireScreen, unenquireScreen } from 'enquire-js'
+import { config, queryAncestors } from 'utils'
+import { isArray } from 'lodash'
+import Error from '../pages/404'
+import styles from './PrimaryLayout.less'
+import { Role } from '../constant'
 
 const { Content } = Layout
 const { Header, Bread, Sider } = MyLayout
@@ -39,7 +39,8 @@ class PrimaryLayout extends PureComponent {
   }
 
   onCollapseChange = collapsed => {
-    this.props.dispatch({
+    const { dispatch } = this.props
+    dispatch({
       type: 'app/handleCollapseChange',
       payload: collapsed,
     })
@@ -47,38 +48,36 @@ class PrimaryLayout extends PureComponent {
 
   render() {
     const { app, location, dispatch, children } = this.props
-    const {
-      user,
-      theme,
-      routeList,
-      collapsed,
-      permissions,
-      notifications,
-    } = app
+    const { user, theme, routeList, collapsed, notifications } = app
     const { isMobile } = this.state
     const { onCollapseChange } = this
 
     // Localized route name.
 
-    const selectedItems = queryAncestors(routeList,location.pathname)
+    const selectedItems = queryAncestors(routeList, location.pathname)
     // Find a route that matches the pathname.
-    const currentRoute = selectedItems?selectedItems[selectedItems.length-1]:null
+    const currentRoute = selectedItems
+      ? selectedItems[selectedItems.length - 1]
+      : null
     // Query whether you have permission to enter this page
     let hasPermission = false
-    if( permissions.role === ADMIN||permissions.role === DEFAULT||permissions.role === DEVELOPER ){
+    const { roles, visit } = user
+    if (
+      (roles && ~roles.indexOf(Role.ADMIN)) ||
+      (roles && ~roles.indexOf(Role.DEFAULT)) ||
+      (roles && ~roles.indexOf(Role.DEVELOPER))
+    ) {
       hasPermission = true
-    }else{
-      if( permissions.visit && isArray(permissions.visit) ){
-        hasPermission = currentRoute ? permissions.visit.includes(currentRoute.id): false
-      }
+    } else if (visit && isArray(visit)) {
+      hasPermission = currentRoute ? visit.includes(currentRoute.id) : false
     }
     const headerProps = {
-      menus:routeList,
+      menus: routeList,
       collapsed,
       notifications,
       onCollapseChange,
       avatar: user.avatar,
-      username: user.username,
+      username: user.userName,
       fixed: config.fixedHeader,
       onAllNotificationsRead() {
         dispatch({ type: 'app/allNotificationsRead' })
@@ -90,14 +89,14 @@ class PrimaryLayout extends PureComponent {
 
     const siderProps = {
       theme,
-      menus:routeList,
+      menus: routeList,
       isMobile,
       collapsed,
       onCollapseChange,
-      onThemeChange(theme) {
+      onThemeChange(myTheme) {
         dispatch({
           type: 'app/handleThemeChange',
-          payload: theme,
+          payload: myTheme,
         })
       },
     }
@@ -155,5 +154,10 @@ PrimaryLayout.propTypes = {
   app: PropTypes.object,
   loading: PropTypes.object,
 }
-
+PrimaryLayout.defaultProps = {
+  location: {},
+  dispatch: () => {},
+  app: {},
+  loading: {},
+}
 export default PrimaryLayout

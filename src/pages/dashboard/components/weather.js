@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Spin } from 'antd';
-import styles from './weather.less';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Spin } from 'antd'
+import styles from './weather.less'
 
 function Weather({ city, icon, dateTime, temperature, name, loading }) {
   return (
@@ -19,14 +19,12 @@ function Weather({ city, icon, dateTime, temperature, name, loading }) {
         <div className={styles.right}>
           <h1 className={styles.temperature}>{`${temperature}°`}</h1>
           <p className={styles.description}>
-            {city}
-,
-{dateTime}
+            {city},{dateTime}
           </p>
         </div>
       </div>
     </Spin>
-  );
+  )
 }
 
 Weather.propTypes = {
@@ -36,6 +34,6 @@ Weather.propTypes = {
   temperature: PropTypes.string,
   name: PropTypes.string,
   loading: PropTypes.bool,
-};
+}
 
-export default Weather;
+export default Weather

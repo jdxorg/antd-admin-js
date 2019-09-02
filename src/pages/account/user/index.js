@@ -1,48 +1,64 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'dva';
-import { Row, Col, Button, Popconfirm } from 'antd';
-import { withI18n } from '@lingui/react';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'dva'
+// import { Row, Col, Button, Popconfirm } from 'antd';
+import { withI18n } from '@lingui/react'
 
-import { Page } from 'components';
-import List from './components/List';
-import Filter from './components/Filter';
-import Modal from './components/Modal';
+import { Page } from 'components'
+import List from './components/List'
+import Filter from './components/Filter'
+import Modal from './components/Modal'
+import Setting from './components/Setting'
 
 @withI18n()
-@connect(({ user,modal, loading }) => ({ user,modal, loading }))
+@connect(({ user, modal, loading }) => ({ user, modal, loading }))
 class User extends PureComponent {
   render() {
-    const { dispatch, user,modal, loading, i18n } = this.props;
-    const {
-      list,
-      pagination,
-      modalType,
-      selectedRowKeys,
-    } = user;
-    const handleRefresh = payload => dispatch({ type:'user/query',payload });
-
+    const { dispatch, user, modal, loading, i18n } = this.props
+    const { list, pagination, selectedRowKeys, roles } = user
+    const handleRefresh = payload => dispatch({ type: 'user/query', payload })
+    const { item } = modal
     const modalProps = {
       ...modal,
-      loading:loading.effects['user/showModal'],
-      confirmLoading: loading.effects[`user/${modalType}`],
-      title: modalType === 'create' ? i18n.t`Create.User` : i18n.t`Update.User`,
+      loading: loading.effects['user/showModal'],
+      title: item && item.id ? i18n.t`Update.User` : i18n.t`Create.User`,
       onOk(data) {
+        const modalType = item && item.id ? 'update' : 'create'
         dispatch({
           type: `user/${modalType}`,
-          payload: data,
+          payload: {
+            id: item.id,
+            ...data,
+          },
         }).then(() => {
-          handleRefresh();
-        });
+          handleRefresh()
+        })
       },
       onCancel() {
         dispatch({
           type: 'modal/hideModal',
-        });
+        })
       },
-    };
+    }
+
+    const settingModalProps = {
+      ...user,
+      ...modal,
+      loading: loading.effects['user/showSettingModal'],
+      title: 'Setting',
+      onOk: data => {
+        dispatch({
+          type: 'user/updatePermission',
+          payload: data,
+        })
+      },
+      onCancel: () => {
+        dispatch({ type: 'modal/hideModal' })
+      },
+    }
 
     const listProps = {
+      roles,
       dataSource: list,
       loading: loading.effects['user/query'],
       pagination,
@@ -50,7 +66,7 @@ class User extends PureComponent {
         handleRefresh({
           current: page.current,
           pageSize: page.pageSize,
-        });
+        })
       },
       onDeleteItem(id) {
         dispatch({
@@ -62,17 +78,24 @@ class User extends PureComponent {
               list.length === 1 && pagination.current > 1
                 ? pagination.current - 1
                 : pagination.current,
-          });
-        });
+          })
+        })
       },
-      onEditItem(item) {
+      onEditItem(currentItem) {
         dispatch({
           type: 'user/showModal',
           payload: {
-            modalType: 'update',
-            currentItem: item,
+            currentItem,
           },
-        });
+        })
+      },
+      onSettingItem(currentItem) {
+        dispatch({
+          type: 'user/showSettingModal',
+          payload: {
+            currentItem,
+          },
+        })
       },
       rowSelection: {
         selectedRowKeys,
@@ -82,48 +105,58 @@ class User extends PureComponent {
             payload: {
               selectedRowKeys: keys,
             },
-          });
+          })
         },
       },
-    };
+    }
 
     const filterProps = {
       onSearch(value) {
+        if (value && value.addressCode && value.addressCode.length > 0) {
+          value.addressCode = JSON.stringify(value.addressCode)
+        }
+        let createBegin
+        let createEnd
+        if (value && value.createTime) {
+          createBegin = new Date(value.createTime[0]).getTime()
+          createEnd = new Date(value.createTime[1]).getTime()
+          delete value.createTime
+        }
         handleRefresh({
-          ...value,
           current: 1,
-        });
+          createBegin,
+          createEnd,
+          ...value,
+        })
       },
       onAdd() {
         dispatch({
           type: 'user/showModal',
-          payload: {
-            modalType: 'create',
-          },
-        });
+          payload: {},
+        })
       },
-    };
+    }
 
-    const handleDeleteItems = () => {
-      dispatch({
-        type: 'user/multiDelete',
-        payload: {
-          ids: selectedRowKeys,
-        },
-      }).then(() => {
-        handleRefresh({
-          current:
-            list.length === selectedRowKeys.length && pagination.current > 1
-              ? pagination.current - 1
-              : pagination.current,
-        });
-      });
-    };
+    // const handleDeleteItems = () => {
+    //   dispatch({
+    //     type: 'user/multiDelete',
+    //     payload: {
+    //       ids: selectedRowKeys,
+    //     },
+    //   }).then(() => {
+    //     handleRefresh({
+    //       current:
+    //         list.length === selectedRowKeys.length && pagination.current > 1
+    //           ? pagination.current - 1
+    //           : pagination.current,
+    //     });
+    //   });
+    // };
 
     return (
       <Page inner>
         <Filter {...filterProps} />
-        {selectedRowKeys.length > 0 && (
+        {/* {selectedRowKeys.length > 0 && (
           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
             <Col>
               {`Selected ${selectedRowKeys.length} items `}
@@ -138,11 +171,14 @@ class User extends PureComponent {
               </Popconfirm>
             </Col>
           </Row>
-        )}
+        )} */}
         <List {...listProps} />
-        {modal.visible && <Modal {...modalProps} />}
+        {modal.visible && modal.type === 'modal' && <Modal {...modalProps} />}
+        {modal.visible && modal.type === 'setting' && (
+          <Setting {...settingModalProps} />
+        )}
       </Page>
-    );
+    )
   }
 }
 
@@ -150,6 +186,10 @@ User.propTypes = {
   user: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
-};
-
-export default User;
+}
+User.defaultProps = {
+  user: {},
+  dispatch: () => {},
+  loading: {},
+}
+export default User

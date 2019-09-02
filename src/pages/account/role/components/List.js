@@ -1,23 +1,27 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Modal} from 'antd'
-import { DropOption,DataTable } from 'components'
+import { Modal } from 'antd'
+import { DropOption, DataTable } from 'components'
 import { Trans, withI18n } from '@lingui/react'
-const { confirm } = Modal
+import { dateFormat } from 'utils'
+import { RoleType, HandleType } from '@/constant'
 
+const { confirm } = Modal
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n } = this.props
-    if (e.key === '1') {
+    const { onDeleteItem, onEditItem, onSettingItem, i18n } = this.props
+    if (+e.key === HandleType.UPDATE) {
       onEditItem(record)
-    } else if (e.key === '2') {
+    } else if (+e.key === HandleType.DELETE) {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
           onDeleteItem(record.id)
         },
       })
+    } else if (+e.key === HandleType.SETTING) {
+      onSettingItem(record)
     }
   }
 
@@ -36,6 +40,9 @@ class List extends PureComponent {
         title: <Trans>RoleType</Trans>,
         dataIndex: 'roleType',
         key: 'roleType',
+        render: text => {
+          return RoleType[text]
+        },
       },
       {
         title: <Trans>Description</Trans>,
@@ -46,26 +53,39 @@ class List extends PureComponent {
         title: <Trans>Status</Trans>,
         dataIndex: 'state',
         key: 'state',
+        render: text => {
+          if (text === 0) {
+            return '正常'
+          } else {
+            return '无效'
+          }
+        },
       },
       {
         title: <Trans>Creator</Trans>,
-        dataIndex: 'creator',
-        key: 'creator',
+        dataIndex: 'createdBy',
+        key: 'createdBy',
       },
       {
         title: <Trans>CreateTime</Trans>,
-        dataIndex: 'createTime',
-        key: 'createTime',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        render: text => {
+          return dateFormat(new Date(+text), 'YYYY-MM-DD HH:MM')
+        },
       },
       {
         title: <Trans>Updator</Trans>,
-        dataIndex: 'updator',
-        key: 'updator',
+        dataIndex: 'updatedBy',
+        key: 'updatedBy',
       },
       {
         title: <Trans>UpdateTime</Trans>,
-        dataIndex: 'updateTime',
-        key: 'updateTime',
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
+        render: text => {
+          return dateFormat(new Date(+text), 'YYYY-MM-DD HH:MM')
+        },
       },
       {
         title: <Trans>Operation</Trans>,
@@ -76,8 +96,9 @@ class List extends PureComponent {
             <DropOption
               onMenuClick={e => this.handleMenuClick(record, e)}
               menuOptions={[
-                { key: '1', name: i18n.t`Update` },
-                { key: '2', name: i18n.t`Delete` },
+                { key: HandleType.UPDATE, name: i18n.t`Update` },
+                { key: HandleType.DELETE, name: i18n.t`Delete` },
+                { key: HandleType.SETTING, name: i18n.t`Setting` },
               ]}
             />
           )
@@ -96,9 +117,8 @@ class List extends PureComponent {
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  location: PropTypes.object,
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
 }
 
 export default List

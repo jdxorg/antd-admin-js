@@ -10,7 +10,7 @@ class UserDetail extends PureComponent {
     const { userDetail } = this.props
     const { data } = userDetail
     const content = []
-    for (let key in data) {
+    for (const key in data) {
       if ({}.hasOwnProperty.call(data, key)) {
         content.push(
           <div key={key} className={styles.item}>
@@ -29,7 +29,7 @@ class UserDetail extends PureComponent {
 }
 
 UserDetail.propTypes = {
-  userDetail: PropTypes.object,
+  userDetail: PropTypes.object.isRequired,
 }
 
 export default UserDetail

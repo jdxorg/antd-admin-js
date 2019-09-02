@@ -178,7 +178,7 @@ class MapChartComponent extends React.Component {
   }
 
   render() {
-    let code =
+    const code =
       "require('echarts/map/js/china.js'); \n" +
       '<ReactEcharts \n' +
       '    option={this.state.option || {}} \n' +

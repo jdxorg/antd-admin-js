@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ResponsiveContainer } from 'recharts';
-import styles from './Container.less';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ResponsiveContainer } from 'recharts'
+import styles from './Container.less'
 
 const Container = ({
   children,
@@ -15,13 +15,17 @@ const Container = ({
       <ResponsiveContainer>{children}</ResponsiveContainer>
     </div>
   </div>
-);
+)
 
 Container.propTypes = {
   children: PropTypes.element.isRequired,
   ratio: PropTypes.number,
   minHeight: PropTypes.number,
   maxHeight: PropTypes.number,
-};
-
-export default Container;
+}
+Container.defaultProps = {
+  ratio: 0,
+  minHeight: 0,
+  maxHeight: 0,
+}
+export default Container

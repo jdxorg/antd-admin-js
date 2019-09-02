@@ -1,78 +1,98 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Form, Input, InputNumber, Radio, Cascader } from 'antd';
-import { Trans, withI18n } from '@lingui/react';
-import city from '@/utils/sys/city';
-import { BaseModal } from 'components';
-import { formItemLayout } from '@/utils/sys/props';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Form, Input, InputNumber, Radio, Cascader, Select } from 'antd'
+import { Trans, withI18n } from '@lingui/react'
+import { BaseModal, ImageUploader } from 'components'
+import city from '@/utils/sys/city'
+import { formItemLayout } from '@/utils/sys/props'
+import { uplodaFile } from '@/services/api'
+import { ACCESS_TOKEN } from '@/constant'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 @withI18n()
 @Form.create()
 class UserModal extends PureComponent {
+  state = {
+    address: '',
+  }
+
+  constructor(props) {
+    super(props)
+    const { item = {} } = this.props
+    this.state.address = item.address
+  }
+
   handleOk = () => {
-    const { item = {}, onOk, form } = this.props;
-    const { validateFields, getFieldsValue } = form;
+    const { item = {}, onOk, form } = this.props
+    const { validateFields, getFieldsValue } = form
 
     validateFields(errors => {
       if (errors) {
-        return;
+        return
       }
+      const { address } = this.state
       const data = {
         ...getFieldsValue(),
         key: item.key,
-      };
-      data.address = data.address.join(' ');
-      onOk(data);
-    });
+        address,
+      }
+      onOk(data)
+    })
+  }
+
+  addressChange = (value, selectedOptions) => {
+    const address = selectedOptions
+      .map(_ => {
+        return _.label
+      })
+      .join(' ')
+    this.setState({ address })
   }
 
   render() {
-    const { item = {}, onOk, form, i18n,modal, ...modalProps } = this.props;
-    const { getFieldDecorator } = form;
-    
+    const { item = {}, onOk, form, i18n, modal, ...modalProps } = this.props
+    const { getFieldDecorator } = form
     return (
       <BaseModal
         {...modalProps}
         onOk={this.handleOk}
-        children={
+        child={
           <Form layout="horizontal">
-            <FormItem label={i18n.t`Name`} hasFeedback {...formItemLayout}>
-              {getFieldDecorator('name', {
-                initialValue: item.name,
+            <FormItem label={i18n.t`LoginName`} hasFeedback {...formItemLayout}>
+              {getFieldDecorator('loginName', {
+                initialValue: item.loginName,
                 rules: [
                   {
                     required: true,
                   },
                 ],
+              })(<Input />)}
+            </FormItem>
+            <FormItem label={i18n.t`Name`} hasFeedback {...formItemLayout}>
+              {getFieldDecorator('userName', {
+                initialValue: item.userName,
               })(<Input />)}
             </FormItem>
             <FormItem label={i18n.t`NickName`} hasFeedback {...formItemLayout}>
               {getFieldDecorator('nickName', {
                 initialValue: item.nickName,
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
               })(<Input />)}
             </FormItem>
             <FormItem label={i18n.t`Gender`} hasFeedback {...formItemLayout}>
-              {getFieldDecorator('isMale', {
-                initialValue: item.isMale,
+              {getFieldDecorator('gender', {
+                initialValue: item.gender,
                 rules: [
                   {
                     required: true,
-                    type: 'boolean',
                   },
                 ],
               })(
                 <Radio.Group>
-                  <Radio value>
+                  <Radio value={0}>
                     <Trans>Male</Trans>
                   </Radio>
-                  <Radio value={false}>
+                  <Radio value={1}>
                     <Trans>Female</Trans>
                   </Radio>
                 </Radio.Group>
@@ -90,11 +110,10 @@ class UserModal extends PureComponent {
               })(<InputNumber min={18} max={100} />)}
             </FormItem>
             <FormItem label={i18n.t`Phone`} hasFeedback {...formItemLayout}>
-              {getFieldDecorator('phone', {
-                initialValue: item.phone,
+              {getFieldDecorator('mobile', {
+                initialValue: item.mobile,
                 rules: [
                   {
-                    required: true,
                     pattern: /^1[34578]\d{9}$/,
                     message: i18n.t`The.input.is.not.valid.phone`,
                   },
@@ -106,7 +125,6 @@ class UserModal extends PureComponent {
                 initialValue: item.email,
                 rules: [
                   {
-                    required: true,
                     pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                     message: i18n.t`The.input.is.not.valid.E-mail`,
                   },
@@ -114,32 +132,65 @@ class UserModal extends PureComponent {
               })(<Input />)}
             </FormItem>
             <FormItem label={i18n.t`Address`} hasFeedback {...formItemLayout}>
-              {getFieldDecorator('address', {
-                initialValue: item.address && item.address.split(' '),
+              {getFieldDecorator('addressCode', {
+                initialValue: item.addressCode,
+              })(
+                <Cascader
+                  style={{ width: '100%' }}
+                  options={city}
+                  placeholder={i18n.t`Pick.an.address`}
+                  onChange={this.addressChange}
+                />
+              )}
+            </FormItem>
+            <FormItem
+              label={i18n.t`FamilyAddress`}
+              hasFeedback
+              {...formItemLayout}
+            >
+              {getFieldDecorator('familyAddress', {
+                initialValue: item.familyAddress,
+              })(<Input />)}
+            </FormItem>
+            <FormItem label={i18n.t`State`} {...formItemLayout}>
+              {getFieldDecorator('state', {
+                initialValue: item.state,
                 rules: [
                   {
                     required: true,
                   },
                 ],
               })(
-                <Cascader
-                  style={{ width: '100%' }}
-                  options={city}
-                  placeholder={i18n.t`Pick.an.address`}
+                <Select placeholder={i18n.t`Pick.an.state`}>
+                  <Select.Option value={1}>启用</Select.Option>
+                  <Select.Option value={0}>禁用</Select.Option>
+                </Select>
+              )}
+            </FormItem>
+            <FormItem label={i18n.t`Avatar`} {...formItemLayout}>
+              {getFieldDecorator('avatar', {
+                initialValue: item.avatar || '',
+              })(
+                <ImageUploader
+                  action={uplodaFile}
+                  headers={{
+                    Authorization: `bearer ${sessionStorage.getItem(
+                      ACCESS_TOKEN
+                    )}`,
+                  }}
                 />
               )}
             </FormItem>
           </Form>
         }
       />
-    );
+    )
   }
 }
 
 UserModal.propTypes = {
-  type: PropTypes.string,
-  item: PropTypes.object,
-  onOk: PropTypes.func,
-};
+  item: PropTypes.object.isRequired,
+  onOk: PropTypes.func.isRequired,
+}
 
-export default UserModal;
+export default UserModal

@@ -1,9 +1,9 @@
-import React from 'react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import { Table, Tag } from 'antd';
-import { Color } from 'utils';
-import styles from './recentSales.less';
+import React from 'react'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import { Table, Tag } from 'antd'
+import { Color } from 'utils'
+import styles from './recentSales.less'
 
 const status = {
   1: {
@@ -22,7 +22,7 @@ const status = {
     color: Color.blue,
     text: 'EXTENDED',
   },
-};
+}
 
 function RecentSales({ data }) {
   const columns = [
@@ -44,13 +44,10 @@ function RecentSales({ data }) {
       title: 'PRICE',
       dataIndex: 'price',
       render: (text, it) => (
-        <span style={{ color: status[it.status].color }}>
-$
-{text}
-</span>
+        <span style={{ color: status[it.status].color }}>${text}</span>
       ),
     },
-  ];
+  ]
   return (
     <div className={styles.recentsales}>
       <Table
@@ -60,11 +57,11 @@ $
         dataSource={data.filter((item, key) => key < 5)}
       />
     </div>
-  );
+  )
 }
 
 RecentSales.propTypes = {
   data: PropTypes.array,
-};
+}
 
-export default RecentSales;
+export default RecentSales

@@ -3,15 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Helmet } from 'react-helmet'
 import { Loader } from 'components'
-import { queryLayout } from 'utils'
+import { queryLayout, config } from 'utils'
 import NProgress from 'nprogress'
-import {config} from 'utils'
+
 import withRouter from 'umi/withRouter'
 
 import PublicLayout from './PublicLayout'
 import PrimaryLayout from './PrimaryLayout'
 import './BaseLayout.less'
-
 
 const LayoutMap = {
   primary: PrimaryLayout,
@@ -52,5 +51,7 @@ class BaseLayout extends PureComponent {
 BaseLayout.propTypes = {
   loading: PropTypes.object,
 }
-
+BaseLayout.defaultProps = {
+  loading: {},
+}
 export default BaseLayout

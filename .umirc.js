@@ -1,17 +1,24 @@
 /*
+ * @Author: dexiaojiang 289608944@qq.com
  * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-08-07 14:54:05
- * @LastEditTime: 2019-08-15 17:40:47
- * @LastEditors: Please set LastEditors
+ * @Date: 2019-08-23 15:20:32
+ * @LastEditTime: 2019-08-26 17:12:35
+ * @LastEditors: dexiaojiang 289608944@qq.com
  */
 // https://umijs.org/config/
 import { resolve } from 'path'
 import { i18n } from './src/utils/sys/config'
+const path = require('path');
+
 export default {
   ignoreMomentLocale: true,
   targets: { ie: 9 },
   treeShaking: true,
+  define: {
+    "process.env": {
+      PROXY: process.env.PROXY,
+    }
+  },
   plugins: [
     [
       // https://umijs.org/plugin/umi-plugin-react.html
@@ -21,7 +28,7 @@ export default {
         antd: true,
         dynamicImport: {
           webpackChunkName: true,
-          loadingComponent: './components/Loader/Loader',
+          loadingComponent: './components/antd-design/Loader/Loader',
         },
         routes: {
           exclude: [
@@ -84,6 +91,7 @@ export default {
     },
   },
   alias: {
+    '@': path.resolve(__dirname, 'src/'),
     api: resolve(__dirname, './src/services/'),
     components: resolve(__dirname, './src/components'),
     config: resolve(__dirname, './src/utils/sys/config'),

@@ -1,99 +1,126 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Avatar } from 'antd';
-import { DropOption,DataTable } from 'components';
-import { Trans, withI18n } from '@lingui/react';
-import Link from 'umi/link';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Modal, Avatar } from 'antd'
+import { DropOption, DataTable } from 'components'
+import { Trans, withI18n } from '@lingui/react'
+import { dateFormat } from 'utils'
+import { Role, HandleType } from '@/constant'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem, i18n } = this.props;
-    if (e.key === '1') {
-      onEditItem(record);
-    } else if (e.key === '2') {
+    const { onDeleteItem, onEditItem, onSettingItem, i18n } = this.props
+    if (+e.key === HandleType.UPDATE) {
+      onEditItem(record)
+    } else if (+e.key === HandleType.DELETE) {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
-          onDeleteItem(record.id);
+          onDeleteItem(record.id)
         },
-      });
+      })
+    } else if (+e.key === HandleType.SETTING) {
+      onSettingItem(record)
     }
   }
 
   render() {
-    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props;
-
+    const { onDeleteItem, onEditItem, i18n, roles, ...tableProps } = this.props
+    const isEditor = roles && ~roles.indexOf(Role.ADMIN)
     const columns = [
       {
         title: <Trans>Avatar</Trans>,
         dataIndex: 'avatar',
-        key: 'avatar',
         width: 72,
         fixed: 'left',
         render: text => <Avatar style={{ marginLeft: 8 }} src={text} />,
       },
       {
+        title: <Trans>Account</Trans>,
+        dataIndex: 'loginName',
+      },
+      {
         title: <Trans>Name</Trans>,
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
+        dataIndex: 'userName',
+        // render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: <Trans>NickName</Trans>,
         dataIndex: 'nickName',
-        key: 'nickName',
       },
       {
         title: <Trans>Age</Trans>,
         dataIndex: 'age',
-        key: 'age',
       },
       {
         title: <Trans>Gender</Trans>,
-        dataIndex: 'isMale',
-        key: 'isMale',
-        render: text => <span>{text ? 'Male' : 'Female'}</span>,
+        dataIndex: 'gender',
+        render: text => <span>{+text === 0 ? 'Male' : 'Female'}</span>,
       },
       {
         title: <Trans>Phone</Trans>,
-        dataIndex: 'phone',
-        key: 'phone',
+        dataIndex: 'mobile',
       },
       {
         title: <Trans>Email</Trans>,
         dataIndex: 'email',
-        key: 'email',
       },
       {
         title: <Trans>Address</Trans>,
         dataIndex: 'address',
-        key: 'address',
       },
       {
         title: <Trans>CreateTime</Trans>,
-        dataIndex: 'createTime',
-        key: 'createTime',
+        dataIndex: 'createdAt',
+        render: text => {
+          return dateFormat(new Date(+text), 'YYYY-MM-DD HH:MM')
+        },
+      },
+      {
+        title: <Trans>CreateBy</Trans>,
+        dataIndex: 'createdBy',
+      },
+      {
+        title: <Trans>UpdatedTime</Trans>,
+        dataIndex: 'updatedAt',
+        render: text => {
+          return dateFormat(new Date(+text), 'YYYY-MM-DD HH:MM')
+        },
+      },
+      {
+        title: <Trans>UpdatedBy</Trans>,
+        dataIndex: 'updatedBy',
       },
       {
         title: <Trans>Operation</Trans>,
         key: 'operation',
         fixed: 'right',
         render: (text, record) => {
-          return (
-            <DropOption
-              onMenuClick={e => this.handleMenuClick(record, e)}
-              menuOptions={[
-                { key: '1', name: i18n.t`Update` },
-                { key: '2', name: i18n.t`Delete` },
-              ]}
-            />
-          );
+          if (isEditor) {
+            return (
+              <DropOption
+                onMenuClick={e => this.handleMenuClick(record, e)}
+                menuOptions={[
+                  { key: HandleType.UPDATE, name: i18n.t`Update` },
+                  { key: HandleType.DELETE, name: i18n.t`Delete` },
+                  { key: HandleType.SETTING, name: i18n.t`Setting` },
+                  { key: HandleType.DETAIL, name: i18n.t`Detail` },
+                ]}
+              />
+            )
+          } else {
+            return (
+              <DropOption
+                onMenuClick={e => this.handleMenuClick(record, e)}
+                menuOptions={[{ key: HandleType.DETAIL, name: i18n.t`Detail` }]}
+              />
+            )
+          }
         },
       },
-    ];
+    ]
 
     return (
       <DataTable
@@ -101,13 +128,13 @@ class List extends PureComponent {
         pagination={tableProps.pagination}
         columns={columns}
       />
-    );
+    )
   }
 }
 
 List.propTypes = {
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired,
-};
+}
 
-export default List;
+export default List

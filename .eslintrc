@@ -10,8 +10,11 @@
     "jasmine": true
   },
   "rules": {
+    //换行风格
     "linebreak-style": [0 ,"error", "windows"],
+    //生成器函数*的前后空格
     "generator-star-spacing": [0],
+    //return 后面是否允许省略
     "consistent-return": [0],
     "react/forbid-prop-types": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
@@ -35,6 +38,7 @@
     "no-else-return": [0],
     "no-restricted-syntax": [0],
     "import/no-extraneous-dependencies": [0],
+    //未定义前不能使用
     "no-use-before-define": [0],
     "jsx-a11y/no-static-element-interactions": [0],
     "jsx-a11y/no-noninteractive-element-interactions": [0],
@@ -43,8 +47,11 @@
     "no-nested-ternary": [0],
     "arrow-body-style": [0],
     "import/extensions": [0],
+    //禁止使用按位运算符
     "no-bitwise": [0],
-    "semi": "warn",
+    //语句分号结尾
+    "semi": 0,
+    //禁止在条件表达式中使用赋值语句
     "no-cond-assign": [0],
     "import/no-unresolved": [0],
     "comma-dangle": [
@@ -60,12 +67,35 @@
     "object-curly-newline": [0],
     "function-paren-newline": [0],
     "no-restricted-globals": [0],
+    //生成器函数必须有yield
     "require-yield": [1],
+    //注释风格要不要有空格什么的
     "spaced-comment": "off",
+    //首选const
     "prefer-const": "warn",
-    "no-param-reassign": "warn",
+    //禁止给参数重新赋值
+    "no-param-reassign": [0],
+    //禁止使用数组构造器
     "no-array-constructor": "warn",
-    "prefer-destructuring": "warn"
+    "prefer-destructuring": "warn",
+    //禁止修改const声明的变量
+    "no-const-assign": 2,
+    //禁止使用debugger
+    "no-debugger": 2,
+    //块语句中的内容不能为空
+    "no-empty": 2,
+    //不能有无法执行的代码
+    "no-unreachable": 2,
+    //禁用var，用let和const代替
+    "no-var": 0,
+    //逗号风格，换行时在行首还是行尾
+    "comma-style": [2, "last"],
+    "no-underscore-dangle":[0],
+    //禁止使用++，--
+    "no-plusplus": 0,
+    //禁止使用continue
+    "no-continue": 0,
+    "no-unused-expressions":[0]
   },
   "parserOptions": {
     "ecmaFeatures": {

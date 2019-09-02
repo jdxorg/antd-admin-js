@@ -1,21 +1,21 @@
-import React from 'react';
-import ReactEcharts from 'echarts-for-react';
+import React from 'react'
+import ReactEcharts from 'echarts-for-react'
 
 class ChartShowLoadingComponent extends React.Component {
   constructor() {
-    super();
-    this._t = null;
-    this.onChartReady = this.onChartReady.bind(this);
+    super()
+    this._t = null
+    this.onChartReady = this.onChartReady.bind(this)
   }
 
   componentWillUnmount() {
-    clearTimeout(this._t);
+    clearTimeout(this._t)
   }
 
   onChartReady(chart) {
     this._t = setTimeout(() => {
-      chart.hideLoading();
-    }, 3000);
+      chart.hideLoading()
+    }, 3000)
   }
 
   render() {
@@ -54,9 +54,9 @@ class ChartShowLoadingComponent extends React.Component {
             ],
           },
         ],
-      };
-      return option;
-    };
+      }
+      return option
+    }
     const getLoadingOption = () => {
       const option = {
         text: '加载中...',
@@ -64,9 +64,9 @@ class ChartShowLoadingComponent extends React.Component {
         textColor: '#270240',
         maskColor: 'rgba(194, 88, 86, 0.3)',
         zlevel: 0,
-      };
-      return option;
-    };
+      }
+      return option
+    }
 
     const code =
       'onChartReady: function(chart) {\n' +
@@ -76,19 +76,16 @@ class ChartShowLoadingComponent extends React.Component {
       '    option={this.getOtion()} \n' +
       '    onChartReady={this.onChartReady} \n' +
       '    loadingOption={this.getLoadingOption()} \n' +
-      '    showLoading={true} />';
+      '    showLoading={true} />'
 
     return (
       <div className="examples">
         <div className="parent">
           <label>
             {' '}
-            Chart loading With 
-{' '}
-<strong> showLoading </strong>
-: (when chart
+            Chart loading With <strong> showLoading </strong>: (when chart
             ready, hide the loading mask.)
-</label>
+          </label>
           <ReactEcharts
             option={getOtion()}
             onChartReady={this.onChartReady}
@@ -101,8 +98,8 @@ class ChartShowLoadingComponent extends React.Component {
           </pre>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ChartShowLoadingComponent;
+export default ChartShowLoadingComponent

@@ -1,83 +1,111 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Input, InputNumber, Row, Col, Checkbox, Radio, Form, message, Card } from 'antd';
-import { BaseComponent,DrawerForm,SearchForm,ModalForm } from '@/components/Form';
-import { renderFormItem, renderSelect, renderRadioGroup } from '@/components/Form/BaseForm';
+import React, { Component, Fragment } from 'react'
+import {
+  Button,
+  Input,
+  InputNumber,
+  Row,
+  Col,
+  Checkbox,
+  Radio,
+  Form,
+  message,
+  Card,
+} from 'antd'
+import {
+  BaseComponent,
+  DrawerForm,
+  SearchForm,
+  ModalForm,
+} from '@/components/antd-design/Form'
+import {
+  renderFormItem,
+  renderSelect,
+  renderRadioGroup,
+} from '@/components/antd-design/Form/BaseForm'
 
-const { TextArea } = Input;
+const { TextArea } = Input
 
 /**
  * 自定义表单控件
  */
 class SizeInput extends Component {
   /**
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * @description:
+   * @param {type}
+   * @return:
    */
   triggerChange = (changedValue, isWidth) => {
-    const { onChange, value } = this.props;
+    const { onChange, value } = this.props
     if (onChange) {
-      const [width = '', height = ''] = value ? value.split('*') : [];
-      const { width: newWidth = '', height: newHeight = '' } = changedValue;
-      const size = isWidth ? `${newWidth}*${height}` : `${width}*${newHeight}`;
-      onChange(size);
+      const [width = '', height = ''] = value ? value.split('*') : []
+      const { width: newWidth = '', height: newHeight = '' } = changedValue
+      const size = isWidth ? `${newWidth}*${height}` : `${width}*${newHeight}`
+      onChange(size)
     }
-  };
+  }
 
   /**
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * @description:
+   * @param {type}
+   * @return:
    */
-  handleWidthChange = val => this.triggerChange({ width: val }, true);
+  handleWidthChange = val => this.triggerChange({ width: val }, true)
 
   /**
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * @description:
+   * @param {type}
+   * @return:
    */
-  handleHeightChange = val => this.triggerChange({ height: val });
+  handleHeightChange = val => this.triggerChange({ height: val })
 
   render() {
-    const { value } = this.props;
-    const [width = '', height = ''] = value ? value.split('*') : [];
-    const style = { width: '90%' };
+    const { value } = this.props
+    const [width = '', height = ''] = value ? value.split('*') : []
+    const style = { width: '90%' }
     return (
       <div>
         <Col span={6}>
-          <InputNumber style={style} value={width} onChange={this.handleWidthChange} />
+          <InputNumber
+            style={style}
+            value={width}
+            onChange={this.handleWidthChange}
+          />
         </Col>
         <Col span={6}>
-          <InputNumber style={style} value={height} onChange={this.handleHeightChange} />
+          <InputNumber
+            style={style}
+            value={height}
+            onChange={this.handleHeightChange}
+          />
         </Col>
       </div>
-    );
+    )
   }
 }
 
 class Demo1 extends ModalForm {
-  getTitle = () => '模态框式表单1';
+  getTitle = () => '模态框式表单1'
 
   getDataSource = () => [
     { label: 'key1', name: 'name1', required: true },
     { label: 'key2', name: 'name2', required: true },
     { label: 'key3', name: 'name3' },
-  ];
+  ]
 }
 
 class Demo2 extends DrawerForm {
-  getTitle = () => '抽屉式表单1';
+  getTitle = () => '抽屉式表单1'
 
   getDataSource = () => [
     { label: 'key1', name: 'name1', required: true },
     { label: 'key2', name: 'name2' },
     { label: 'key3', name: 'name3', required: true },
-  ];
+  ]
 }
 
-const map = { all: '全部', key1: '选项1', key2: '选项2' };
+const map = { all: '全部', key1: '选项1', key2: '选项2' }
 function getDataSource() {
-  const { formValues = {} } = this.props;
+  const { formValues = {} } = this.props
   return [
     { label: 'key1', name: 'name1', required: true },
     {
@@ -145,21 +173,21 @@ function getDataSource() {
       name: 'name13',
       itemRender: <SizeInput />,
     },
-  ];
+  ]
 }
 class Demo3 extends ModalForm {
-  getTitle = () => '模态框式表单2';
+  getTitle = () => '模态框式表单2'
 
-  getDataSource = getDataSource.bind(this);
+  getDataSource = getDataSource.bind(this)
 }
 
 class Demo4 extends DrawerForm {
-  getDataSource = getDataSource.bind(this);
+  getDataSource = getDataSource.bind(this)
 }
 
-const showDemo1 = () => Demo1.open();
-const showDemo2 = () => Demo2.open();
-const showDemo3 = () => Demo3.open({ formValues: { name9: true } });
+const showDemo1 = () => Demo1.open()
+const showDemo2 = () => Demo2.open()
+const showDemo3 = () => Demo3.open({ formValues: { name9: true } })
 const showDemo4 = () =>
   Demo4.open({
     title: '抽屉式表单2',
@@ -177,15 +205,19 @@ const showDemo4 = () =>
       name7: true,
       name13: '1920*1080',
     },
-  });
+  })
 
 export default class Forms extends BaseComponent {
-  search = data => message.success(`搜索提交:${JSON.stringify(data)}`);
+  search = data => message.success(`搜索提交:${JSON.stringify(data)}`)
 
   renderSearchForm = ({ form: { getFieldDecorator } }) => (
     <Fragment>
       <Row>
-        <Button icon="plus" type="primary" onClick={() => Demo1.open({ title: '新增' })}>
+        <Button
+          icon="plus"
+          type="primary"
+          onClick={() => Demo1.open({ title: '新增' })}
+        >
           新增
         </Button>
       </Row>
@@ -194,25 +226,37 @@ export default class Forms extends BaseComponent {
           <Form.Item label="条件1">
             {getFieldDecorator('param1')(<Input placeholder="请输入" />)}
           </Form.Item>
-          {renderFormItem({ label: '条件2', name: 'param2' }, getFieldDecorator)}
-          {renderFormItem({ label: '条件3', name: 'param3' }, getFieldDecorator)}
+          {renderFormItem(
+            { label: '条件2', name: 'param2' },
+            getFieldDecorator
+          )}
+          {renderFormItem(
+            { label: '条件3', name: 'param3' },
+            getFieldDecorator
+          )}
         </Col>
         <Col span={6} style={{ textAlign: 'right' }}>
           <span>
             <Button type="primary" htmlType="submit">
               查询
             </Button>
-            <Button style={{ marginLeft: 8 }} onClick={() => this.searchForm.reset()}>
+            <Button
+              style={{ marginLeft: 8 }}
+              onClick={() => this.searchForm.reset()}
+            >
               重置并提交
             </Button>
-            <Button style={{ marginLeft: 8 }} onClick={() => this.searchForm.reset(false)}>
+            <Button
+              style={{ marginLeft: 8 }}
+              onClick={() => this.searchForm.reset(false)}
+            >
               只重置
             </Button>
           </span>
         </Col>
       </Row>
     </Fragment>
-  );
+  )
 
   render() {
     return (
@@ -242,6 +286,6 @@ export default class Forms extends BaseComponent {
           />
         </Card>
       </Fragment>
-    );
+    )
   }
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Input,Row,Col,Form,Button } from 'antd';
-import { SearchForm } from '@/components/Form';
-import { Trans, withI18n } from '@lingui/react';
+import React from 'react'
+import { Input, Row, Col, Form, Button } from 'antd'
+import { Trans, withI18n } from '@lingui/react'
+import { SearchForm } from '@/components'
 
 const ColProps = {
   xs: 24,
@@ -9,32 +9,28 @@ const ColProps = {
   style: {
     marginBottom: 16,
   },
-};
+}
 
 const TwoColProps = {
   ...ColProps,
   xl: 96,
-};
+}
 @withI18n()
 class SearchBar extends React.Component {
-  render(){
-    const {onSearch,onAdd } = this.props;
-    const search = fields => onSearch&&onSearch(fields);
-    const renderSearchForm = ({ form: { getFieldDecorator } })=>(
+  render() {
+    const { onSearch, onAdd } = this.props
+    const search = fields => onSearch && onSearch(fields)
+    const renderSearchForm = ({ form: { getFieldDecorator } }) => (
       <Row gutter={24}>
-        <Col 
-          {...ColProps} 
-          xl={{ span: 6 }} 
-          md={{ span: 12 }}
-        >
+        <Col {...ColProps} xl={{ span: 6 }} md={{ span: 12 }}>
           {getFieldDecorator('name')(
             <Input.Search placeholder="Action Name" />
-        )}
+          )}
         </Col>
-        <Col 
-          {...TwoColProps} 
-          xl={{ span: 18 }} 
-          md={{ span: 12 }} 
+        <Col
+          {...TwoColProps}
+          xl={{ span: 18 }}
+          md={{ span: 12 }}
           sm={{ span: 12 }}
         >
           <Row type="flex" align="middle" justify="space-between">
@@ -42,7 +38,7 @@ class SearchBar extends React.Component {
               <Button type="primary" htmlType="submit" className="margin-right">
                 <Trans>Search</Trans>
               </Button>
-              <Button onClick={()=>this.searchForm.reset()}>
+              <Button onClick={() => this.searchForm.reset()}>
                 <Trans>Reset</Trans>
               </Button>
             </div>
@@ -52,16 +48,16 @@ class SearchBar extends React.Component {
           </Row>
         </Col>
       </Row>
-    );
-    
-    return(
+    )
+
+    return (
       <SearchForm
         root={this}
         onSearch={search}
         render={renderSearchForm}
         searchOnReset
       />
-    );
+    )
   }
 }
-export default Form.create()(SearchBar);
+export default Form.create()(SearchBar)
