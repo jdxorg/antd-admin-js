@@ -21,6 +21,7 @@ const database = [
     children:[
       {id:'21',parentid:'2',name:'user',zh: {name: '用户管理'},icon:'user',route:'/account/user'},
       {id:'22',parentid:'2',name:'role',zh: {name: '角色管理'},icon:'user',route:'/account/role'},
+      {id:'23',parentid:'2',name:'authority',zh: {name: '权限管理'},icon:'user',route:'/account/authority'},
     ]
   },
   {
