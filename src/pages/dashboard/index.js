@@ -1,12 +1,5 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-05-29 14:49:49
- * @LastEditTime: 2019-09-02 11:21:07
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { Color } from 'utils'
@@ -32,15 +25,19 @@ const bodyStyle = {
   },
 }
 
-@connect(({ app, dashboard, loading }) => ({
-  avatar: app.user.avatar,
-  username: app.user.username,
-  dashboard,
-  loading,
-}))
+@connect(({ app, dashboard, loading }) => {
+  const { avatar, loginName } = app.user
+  return {
+    avatar,
+    username: loginName,
+    dashboard,
+    loading,
+  }
+})
 class Dashboard extends PureComponent {
   render() {
     const { avatar, username, dashboard, loading } = this.props
+
     const {
       weather,
       sales,
@@ -62,6 +59,7 @@ class Dashboard extends PureComponent {
 
     return (
       <Page
+        inner
         // loading={loading.models.dashboard && sales.length === 0}
         className={styles.dashboard}
       >
@@ -160,11 +158,11 @@ class Dashboard extends PureComponent {
   }
 }
 
-Dashboard.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  dashboard: PropTypes.object.isRequired,
-  loading: PropTypes.object.isRequired,
-}
+// Dashboard.propTypes = {
+//   avatar: PropTypes.string.isRequired,
+//   username: PropTypes.string.isRequired,
+//   dashboard: PropTypes.object.isRequired,
+//   loading: PropTypes.object.isRequired,
+// }
 
 export default Dashboard

@@ -1,13 +1,6 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-23 15:20:33
- * @LastEditTime: 2019-08-27 16:11:49
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
-import { config } from 'utils';
+import { config } from 'utils'
 
-const { apiPrefix,ACCOUNT_API,UPLOAD_API } = config;
+const { apiPrefix, ACCOUNT_API, UPLOAD_API } = config
 
 export default {
   //menus
@@ -27,14 +20,14 @@ export default {
   updatePermission: `Put ${ACCOUNT_API}/account/user/permission/:id`,
 
   //role
-  queryRolePage:`${ACCOUNT_API}/account/role`,
-  queryRoleRelations:`${ACCOUNT_API}/account/role/relations/:id`,
-  queryRole:`${ACCOUNT_API}/account/role/:id`,
-  saveUserRole:`POST ${ACCOUNT_API}/account/role/:id`,
+  queryRolePage: `${ACCOUNT_API}/account/role`,
+  queryRoleRelations: `${ACCOUNT_API}/account/role/relations/:id`,
+  queryRole: `${ACCOUNT_API}/account/role/:id`,
+  saveUserRole: `POST ${ACCOUNT_API}/account/role/:id`,
   createRole: `POST ${ACCOUNT_API}/account/role`,
   updateRole: `Put ${ACCOUNT_API}/account/role/:id`,
   removeRole: `DELETE ${ACCOUNT_API}/account/role/:id`,
-  removeRoleList:`POST ${ACCOUNT_API}/account/role/deleteMany`,
+  removeRoleList: `POST ${ACCOUNT_API}/account/role/deleteMany`,
 
   queryPostList: '/posts',
   queryDashboard: `${apiPrefix}/dashboard`,
@@ -49,7 +42,6 @@ export default {
   createNavbar: `POST ${ACCOUNT_API}/mobile/navbar`,
   updateNavbar: `Put ${ACCOUNT_API}/mobile/navbar/:id`,
   queryNavbar: `${ACCOUNT_API}/mobile/navbar/:id`,
+}
 
-};
-
-export const uplodaFile = `${UPLOAD_API}/upload/file`;
+export const uplodaFile = `${UPLOAD_API}/upload/file`

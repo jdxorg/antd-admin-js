@@ -1,39 +1,32 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-26 18:03:30
- * @LastEditTime: 2019-08-27 16:21:10
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Modal } from 'antd';
-import { DropOption,DataTable } from 'components';
-import { Trans, withI18n } from '@lingui/react';
-import { HandleType } from '@/constant';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Modal } from 'antd'
+import { DropOption, DataTable } from 'components'
+import { Trans, withI18n } from '@lingui/react'
+import { HandleType } from '@/constant'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem,onSettingItem, i18n } = this.props;
+    const { onDeleteItem, onEditItem, onSettingItem, i18n } = this.props
     if (+e.key === HandleType.UPDATE) {
-      onEditItem(record);
+      onEditItem(record)
     } else if (+e.key === HandleType.DELETE) {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
-          onDeleteItem(record.id);
+          onDeleteItem(record.id)
         },
-      });
-    } else if(+e.key === HandleType.SETTING){
-      onSettingItem(record);
+      })
+    } else if (+e.key === HandleType.SETTING) {
+      onSettingItem(record)
     }
   }
 
   render() {
-    const { onDeleteItem, onEditItem, i18n,roles, ...tableProps } = this.props;
+    const { onDeleteItem, onEditItem, i18n, roles, ...tableProps } = this.props
 
     const columns = [
       {
@@ -41,7 +34,9 @@ class List extends PureComponent {
         dataIndex: 'image',
         width: 72,
         fixed: 'left',
-        render: text => <img style={{width:150,height:100}} alt='' src={text} />,
+        render: text => (
+          <img style={{ width: 150, height: 100 }} alt="" src={text} />
+        ),
       },
       {
         title: <Trans>Name</Trans>,
@@ -64,24 +59,18 @@ class List extends PureComponent {
                 { key: HandleType.DELETE, name: i18n.t`Delete` },
               ]}
             />
-          );
+          )
         },
       },
-    ];
+    ]
 
-    return (
-      <DataTable
-        {...tableProps}
-        pagination={false}
-        columns={columns}
-      />
-    );
+    return <DataTable {...tableProps} pagination={false} columns={columns} />
   }
 }
 
 List.propTypes = {
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired,
-};
+}
 
-export default List;
+export default List

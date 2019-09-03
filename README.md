@@ -16,7 +16,7 @@
 ```  
 ### Setting
 ```
-  master 分支全使用mock，proxy 分支部分使用mock
+  feature/1.0 mock 分支全使用mock，proxy 分支部分使用mock
   utils/sys/config  api 配置 
   localhost service 接口地址，部分接口使用本地mock数据
   const MOCK_API = 'http://localhost:7000';

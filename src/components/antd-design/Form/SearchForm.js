@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import { Form,Row,Col,Button,Icon } from 'antd';
-import PropTypes from 'prop-types';
-import { Trans, withI18n } from '@lingui/react';
-import { submitForm } from './BaseForm';
-import { HandleType } from '@/constant';
+import React, { Component } from 'react'
+import { Form, Row, Col, Button, Icon } from 'antd'
+import PropTypes from 'prop-types'
+import { Trans, withI18n } from '@lingui/react'
+import _ from 'lodash'
+import { HandleType } from '@/constant'
 
-const {ADD} = HandleType;
+const { isFunction } = _
+const { ADD } = HandleType
 /**
  * 搜索表单
  */
 @Form.create({
   // 表单项变化时调用
   onValuesChange({ onValuesChange, ...restProps }, changedValues, allValues) {
-    if (onValuesChange) onValuesChange(restProps, changedValues, allValues);
+    if (onValuesChange) onValuesChange(restProps, changedValues, allValues)
   },
 })
 @withI18n()
@@ -24,7 +25,7 @@ class SearchForm extends Component {
     layout: PropTypes.string,
     child: PropTypes.array,
     showCreateButton: PropTypes.bool,
-  };
+  }
 
   static defaultProps = {
     onSearch: undefined,
@@ -32,8 +33,8 @@ class SearchForm extends Component {
     onReset: undefined,
     layout: 'inline',
     child: [],
-    showCreateButton:true,
-  };
+    showCreateButton: true,
+  }
 
   /**
    * 表单提交时触发
@@ -41,17 +42,17 @@ class SearchForm extends Component {
    * @param e
    */
   onSubmit = e => {
-    if (e) e.preventDefault();
-    const { form } = this.props;
-    const fields = form.getFieldsValue();
-    submitForm(form, fields, this.search);
-  };
+    if (e) e.preventDefault()
+    const { form } = this.props
+    const fields = form.getFieldsValue()
+    this.submitForm(form, fields, this.search)
+  }
 
-  onCreate = e=> {
-    if(e) e.preventDefault();
-    const { onCreate } = this.props;
-    if(onCreate) onCreate(null,ADD);
-  };
+  onCreate = e => {
+    if (e) e.preventDefault()
+    const { onCreate } = this.props
+    if (onCreate) onCreate(null, ADD)
+  }
 
   /**
    * 调用搜索
@@ -59,57 +60,84 @@ class SearchForm extends Component {
    * @param formValues
    */
   search = formValues => {
-    const { onSearch } = this.props;
-    if (onSearch) onSearch(formValues||{});
-  };
+    const { onSearch } = this.props
+    if (onSearch) onSearch(formValues || {})
+  }
 
   /**
    * 重置表单并搜索
    */
   reset = () => {
-    const { form, searchOnReset,onReset } = this.props;
-    form.resetFields();
-    if(onReset){
-      onReset(form);
-    } else if(searchOnReset !== false){
-      const fields = form.getFieldsValue();
-      this.search(fields);
+    const { form, searchOnReset, onReset } = this.props
+    form.resetFields()
+    if (onReset) {
+      onReset(form)
+    } else if (searchOnReset !== false) {
+      const fields = form.getFieldsValue()
+      this.search(fields)
     }
-  };
+  }
+
+  /**
+   * 提交表单
+   *
+   * @param form       Form.create创建的表单对象
+   * @param formValues 表单初始值
+   * @param callback   表单校验成功后回调
+   */
+  submitForm = (form, formValues, callback) => {
+    if (form) {
+      form.validateFields((err, fieldsValue) => {
+        if (!err && isFunction(callback)) {
+          callback({ ...formValues, ...fieldsValue }, form)
+        }
+      })
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('form is not defined')
+    }
+  }
 
   render() {
-    const { child, hideRequiredMark,showCreateButton, layout,form:{ getFieldDecorator } } = this.props;
+    const {
+      child,
+      hideRequiredMark,
+      showCreateButton,
+      layout,
+      form: { getFieldDecorator },
+    } = this.props
     return (
-      <Form 
-        hideRequiredMark={hideRequiredMark} 
-        layout={layout} 
-        onSubmit={this.onSubmit} 
+      <Form
+        hideRequiredMark={hideRequiredMark}
+        layout={layout}
+        onSubmit={this.onSubmit}
       >
-        <Row 
-          gutter={24} 
-          type="flex" 
-          style={{marginBottom:20}} 
-        >
+        <Row gutter={24} type="flex" style={{ marginBottom: 20 }}>
           <Col span={20}>
-            <Row type='flex'>
-              {
-                child&&child.map(_=> {
-                  return _.display!==false?(
-                    <Col id={_.id||_.key} key={_.key} style={{marginRight:20,paddingBottom:5,paddingTop:5}}>
-                      {
-                        getFieldDecorator(_.key,Object.assign({},_.rest))(
-                          _.child
-                        )
-                      }
+            <Row type="flex">
+              {child &&
+                child.map(_ => {
+                  return _.display !== false ? (
+                    <Col
+                      id={_.id || _.key}
+                      key={_.key}
+                      style={{
+                        marginRight: 20,
+                        paddingBottom: 5,
+                        paddingTop: 5,
+                      }}
+                    >
+                      {getFieldDecorator(_.key, Object.assign({}, _.rest))(
+                        _.child
+                      )}
                     </Col>
-                  ):null;
-                })
-              }
-              <Col style={{paddingBottom:5,paddingTop:5}}>
-                <Button 
-                  type="primary" 
-                  htmlType="submit" 
-                  style={{ marginRight: 10 }} 
+                  ) : null
+                })}
+              <Col style={{ paddingBottom: 5, paddingTop: 5 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginRight: 10 }}
                 >
                   <Trans>Search</Trans>
                 </Button>
@@ -120,23 +148,17 @@ class SearchForm extends Component {
             </Row>
           </Col>
           <Col span={4} align="right">
-            {
-              showCreateButton &&
-              (
-                <Button 
-                  type="primary" 
-                  onClick={this.onCreate.bind(this)}
-                >
-                  <Trans>Create</Trans>
-                  <Icon type="plus" style={{ color: '#fff' }} />
-                </Button>
-              )
-            }
+            {showCreateButton && (
+              <Button type="primary" onClick={this.onCreate.bind(this)}>
+                <Trans>Create</Trans>
+                <Icon type="plus" style={{ color: '#fff' }} />
+              </Button>
+            )}
           </Col>
         </Row>
       </Form>
-    );
+    )
   }
 }
 
-export default SearchForm;
+export default SearchForm

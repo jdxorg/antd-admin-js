@@ -1,10 +1,3 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-26 17:53:29
- * @LastEditTime: 2019-08-27 11:36:05
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React from 'react'
 import { Form, Input } from 'antd'
 import { ImageUploader, BaseModal } from 'components'

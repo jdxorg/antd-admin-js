@@ -1,10 +1,3 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-30 13:36:04
- * @LastEditTime: 2019-08-30 14:24:48
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React from 'react'
 import styles from './index.less'
 

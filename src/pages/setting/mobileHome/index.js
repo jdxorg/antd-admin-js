@@ -1,13 +1,5 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-26 16:35:45
- * @LastEditTime: 2019-09-02 11:13:00
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
-
 import React from 'react'
-import { Page } from 'components'
+import { Page, CTabs } from 'components'
 import { Row, Col, Carousel } from 'antd'
 import { connect } from 'dva'
 // import { withI18n } from '@lingui/react';
@@ -15,7 +7,6 @@ import { connect } from 'dva'
 import styles from './index.less'
 import mobilePng from '../../../../assets/images/mobile.png'
 import searchBar from '../../../../assets/images/search-bar.png'
-import { CTabs } from '../../../components/antd-design/index'
 import CBanner from './components/banner'
 import CNavbar from './components/navbar'
 

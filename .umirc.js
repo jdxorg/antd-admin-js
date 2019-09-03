@@ -1,10 +1,3 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-23 15:20:32
- * @LastEditTime: 2019-08-30 17:29:54
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 // https://umijs.org/config/
 import { resolve } from 'path'
 import webpackPlugin from './config/webpack.config'
@@ -80,7 +73,16 @@ export default {
     utils: resolve(__dirname, './src/utils'),
   },
   extraBabelPresets: ['@lingui/babel-preset-react'],
-  extraBabelPlugins: [],
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      }
+    ]
+  ],
   treeShaking: true,
   chainWebpack: webpackPlugin
 }

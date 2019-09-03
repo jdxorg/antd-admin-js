@@ -1,9 +1,9 @@
 /*
- * @Author: dexiaojiang 289608944@qq.com
+ * @Author: 289608944@qq.com
+ * @Date: 2019-09-03 13:51:02
+ * @LastEditors: 289608944@qq.com
+ * @LastEditTime: 2019-09-03 17:40:18
  * @Description: In User Settings Edit
- * @Date: 2019-08-23 15:20:33
- * @LastEditTime: 2019-08-29 15:05:35
- * @LastEditors: dexiaojiang 289608944@qq.com
  */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'

@@ -1,16 +1,9 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-26 18:08:21
- * @LastEditTime: 2019-08-29 16:58:45
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React from 'react'
 import { connect } from 'dva'
+import { message } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import { message } from '../../../../../../node_modules/antd/lib/index'
 
 const Navbar = ({ dispatch, loading, modal, list, tabKey }) => {
   const handleRefresh = payload => dispatch({ type: 'mobile/query', payload })

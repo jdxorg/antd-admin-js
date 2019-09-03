@@ -1,10 +1,3 @@
-/*
- * @Description: 基类模态框
- * @Author: jiangdexiao
- * @Date: 2019-06-19 14:24:05
- * @LastEditTime: 2019-09-02 11:24:14
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React from 'react'
 import { Modal, Spin } from 'antd'
 import PropTypes from 'prop-types'

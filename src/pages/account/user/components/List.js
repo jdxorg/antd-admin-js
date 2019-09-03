@@ -1,34 +1,34 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Avatar } from 'antd';
-import { DropOption,DataTable } from 'components';
-import { Trans, withI18n } from '@lingui/react';
-import { Role,HandleType } from '@/constant';
-import { dateFormat } from 'utils';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Modal, Avatar } from 'antd'
+import { DropOption, DataTable } from 'components'
+import { Trans, withI18n } from '@lingui/react'
+import { Role, HandleType } from '@/constant'
+import { dateFormat } from 'utils'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem,onSettingItem, i18n } = this.props;
+    const { onDeleteItem, onEditItem, onSettingItem, i18n } = this.props
     if (+e.key === HandleType.UPDATE) {
-      onEditItem(record);
+      onEditItem(record)
     } else if (+e.key === HandleType.DELETE) {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
-          onDeleteItem(record.id);
+          onDeleteItem(record.id)
         },
-      });
-    } else if(+e.key === HandleType.SETTING){
-      onSettingItem(record);
+      })
+    } else if (+e.key === HandleType.SETTING) {
+      onSettingItem(record)
     }
   }
 
   render() {
-    const { onDeleteItem, onEditItem, i18n,roles, ...tableProps } = this.props;
-    const isEditor = roles&&~roles.indexOf(Role.ADMIN);
+    const { onDeleteItem, onEditItem, i18n, roles, ...tableProps } = this.props
+    const isEditor = roles && ~roles.indexOf(Role.ADMIN)
     const columns = [
       {
         title: <Trans>Avatar</Trans>,
@@ -57,7 +57,7 @@ class List extends PureComponent {
       {
         title: <Trans>Gender</Trans>,
         dataIndex: 'gender',
-        render: text => <span>{+text===0 ? 'Male' : 'Female'}</span>,
+        render: text => <span>{+text === 0 ? 'Male' : 'Female'}</span>,
       },
       {
         title: <Trans>Phone</Trans>,
@@ -74,8 +74,8 @@ class List extends PureComponent {
       {
         title: <Trans>CreateTime</Trans>,
         dataIndex: 'createdAt',
-        render:(text)=> {
-          return dateFormat(new Date(+text),'YYYY-MM-DD HH:MM');
+        render: text => {
+          return dateFormat(text, 'YYYY-MM-DD HH:MM')
         },
       },
       {
@@ -85,8 +85,8 @@ class List extends PureComponent {
       {
         title: <Trans>UpdatedTime</Trans>,
         dataIndex: 'updatedAt',
-        render:(text)=> {
-          return dateFormat(new Date(+text),'YYYY-MM-DD HH:MM');
+        render: text => {
+          return dateFormat(text, 'YYYY-MM-DD HH:MM')
         },
       },
       {
@@ -98,7 +98,7 @@ class List extends PureComponent {
         key: 'operation',
         fixed: 'right',
         render: (text, record) => {
-          if(isEditor){
+          if (isEditor) {
             return (
               <DropOption
                 onMenuClick={e => this.handleMenuClick(record, e)}
@@ -109,20 +109,18 @@ class List extends PureComponent {
                   { key: HandleType.DETAIL, name: i18n.t`Detail` },
                 ]}
               />
-            );
-          }else {
+            )
+          } else {
             return (
               <DropOption
                 onMenuClick={e => this.handleMenuClick(record, e)}
-                menuOptions={[
-                  { key: HandleType.DETAIL, name: i18n.t`Detail` },
-                ]}
+                menuOptions={[{ key: HandleType.DETAIL, name: i18n.t`Detail` }]}
               />
-            );
+            )
           }
         },
       },
-    ];
+    ]
 
     return (
       <DataTable
@@ -130,13 +128,13 @@ class List extends PureComponent {
         pagination={tableProps.pagination}
         columns={columns}
       />
-    );
+    )
   }
 }
 
 List.propTypes = {
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired,
-};
+}
 
-export default List;
+export default List

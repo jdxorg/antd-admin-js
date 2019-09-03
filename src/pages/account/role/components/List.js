@@ -1,32 +1,32 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Modal} from 'antd';
-import { DropOption,DataTable } from 'components';
-import { Trans, withI18n } from '@lingui/react';
-import { RoleType,HandleType } from '@/constant';
-import { dateFormat } from 'utils';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Modal } from 'antd'
+import { DropOption, DataTable } from 'components'
+import { Trans, withI18n } from '@lingui/react'
+import { RoleType, HandleType } from '@/constant'
+import { dateFormat } from 'utils'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 @withI18n()
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
-    const { onDeleteItem, onEditItem,onSettingItem, i18n } = this.props;
+    const { onDeleteItem, onEditItem, onSettingItem, i18n } = this.props
     if (+e.key === HandleType.UPDATE) {
-      onEditItem(record);
+      onEditItem(record)
     } else if (+e.key === HandleType.DELETE) {
       confirm({
         title: i18n.t`Delete.Title`,
         onOk() {
-          onDeleteItem(record.id);
+          onDeleteItem(record.id)
         },
-      });
-    } else if(+e.key === HandleType.SETTING){
-      onSettingItem(record);
+      })
+    } else if (+e.key === HandleType.SETTING) {
+      onSettingItem(record)
     }
   }
 
   render() {
-    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props;
+    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
 
     const columns = [
       {
@@ -40,9 +40,9 @@ class List extends PureComponent {
         title: <Trans>RoleType</Trans>,
         dataIndex: 'roleType',
         key: 'roleType',
-        render:(text)=>{
-          return RoleType[text];
-        },  
+        render: text => {
+          return RoleType[text]
+        },
       },
       {
         title: <Trans>Description</Trans>,
@@ -53,11 +53,11 @@ class List extends PureComponent {
         title: <Trans>Status</Trans>,
         dataIndex: 'state',
         key: 'state',
-        render:(text)=>{
-          if(text===0){
-            return '正常';
-          }else{
-            return '无效';
+        render: text => {
+          if (text === 0) {
+            return '正常'
+          } else {
+            return '无效'
           }
         },
       },
@@ -70,8 +70,8 @@ class List extends PureComponent {
         title: <Trans>CreateTime</Trans>,
         dataIndex: 'createdAt',
         key: 'createdAt',
-        render:(text)=>{
-          return dateFormat(new Date(+text),'YYYY-MM-DD HH:MM');
+        render: text => {
+          return dateFormat(text, 'YYYY-MM-DD HH:MM')
         },
       },
       {
@@ -83,8 +83,8 @@ class List extends PureComponent {
         title: <Trans>UpdateTime</Trans>,
         dataIndex: 'updatedAt',
         key: 'updatedAt',
-        render:(text)=>{
-          return dateFormat(new Date(+text),'YYYY-MM-DD HH:MM');
+        render: text => {
+          return dateFormat(text, 'YYYY-MM-DD HH:MM')
         },
       },
       {
@@ -101,10 +101,10 @@ class List extends PureComponent {
                 { key: HandleType.SETTING, name: i18n.t`Setting` },
               ]}
             />
-          );
+          )
         },
       },
-    ];
+    ]
 
     return (
       <DataTable
@@ -112,13 +112,13 @@ class List extends PureComponent {
         pagination={tableProps.pagination}
         columns={columns}
       />
-    );
+    )
   }
 }
 
 List.propTypes = {
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired,
-};
+}
 
-export default List;
+export default List

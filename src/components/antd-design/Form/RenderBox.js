@@ -1,10 +1,3 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-23 15:20:32
- * @LastEditTime: 2019-08-30 16:34:48
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import React from 'react'
 import { Form, Input, Radio, Select } from 'antd'
 import _ from 'lodash'

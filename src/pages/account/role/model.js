@@ -1,10 +1,3 @@
-/*
- * @Author: dexiaojiang 289608944@qq.com
- * @Description: In User Settings Edit
- * @Date: 2019-08-23 15:20:33
- * @LastEditTime: 2019-08-29 16:45:10
- * @LastEditors: dexiaojiang 289608944@qq.com
- */
 import modelExtend from 'dva-model-extend'
 import { pathMatchRegexp } from 'utils'
 import api from 'api'

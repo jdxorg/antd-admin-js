@@ -55,7 +55,7 @@
     "no-cond-assign": [0],
     "import/no-unresolved": [0],
     "comma-dangle": [
-      "error",
+      "off",
       {
         "arrays": "always-multiline",
         "objects": "always-multiline",
