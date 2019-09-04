@@ -10,6 +10,7 @@ import Filter from './components/Filter'
 import Modal from './components/Modal'
 
 @withI18n()
+@connect(({ authority }) => ({ authority }))
 class Authority extends PureComponent {
   constructor(props) {
     super(props)
@@ -27,13 +28,16 @@ class Authority extends PureComponent {
   }
 
   render() {
-    //   const  listProps ={
-    //   dataSource: list,
-    // }
+    const listProps = {
+      dataSource: [],
+      // loading:'',
+      onDeleteItem() {},
+      onEditItem() {},
+    }
     return (
       <Page inner>
         <Filter onSearch={this.onSearch} onAdd={this.onAdd} />
-        <List />
+        <List {...listProps} />
       </Page>
     )
   }
