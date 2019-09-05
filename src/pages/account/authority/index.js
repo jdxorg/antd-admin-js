@@ -15,32 +15,42 @@ class Authority extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {}
-    this.onSearch = this.onSearch.bind(this)
-    this.onAdd = this.onAdd.bind(this)
   }
 
-  onSearch(value) {
-    console.log(value, 23333)
-  }
-
-  onAdd() {
-    alert(2222)
-  }
+  componentDidMount() {}
 
   render() {
+    const { authority, dispatch } = this.props
+    // const {
+    //   list,
+    // } = authority;
+    const handleRefresh = payload =>
+      dispatch({ type: 'authority/query', payload })
+    const filterProps = {
+      onSearch(value) {
+        console.log(value, 23333)
+      },
+      onAdd() {
+        alert(2222)
+      },
+    }
     const listProps = {
       dataSource: [],
-      // loading:'',
+      loading: true,
       onDeleteItem() {},
       onEditItem() {},
     }
     return (
       <Page inner>
-        <Filter onSearch={this.onSearch} onAdd={this.onAdd} />
+        <Filter {...filterProps} />
         <List {...listProps} />
       </Page>
     )
   }
 }
-
+Authority.propTypes = {
+  authority: PropTypes.object,
+  dispatch: PropTypes.func,
+  loading: PropTypes.object,
+}
 export default Authority
