@@ -1,37 +1,37 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Form, Input, InputNumber, Radio, Cascader } from 'antd';
-import { Trans, withI18n } from '@lingui/react';
-import city from '@/utils/sys/city';
-import { BaseModal } from 'components';
-import { formItemLayout } from '@/utils/sys/props';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Form, Input, InputNumber, Radio, Cascader } from 'antd'
+import { Trans, withI18n } from '@lingui/react'
+import { BaseModal } from 'components'
+import city from '@/utils/sys/city'
+import { formItemLayout } from '@/utils/sys/props'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 @withI18n()
 @Form.create()
 class UserModal extends PureComponent {
   handleOk = () => {
-    const { item = {}, onOk, form } = this.props;
-    const { validateFields, getFieldsValue } = form;
+    const { item = {}, onOk, form } = this.props
+    const { validateFields, getFieldsValue } = form
 
     validateFields(errors => {
       if (errors) {
-        return;
+        return
       }
       const data = {
         ...getFieldsValue(),
         key: item.key,
-      };
-      data.address = data.address.join(' ');
-      onOk(data);
-    });
+      }
+      data.address = data.address.join(' ')
+      onOk(data)
+    })
   }
 
   render() {
-    const { item = {}, onOk, form, i18n,modal, ...modalProps } = this.props;
-    const { getFieldDecorator } = form;
-    
+    const { item = {}, onOk, form, i18n, modal, ...modalProps } = this.props
+    const { getFieldDecorator } = form
+
     return (
       <BaseModal
         {...modalProps}
@@ -132,7 +132,7 @@ class UserModal extends PureComponent {
           </Form>
         }
       />
-    );
+    )
   }
 }
 
@@ -140,6 +140,6 @@ UserModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-};
+}
 
-export default UserModal;
+export default UserModal

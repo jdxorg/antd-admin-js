@@ -25,7 +25,7 @@ class List extends PureComponent {
 
   render() {
     const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
-
+    console.log(this.props, 2222)
     const columns = [
       {
         title: <Trans>Avatar</Trans>,

@@ -10,7 +10,7 @@ const {
   updateUser,
   removeUserList,
 } = api // 使用user数据
-
+// 公用pageModel和定义的数据
 export default modelExtend(pageModel, {
   namespace: 'authority',
   state: {},
@@ -27,7 +27,11 @@ export default modelExtend(pageModel, {
   effects: {
     *query({ payload = {} }, { call, put, select }) {
       const pagination = yield select(state => state.authority.pagination)
-      const data = yield call(queryUserList, pagination)
+      const filter = {
+        pagination,
+        ...payload,
+      }
+      const data = yield call(queryUserList, filter)
       console.log(data, 2333)
       if (data) {
         yield put({

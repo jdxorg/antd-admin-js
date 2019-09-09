@@ -21,22 +21,23 @@ class Authority extends PureComponent {
 
   render() {
     const { authority, dispatch } = this.props
-    // const {
-    //   list,
-    // } = authority;
+    const { list, pagination } = authority // 取得是state里面的东西
     const handleRefresh = payload =>
       dispatch({ type: 'authority/query', payload })
     const filterProps = {
       onSearch(value) {
-        console.log(value, 23333)
+        handleRefresh({
+          ...value,
+          current: 1,
+        })
       },
       onAdd() {
-        alert(2222)
+        alert(2333)
       },
     }
     const listProps = {
-      dataSource: [],
-      loading: true,
+      dataSource: list.data,
+      loading: false,
       onDeleteItem() {},
       onEditItem() {},
     }
